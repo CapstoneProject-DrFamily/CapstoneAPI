@@ -17,6 +17,7 @@ namespace Capstone_API_V2.Models
         public int RoleId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool? Disabled { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
     }

@@ -14,6 +14,7 @@ namespace Capstone_API_V2.Models
         public int PatientId { get; set; }
         public string Relationship { get; set; }
         public string Phone { get; set; }
+        public bool? Disabled { get; set; }
 
         public virtual Family Family { get; set; }
         public virtual Patient Patient { get; set; }

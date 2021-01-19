@@ -21,7 +21,6 @@ namespace Capstone_API_V2.Models
 
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Drug> Drugs { get; set; }
-        public virtual DbSet<Drug2> Drug2 { get; set; }
         public virtual DbSet<Family> Families { get; set; }
         public virtual DbSet<FamilyDetail> FamilyDetails { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
@@ -103,35 +102,6 @@ namespace Capstone_API_V2.Models
                     .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<Drug2>(entity =>
-            {
-                entity.HasKey(e => e.DrugId)
-                    .HasName("PK_Drug");
-
-                entity.Property(e => e.DrugId).HasColumnName("drug_id");
-
-                entity.Property(e => e.ExpireDate)
-                    .HasColumnName("expire_date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ManufacturedDate)
-                    .HasColumnName("manufactured_date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ManufacturerName)
-                    .HasColumnName("manufacturer_name")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Unit)
-                    .HasColumnName("unit")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-            });
-
             modelBuilder.Entity<Family>(entity =>
             {
                 entity.ToTable("Family");
@@ -148,6 +118,8 @@ namespace Capstone_API_V2.Models
                 entity.ToTable("FamilyDetail");
 
                 entity.Property(e => e.FamilyDetailId).HasColumnName("family_detail_id");
+
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
 
                 entity.Property(e => e.FamilyId).HasColumnName("family_id");
 
@@ -331,6 +303,8 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("description")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
@@ -346,6 +320,8 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.Date)
                     .HasColumnName("date")
                     .HasColumnType("date");
+
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
 
                 entity.Property(e => e.DoctorId).HasColumnName("doctor_id");
 
@@ -364,6 +340,8 @@ namespace Capstone_API_V2.Models
                 entity.ToTable("Service");
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
+
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
 
                 entity.Property(e => e.ServiceDescription)
                     .HasColumnName("service_description")
@@ -417,6 +395,8 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
+
                 entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.Name)
@@ -432,6 +412,8 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.SymptomId).HasColumnName("symptom_id");
 
                 entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -458,6 +440,8 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.DateStart)
                     .HasColumnName("date_start")
                     .HasColumnType("datetime");
+
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
 
                 entity.Property(e => e.DoctorId).HasColumnName("doctor_id");
 
@@ -498,14 +482,13 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.AccountId).HasColumnName("account_id");
 
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
+
                 entity.Property(e => e.Password)
-                    .IsRequired()
                     .HasColumnName("password")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.RoleId).HasColumnName("role_id");
-
-                entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.Username)
                     .IsRequired()

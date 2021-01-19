@@ -18,6 +18,7 @@ namespace Capstone_API_V2.Models
         public string Name { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
+        public bool? Disabled { get; set; }
 
         public virtual ICollection<Doctor> Doctors { get; set; }
     }

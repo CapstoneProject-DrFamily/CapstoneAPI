@@ -14,6 +14,7 @@ namespace Capstone_API_V2.Models
         public DateTime? Date { get; set; }
         public TimeSpan? Time { get; set; }
         public bool? Status { get; set; }
+        public bool? Disabled { get; set; }
 
         public virtual Doctor Doctor { get; set; }
     }

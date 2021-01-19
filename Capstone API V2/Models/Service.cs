@@ -17,6 +17,7 @@ namespace Capstone_API_V2.Models
         public int ServiceId { get; set; }
         public string ServiceName { get; set; }
         public string ServiceDescription { get; set; }
+        public bool? Disabled { get; set; }
 
         public virtual ICollection<ServiceDetail> ServiceDetails { get; set; }
     }

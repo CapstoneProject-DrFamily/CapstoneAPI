@@ -18,6 +18,7 @@ namespace Capstone_API_V2.Models
         public byte? Status { get; set; }
         public string Location { get; set; }
         public string Note { get; set; }
+        public bool? Disabled { get; set; }
 
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
