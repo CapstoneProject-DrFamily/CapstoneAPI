@@ -7,15 +7,16 @@ using System.Collections.Generic;
 
 namespace Capstone_API_V2.Models
 {
-    public partial class Drug
+    public partial class Medicine
     {
-        public Drug()
+        public Medicine()
         {
             PrescriptionDetails = new HashSet<PrescriptionDetail>();
         }
 
         public string Name { get; set; }
         public int DrugId { get; set; }
+        public bool? Disabled { get; set; }
 
         public virtual ICollection<PrescriptionDetail> PrescriptionDetails { get; set; }
     }

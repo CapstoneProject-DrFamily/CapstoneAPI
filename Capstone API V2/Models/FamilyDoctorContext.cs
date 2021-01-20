@@ -20,11 +20,11 @@ namespace Capstone_API_V2.Models
         }
 
         public virtual DbSet<Doctor> Doctors { get; set; }
-        public virtual DbSet<Drug> Drugs { get; set; }
         public virtual DbSet<Family> Families { get; set; }
         public virtual DbSet<FamilyDetail> FamilyDetails { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<HealthRecord> HealthRecords { get; set; }
+        public virtual DbSet<Medicine> Medicines { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Prescription> Prescriptions { get; set; }
         public virtual DbSet<PrescriptionDetail> PrescriptionDetails { get; set; }
@@ -85,21 +85,6 @@ namespace Capstone_API_V2.Models
                     .HasForeignKey(d => d.SpecialtyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Doctors_Specialties");
-            });
-
-            modelBuilder.Entity<Drug>(entity =>
-            {
-                entity.ToTable("Drug");
-
-                entity.HasIndex(e => e.Name)
-                    .HasName("UC_Drugs")
-                    .IsUnique();
-
-                entity.Property(e => e.DrugId).HasColumnName("drug_id");
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Family>(entity =>
@@ -194,6 +179,26 @@ namespace Capstone_API_V2.Models
                     .WithMany(p => p.HealthRecords)
                     .HasForeignKey(d => d.SymptomId)
                     .HasConstraintName("FK_HealthRecord_Symptoms");
+            });
+
+            modelBuilder.Entity<Medicine>(entity =>
+            {
+                entity.HasKey(e => e.DrugId)
+                    .HasName("PK_Drug_1");
+
+                entity.ToTable("Medicine");
+
+                entity.HasIndex(e => e.Name)
+                    .HasName("UC_Drugs")
+                    .IsUnique();
+
+                entity.Property(e => e.DrugId).HasColumnName("drug_id");
+
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Patient>(entity =>

@@ -14,7 +14,7 @@ namespace Capstone_API_V2.Models
         public int DrugId { get; set; }
         public int Quantity { get; set; }
 
-        public virtual Drug Drug { get; set; }
+        public virtual Medicine Drug { get; set; }
         public virtual Prescription Prescription { get; set; }
     }
 }
