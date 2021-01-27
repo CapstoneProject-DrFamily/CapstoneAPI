@@ -15,6 +15,7 @@ namespace Capstone_API_V2.ViewModels
             get { return _size; }
             set { _size = (value < MaxSize) ? MaxSize : value; }
         }
+        public string SearchValue { get; set; }
         //public int SortBy { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Capstone_API_V2.Services
         Task<PaginatedList<TEntity>> GetAsync(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> filter = null,
                                                         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                                         string includeProperties = "");
-        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
+        IQueryable<TDto> GetAll(Expression<Func<TEntity, bool>> filter = null,
                           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                           string includeProperties = "");
         Task<TDto> CreateAsync(TDto dto);

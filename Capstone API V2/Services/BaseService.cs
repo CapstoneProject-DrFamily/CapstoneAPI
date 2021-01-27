@@ -67,9 +67,9 @@ namespace Capstone_API_V2.Services
             return _repository.Get(pageIndex, pageSize, filter, orderBy, includeProperties);
         }
 
-        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        public IQueryable<TDto> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
         {
-            return _repository.GetAll(filter, orderBy, includeProperties);
+            return _mapper.ProjectTo<TDto>(_repository.GetAll(filter, orderBy, includeProperties));
         }
     }
 }
