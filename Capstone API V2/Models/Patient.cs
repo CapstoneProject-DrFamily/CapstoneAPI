@@ -11,9 +11,7 @@ namespace Capstone_API_V2.Models
     {
         public Patient()
         {
-            FamilyDetails = new HashSet<FamilyDetail>();
             Feedbacks = new HashSet<Feedback>();
-            HealthRecords = new HashSet<HealthRecord>();
             Transactions = new HashSet<Transaction>();
         }
 
@@ -22,11 +20,17 @@ namespace Capstone_API_V2.Models
         public double? Weight { get; set; }
         public string BloodType { get; set; }
         public int ProfileId { get; set; }
+        public string InsBy { get; set; }
+        public DateTime? InsDatetime { get; set; }
+        public string UpdBy { get; set; }
+        public DateTime? UpdDatetime { get; set; }
+        public int RecordId { get; set; }
+        public int? AccountId { get; set; }
+        public string Relationship { get; set; }
 
         public virtual Profile Profile { get; set; }
-        public virtual ICollection<FamilyDetail> FamilyDetails { get; set; }
+        public virtual HealthRecord Record { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
-        public virtual ICollection<HealthRecord> HealthRecords { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

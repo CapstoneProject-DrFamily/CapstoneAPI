@@ -23,7 +23,7 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _medicineService.GetAll(filter: f => f.Disabled == false, orderBy: o => o.OrderBy(d => d.Name)).ToListAsync();
+            var result = await _medicineService.GetAll(filter: f => f.Disabled == false).Take(1000).ToListAsync();
             return Ok(result);
         }
 
@@ -39,16 +39,16 @@ namespace Capstone_API_V2.Controllers
         }*/
 
         [HttpGet("paging")]
-        public async Task<IActionResult> Get([FromQuery] MedicineModel model)
+        public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
             var result = await _medicineService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Disabled == false, orderBy: o => o.OrderBy(d => d.Name));
             return Ok(result);
         }
 
         [HttpGet("{medicineId}")]
-        public async Task<IActionResult> GetById(string productId)
+        public async Task<IActionResult> GetById(int medicineId)
         {
-            var result = await _medicineService.GetByIdAsync(productId);
+            var result = await _medicineService.GetByIdAsync(medicineId);
             if (result == null)
             {
                 return NotFound();
@@ -68,9 +68,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpDelete("{medicineId}")]
-        public async Task<IActionResult> Delete(string productId)
+        public async Task<IActionResult> Delete(string medicineId)
         {
-            var result = await _medicineService.DeleteAsync(productId);
+            var result = await _medicineService.DeleteAsync(medicineId);
             if (result)
             {
                 return NoContent();

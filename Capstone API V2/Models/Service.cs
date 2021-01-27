@@ -11,14 +11,18 @@ namespace Capstone_API_V2.Models
     {
         public Service()
         {
-            ServiceDetails = new HashSet<ServiceDetail>();
+            Transactions = new HashSet<Transaction>();
         }
 
         public int ServiceId { get; set; }
         public string ServiceName { get; set; }
         public string ServiceDescription { get; set; }
         public bool? Disabled { get; set; }
+        public string InsBy { get; set; }
+        public DateTime? InsDatetime { get; set; }
+        public string UpdBy { get; set; }
+        public DateTime? UpdDatetime { get; set; }
 
-        public virtual ICollection<ServiceDetail> ServiceDetails { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

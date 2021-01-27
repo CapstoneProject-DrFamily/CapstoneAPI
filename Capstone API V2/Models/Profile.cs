@@ -13,6 +13,7 @@ namespace Capstone_API_V2.Models
         {
             Doctors = new HashSet<Doctor>();
             Patients = new HashSet<Patient>();
+            Users = new HashSet<User>();
         }
 
         public int ProfileId { get; set; }
@@ -20,12 +21,12 @@ namespace Capstone_API_V2.Models
         public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
         public string Phone { get; set; }
-        public string Address { get; set; }
         public string Image { get; set; }
-        public int AccountId { get; set; }
+        public string Email { get; set; }
+        public string IdCard { get; set; }
 
-        public virtual User Account { get; set; }
         public virtual ICollection<Doctor> Doctors { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Capstone_API_V2.Helper;
 using Capstone_API_V2.Models;
 using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
@@ -21,9 +22,11 @@ namespace Capstone_API_V2.Services
         public override async Task<MedicineModel> CreateAsync(MedicineModel dto)
         {
             var entity = _mapper.Map<Medicine>(dto);
-            entity.Name = dto.Name;
             entity.Disabled = false;
-            //entity.Unit = dto.Unit;
+            entity.InsBy = Constants.Roles.ROLE_ADMIN;
+            entity.InsDatetime = DateTime.Now;
+            entity.UpdBy = Constants.Roles.ROLE_ADMIN;
+            entity.UpdDatetime = DateTime.Now;
 
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();

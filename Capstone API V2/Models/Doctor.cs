@@ -13,7 +13,6 @@ namespace Capstone_API_V2.Models
         {
             Feedbacks = new HashSet<Feedback>();
             Schedules = new HashSet<Schedule>();
-            ServiceDetails = new HashSet<ServiceDetail>();
             Transactions = new HashSet<Transaction>();
         }
 
@@ -23,12 +22,15 @@ namespace Capstone_API_V2.Models
         public string Description { get; set; }
         public int SpecialtyId { get; set; }
         public int ProfileId { get; set; }
+        public string InsBy { get; set; }
+        public DateTime? InsDatetime { get; set; }
+        public string UpdBy { get; set; }
+        public DateTime? UpdDatetime { get; set; }
 
         public virtual Profile Profile { get; set; }
         public virtual Specialty Specialty { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Schedule> Schedules { get; set; }
-        public virtual ICollection<ServiceDetail> ServiceDetails { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

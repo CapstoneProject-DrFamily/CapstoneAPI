@@ -14,9 +14,16 @@ namespace Capstone_API_V2.Models
             PrescriptionDetails = new HashSet<PrescriptionDetail>();
         }
 
+        public int MedicineId { get; set; }
+        public string Form { get; set; }
+        public string Strength { get; set; }
         public string Name { get; set; }
-        public int DrugId { get; set; }
+        public string ActiveIngredient { get; set; }
         public bool? Disabled { get; set; }
+        public string InsBy { get; set; }
+        public DateTime? InsDatetime { get; set; }
+        public string UpdBy { get; set; }
+        public DateTime? UpdDatetime { get; set; }
 
         public virtual ICollection<PrescriptionDetail> PrescriptionDetails { get; set; }
     }
