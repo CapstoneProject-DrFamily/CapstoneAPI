@@ -28,6 +28,10 @@ namespace Capstone_API_V2.AutoMapper
 
             CreateMap<Profile, ProfileModel>();
             CreateMap<ProfileModel, Profile>();
+
+            CreateMap<Symptom, SymptomModel>();
+            CreateMap<SymptomModel, Symptom>();
+
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Capstone_API_V2
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IMedicineService, MedicineService>();
+            services.AddScoped<ISymptomService, SymptomService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IHealthRecordService, HealthRecordService>();
             services.AddScoped<IDoctorService, DoctorService>();
