@@ -29,7 +29,7 @@ namespace Capstone_API_V2.Services
 
             var user = await _unitOfWork.UserRepository.GetByUsername(username);
 
-            if (user != null)
+            if (user != null && user.Disabled == false)
             {
                 /*if (VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 {
@@ -75,7 +75,7 @@ namespace Capstone_API_V2.Services
         public async Task<User> GetByUserName(string username, string action)
         {
             var entity = await _unitOfWork.UserRepository.GetByUsername(username);
-            if (entity == null)
+            if (entity == null || entity.Disabled == true)
             {
                 if (action == "Login")
                 {
