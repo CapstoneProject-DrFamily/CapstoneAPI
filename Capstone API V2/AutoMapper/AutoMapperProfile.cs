@@ -1,10 +1,10 @@
 ﻿using Capstone_API_V2.Models;
 using Capstone_API_V2.ViewModels;
-using Profile = AutoMapper.Profile;
+using MapperProfile = AutoMapper.Profile;
 
 namespace Capstone_API_V2.AutoMapper
 {
-    public class ViewModelEntityCommonMapper : Profile
+    public class ViewModelEntityCommonMapper : MapperProfile
     {
         public ViewModelEntityCommonMapper()
         {
@@ -25,6 +25,9 @@ namespace Capstone_API_V2.AutoMapper
             
             CreateMap<HealthRecord, HealthRecordModel>();
             CreateMap<HealthRecordModel, HealthRecord>();
+
+            CreateMap<Profile, ProfileModel>();
+            CreateMap<ProfileModel, Profile>();
         }
     }
 }
