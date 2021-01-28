@@ -2,6 +2,7 @@
 using Capstone_API_V2.Helper;
 using Capstone_API_V2.Models;
 using Capstone_API_V2.UnitOfWork;
+using Capstone_API_V2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,31 +43,28 @@ namespace Capstone_API_V2.Services
             return false;
         }
 
-        public async Task<User> CreateUser(string model, string password)
+        public async Task<User> CreateUser(UserModel model)
         {
             var user = _mapper.Map<User>(model);
-            user.RoleId = Constants.Roles.ROLE_ADMIN_ID;
-            await _unitOfWork.UserRepository.Create(user, password);
+            await _unitOfWork.UserRepository.Create(user);
             await _unitOfWork.SaveAsync();
             return user;
         }
 
-        //public async Task<bool> DeleteUser(string username)
-        //{
-        //    var entity = await _unitOfWork.UsersRepository.GetByUsername(username);
-        //    if (entity != null)
-        //    {
-        //        if (entity.RoleId == Constants.Roles.ROLE_STAFF)
-        //        {
-        //            var staff = await _unitOfWork.StaffRepository.GetByIdToEntity(entity.Id);
-        //            _unitOfWork.StaffRepository.Delete(staff);
-        //        }
-        //        _unitOfWork.UserRepository.Delete(entity);
-        //        await _unitOfWork.Commit();
-        //        return true;
-        //    }
-        //    return false;
-        //}
+        public async Task<bool> DeleteUser(string username)
+        {
+            var entity = await _unitOfWork.UserRepository.GetByUsername(username);
+            if (entity != null && entity.Disabled == false)
+            {
+                if (entity.RoleId == Constants.Roles.ROLE_DOCTOR_ID || entity.RoleId == Constants.Roles.ROLE_PATIENT_ID)
+                {
+                    _unitOfWork.UserRepository.Delete(entity);
+                    await _unitOfWork.SaveAsync();
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {

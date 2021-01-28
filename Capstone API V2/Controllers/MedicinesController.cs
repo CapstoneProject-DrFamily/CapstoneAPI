@@ -27,17 +27,6 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        /*[HttpGet("{drugName}")]
-        public async Task<IActionResult> GetByName(string drugName)
-        {
-            var result = await _drugService.GetByDrugName(drugName);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
-        }*/
-
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {

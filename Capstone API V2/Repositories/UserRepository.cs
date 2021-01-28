@@ -17,21 +17,21 @@ namespace Capstone_API_V2.Repositories
             _context = context;
         }
 
-        public async Task<User> Create(User user, string password)
+        public async Task<User> Create(User user)
         {
-            if (string.IsNullOrWhiteSpace(password))
+            /*if (string.IsNullOrWhiteSpace(password))
             {
                 throw new AppException("Password is required");
-            }
+            }*/
 
 
             if (_context.Users.Any(x => x.Username == user.Username))
             {
-                throw new AppException("Username \"" + user.Username + "\" is already taken");
+                throw new AppException("Username \"" + user.Username + "\" is duplicate");
             }
 
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            /*byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);*/
 
             /*user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -63,7 +63,7 @@ namespace Capstone_API_V2.Repositories
             return user;
         }
 
-        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        /*private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
@@ -73,6 +73,6 @@ namespace Capstone_API_V2.Repositories
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
-        }
+        }*/
     }
 }

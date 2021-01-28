@@ -32,7 +32,7 @@ namespace Capstone_API_V2.Services
                 var user_info = new User()
                 {
                     Username = user.PhoneNumber,
-                    RoleId = Constants.Roles.ROLE_PATIENT_ID,
+                    RoleId = role_id,
                     Disabled = false
                     /*Photo = user_firebase.PhotoUrl,
                     InsBy = Constants.Roles.ROLE_ADMIN,
@@ -41,7 +41,7 @@ namespace Capstone_API_V2.Services
                     UpdDatetime = DateTime.Now*/
                 };
 
-                await _uow.UserRepository.Create(user_info, "123");
+                await _uow.UserRepository.Create(user_info);
 
                 if (await _uow.SaveAsync() > 0)
                 {

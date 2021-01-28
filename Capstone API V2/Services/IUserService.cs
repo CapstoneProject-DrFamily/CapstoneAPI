@@ -1,15 +1,16 @@
 ﻿using Capstone_API_V2.Models;
+using Capstone_API_V2.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Capstone_API_V2.Services
 {
-    public interface IUserService
+    public interface IUserService 
     {
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetByUserName(string username, string action = "");
-        Task<User> CreateUser(string username, string password);
+        Task<User> CreateUser(UserModel user);
         Task<bool> CheckPassWord(string username, string password);
-        //Task<bool> DeleteUser(string username);
+        Task<bool> DeleteUser(string username);
     }
 }
