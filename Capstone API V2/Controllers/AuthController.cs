@@ -47,7 +47,7 @@ namespace Capstone_API_V2.Controllers
         [HttpPost("OTP")]
         public async Task<ActionResult> Login([FromBody] LoginModel model)
         {
-            UserModel user = await _authService.LoginOTP(model);
+            var user = await _authService.LoginOTP(model);
             if (user != null)
             {
                 var role = model.RoleID;
@@ -72,6 +72,7 @@ namespace Capstone_API_V2.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
+                    userId = user.AccountId,
                     phone = model.PhoneNumber,
                     role = role,
                     /*email = user.Email,

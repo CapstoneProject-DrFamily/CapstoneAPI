@@ -61,7 +61,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpDelete("{medicineId}")]
-        public async Task<IActionResult> Delete(string medicineId)
+        public async Task<IActionResult> Delete(int medicineId)
         {
             var result = await _medicineService.DeleteAsync(medicineId);
             if (result)

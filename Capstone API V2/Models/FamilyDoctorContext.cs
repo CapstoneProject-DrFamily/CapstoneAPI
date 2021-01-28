@@ -530,8 +530,6 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.PatientId).HasColumnName("patient_id");
 
-                entity.Property(e => e.AccountId).HasColumnName("account_id");
-
                 entity.Property(e => e.BloodType)
                     .HasColumnName("blood_type")
                     .HasMaxLength(3);

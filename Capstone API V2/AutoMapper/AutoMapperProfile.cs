@@ -16,6 +16,9 @@ namespace Capstone_API_V2.AutoMapper
 
             CreateMap<Medicine, MedicineModel>();
             CreateMap<MedicineModel, Medicine>();
+
+            CreateMap<Patient, PatientModel>();
+            CreateMap<PatientModel, Patient>();
         }
     }
 }

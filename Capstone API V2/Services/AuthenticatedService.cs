@@ -20,7 +20,7 @@ namespace Capstone_API_V2.Services
             _mapper = mapper;
         }
 
-        public async Task<UserModel> LoginOTP(LoginModel user)
+        public async Task<User> LoginOTP(LoginModel user)
         {
             //UserRecord user_firebase = await FirebaseAuth.DefaultInstance.GetUserAsync(uid);
             int role_id = int.Parse(user.RoleID);
@@ -45,7 +45,7 @@ namespace Capstone_API_V2.Services
 
                 if (await _uow.SaveAsync() > 0)
                 {
-                    return _mapper.Map<UserModel>(user_info);
+                    return user_info;
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace Capstone_API_V2.Services
                     return null;
                 }
             }
-            return _mapper.Map<UserModel>(currentUser);
+            return currentUser;
         }
     }
 }

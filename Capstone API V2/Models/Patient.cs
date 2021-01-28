@@ -25,7 +25,6 @@ namespace Capstone_API_V2.Models
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
         public int RecordId { get; set; }
-        public int? AccountId { get; set; }
         public string Relationship { get; set; }
 
         public virtual Profile Profile { get; set; }
