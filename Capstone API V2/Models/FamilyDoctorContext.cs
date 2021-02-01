@@ -56,13 +56,9 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("doctor_id")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Degree)
-                    .HasColumnName("degree")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Degree).HasColumnName("degree");
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Description).HasColumnName("description");
 
                 entity.Property(e => e.Experience)
                     .HasColumnName("experience")
@@ -79,6 +75,8 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.ProfileId)
                     .HasColumnName("profile_id")
                     .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.School).HasColumnName("school");
 
                 entity.Property(e => e.SpecialtyId).HasColumnName("specialty_id");
 
@@ -529,6 +527,8 @@ namespace Capstone_API_V2.Models
                 entity.ToTable("Patient");
 
                 entity.Property(e => e.PatientId).HasColumnName("patient_id");
+
+                entity.Property(e => e.AccountId).HasColumnName("account_id");
 
                 entity.Property(e => e.BloodType)
                     .HasColumnName("blood_type")
