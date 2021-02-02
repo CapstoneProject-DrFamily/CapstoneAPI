@@ -32,6 +32,18 @@ namespace Capstone_API_V2
             });
             services.AddControllers().AddNewtonsoftJson( o => { o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
+              services.AddCors(Options =>
+            {
+                Options.AddPolicy(
+                    name: "CorsPolicy",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
