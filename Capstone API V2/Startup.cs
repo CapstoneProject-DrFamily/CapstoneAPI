@@ -102,7 +102,7 @@ namespace Capstone_API_V2
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -113,7 +113,7 @@ namespace Capstone_API_V2
             {
                 endpoints.MapControllers();
             });
-            app.UseCors("AllowAll");
+            
             app.UseSwagger();
             app.UseSwaggerUI(UI =>
             {
