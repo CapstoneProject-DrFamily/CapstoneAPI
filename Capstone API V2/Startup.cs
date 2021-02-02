@@ -32,17 +32,6 @@ namespace Capstone_API_V2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FamilyDoctorContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Capstone_DB")));
-            services.AddCors(Options =>
-            {
-                Options.AddPolicy(
-                    name: "CorsPolicy",
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                    });
-            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
