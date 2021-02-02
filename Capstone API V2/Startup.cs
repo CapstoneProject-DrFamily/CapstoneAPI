@@ -113,6 +113,7 @@ namespace Capstone_API_V2
             {
                 endpoints.MapControllers();
             });
+            app.UseCors("AllowAll");
             app.UseSwagger();
             app.UseSwaggerUI(UI =>
             {
