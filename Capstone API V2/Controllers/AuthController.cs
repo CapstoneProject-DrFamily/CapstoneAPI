@@ -80,7 +80,8 @@ namespace Capstone_API_V2.Controllers
                     fullName = user.FullName,
                     username = user.Username,
                     photo = user.Photo,*/
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    waiting = user.Waiting,
                 });
             }
             return Unauthorized();
