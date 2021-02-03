@@ -52,9 +52,7 @@ namespace Capstone_API_V2.Models
             {
                 entity.ToTable("Doctor");
 
-                entity.Property(e => e.DoctorId)
-                    .HasColumnName("doctor_id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.DoctorId).HasColumnName("doctor_id");
 
                 entity.Property(e => e.Degree).HasColumnName("degree");
 
@@ -72,9 +70,7 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("insDatetime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.ProfileId)
-                    .HasColumnName("profile_id")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.ProfileId).HasColumnName("profile_id");
 
                 entity.Property(e => e.School).HasColumnName("school");
 
@@ -976,6 +972,8 @@ namespace Capstone_API_V2.Models
                     .IsRequired()
                     .HasColumnName("username")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Waiting).HasColumnName("waiting");
 
                 entity.HasOne(d => d.Profile)
                     .WithMany(p => p.Users)
