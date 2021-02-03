@@ -26,19 +26,16 @@ namespace Capstone_API_V2.Services
             int role_id = int.Parse(user.RoleID);
 
             var currentUser = await _uow.UserRepository.GetByUsername(user.PhoneNumber);
-            bool waiting = false;
 
 
             if (currentUser == null)
             {
-                if (role_id == 2) waiting = false;
-                else waiting = true;
                 var user_info = new User()
                 {
                     Username = user.PhoneNumber,
                     RoleId = role_id,
                     Disabled = false,
-                    Waiting = waiting,
+                    Waiting = true,
                     /*Photo = user_firebase.PhotoUrl,
                     InsBy = Constants.Roles.ROLE_ADMIN,
                     InsDatetime = DateTime.Now,
