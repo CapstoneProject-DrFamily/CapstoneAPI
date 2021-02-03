@@ -59,7 +59,7 @@ namespace Capstone_API_V2.Services
             }
             else
             {
-                if(currentUser.Disabled || currentUser.RoleId != role_id || currentUser.Waiting == true)
+                if(currentUser.Disabled || currentUser.RoleId != role_id)
                 {
                     return null;
                 }
