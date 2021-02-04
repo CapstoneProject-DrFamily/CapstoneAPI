@@ -23,6 +23,7 @@ namespace Capstone_API_V2.Repositories
                                                 .Select(patient => new DependentModel 
                                                 {
                                                     PatientID = patient.PatientId,
+                                                    DependentImage = patient.Profile.Image,
                                                     DependentName = patient.Profile.FullName,
                                                     DependentRelationShip = patient.Relationship,
                                                 });

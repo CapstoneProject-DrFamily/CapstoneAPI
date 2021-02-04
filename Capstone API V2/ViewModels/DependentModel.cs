@@ -9,6 +9,8 @@ namespace Capstone_API_V2.ViewModels
     {
         public int PatientID { get; set; }
         public string DependentName { get; set; }
+        public string DependentImage { get; set; }
+
         public string DependentRelationShip { get; set; }
     }
 }
