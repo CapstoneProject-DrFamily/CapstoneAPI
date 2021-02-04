@@ -25,6 +25,8 @@ namespace Capstone_API_V2.UnitOfWork
         IGenericRepository<Transaction> TransactionRepository { get; }
         IGenericRepository<User> UserGenRepository { get; }
         IUserRepository UserRepository { get; }
+        IPatientRepository PatientRepositorySep { get; set; }
+
 
         Task<int> SaveAsync();
     }

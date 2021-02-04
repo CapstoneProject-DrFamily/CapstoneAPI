@@ -9,5 +9,6 @@ namespace Capstone_API_V2.Services
 {
     public interface IPatientService : IBaseService<Patient, PatientModel>
     {
+        IQueryable<DependentModel> GetDepdentByIdAsync(int ID);
     }
 }

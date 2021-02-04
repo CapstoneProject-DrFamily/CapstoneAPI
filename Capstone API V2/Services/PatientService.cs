@@ -32,6 +32,11 @@ namespace Capstone_API_V2.Services
             return _mapper.Map<PatientModel>(entity);
         }
 
+        public IQueryable<DependentModel> GetDepdentByIdAsync(int ID)
+        {
+            return _unitOfWork.PatientRepositorySep.GetDependents(ID);
+        }
+
         /*public override async Task<bool> DeleteAsync(object id)
         {
             var entity = await _repository.GetById(id);

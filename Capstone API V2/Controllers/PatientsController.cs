@@ -74,5 +74,12 @@ namespace Capstone_API_V2.Controllers
             var result = await _patientService.UpdateAsync(model);
             return Ok(result);
         }
+
+        [HttpGet("{accountId}/Depdent")]
+        public async Task<IActionResult> GetDepdent(int accountId)
+        {
+            var result = await _patientService.GetDepdentByIdAsync(accountId).ToListAsync();
+            return Ok(result);
+        }
     }
 }
