@@ -22,6 +22,7 @@ namespace Capstone_API_V2.Repositories
                                                 .Where(patient => patient.AccountId == accountId)
                                                 .Select(patient => new DependentModel 
                                                 {
+                                                    PatientID = patient.PatientId,
                                                     DependentName = patient.Profile.FullName,
                                                     DependentRelationShip = patient.Relationship,
                                                 });
