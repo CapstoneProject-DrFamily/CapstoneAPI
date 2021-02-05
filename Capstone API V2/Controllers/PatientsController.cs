@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Capstone_API_V2.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class PatientsController : ControllerBase
     {
@@ -75,7 +75,7 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{accountId}/Depdent")]
+        [HttpGet("{accountId}/Dependents")]
         public async Task<IActionResult> GetDepdent(int accountId)
         {
             var result = await _patientService.GetDepdentByIdAsync(accountId).ToListAsync();

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Capstone_API_V2.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class DoctorsController : ControllerBase
     {
@@ -23,7 +23,7 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _doctorService.GetAll().ToListAsync();
+            var result = await _doctorService.GetAll(includeProperties: "Profile").ToListAsync();
             return Ok(result);
         }
 

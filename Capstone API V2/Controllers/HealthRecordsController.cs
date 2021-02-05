@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Capstone_API_V2.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class HealthRecordsController : ControllerBase
     {
