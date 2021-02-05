@@ -43,6 +43,7 @@ namespace Capstone_API_V2
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ISpecialtyService, SpecialtyService>();
             services.AddScoped<IAuthenticatedService, AuthenticatedService>();
             _ = services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 

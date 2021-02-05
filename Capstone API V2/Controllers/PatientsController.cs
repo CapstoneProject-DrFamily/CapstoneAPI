@@ -79,6 +79,10 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetDepdent(int accountId)
         {
             var result = await _patientService.GetDepdentByIdAsync(accountId).ToListAsync();
+            if (result.Count == 0)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
     }
