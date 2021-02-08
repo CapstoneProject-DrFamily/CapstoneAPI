@@ -23,7 +23,7 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _doctorService.GetAll(includeProperties: "Profile").ToListAsync();
+            var result = await _doctorService.GetAll(includeProperties: "Specialty,Profile").ToListAsync();
             return Ok(result);
         }
 
@@ -38,7 +38,10 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("{doctorId}")]
         public async Task<IActionResult> GetById(int doctorId)
         {
-            var result = await _doctorService.GetByIdAsync(doctorId);
+            //var result = await _doctorService.GetByIdAsync(doctorId);
+            
+            var result = await _doctorService.GetAll(filter: doctor => doctor.DoctorId == doctorId, includeProperties: "Specialty,Profile").ToListAsync();
+
             if (result == null)
             {
                 return NotFound();

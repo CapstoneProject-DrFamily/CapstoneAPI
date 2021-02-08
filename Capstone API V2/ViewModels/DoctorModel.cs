@@ -13,7 +13,8 @@ namespace Capstone_API_V2.ViewModels
         public string Experience { get; set; }
         public string Description { get; set; }
         public int SpecialtyId { get; set; }
-        //public int ProfileId { get; set; }
+        public int ProfileId { get; set; }
+        public SpecialtyModel Specialty { get; set; }
         public ProfileModel Profile { get; set; }
         public string InsBy { get; set; }
         public DateTime? InsDatetime { get; set; }
