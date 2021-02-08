@@ -77,5 +77,16 @@ namespace Capstone_API_V2.Controllers
             var result = await _doctorService.UpdateAsync(model);
             return Ok(result);
         }
+
+        [HttpGet("{profileId}/SimpleInfo")]
+        public async Task<IActionResult> GetInfoRequest(int profileId)
+        {
+            var result = await _doctorService.GetRequestDoctorInfo(profileId);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }

@@ -27,6 +27,9 @@ namespace Capstone_API_V2.UnitOfWork
         IUserRepository UserRepository { get; }
         IPatientRepository PatientRepositorySep { get; set; }
 
+        IDoctorRepository DoctorRepositorySep { get; set; }
+
+
 
         Task<int> SaveAsync();
     }

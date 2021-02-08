@@ -31,5 +31,11 @@ namespace Capstone_API_V2.Services
 
             return _mapper.Map<DoctorModel>(entity);
         }
+
+        public async Task<DoctorRequestModel> GetRequestDoctorInfo(int profileID)
+        {
+            var users = await _unitOfWork.DoctorRepositorySep.GetRequestDoctorInfo(profileID);
+            return users;
+        }
     }
 }
