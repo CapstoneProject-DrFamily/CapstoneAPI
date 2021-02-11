@@ -58,6 +58,7 @@ namespace Capstone_API_V2.UnitOfWork
 
         public IDoctorRepository DoctorRepositorySep { get; set; }
 
+        public IGenericRepository<ExaminationHistory> ExaminationHistoryRepository { get; set; }
 
 
         private void InitRepository()
@@ -78,12 +79,13 @@ namespace Capstone_API_V2.UnitOfWork
             ServiceDetailRepository = new GenericRepository<ServiceDetail>(_context);
             SpecialtyRepository = new GenericRepository<Specialty>(_context);
             SymptomRepository = new GenericRepository<Symptom>(_context);
-            TransactionRepository = new GenericRepository<Transaction>(_context);
+            TransactionRepository = new GenericRepository<Transaction>(_context);           
             UserRepository = new UserRepository(_context);
             PatientRepositorySep = new PatientRepository(_context);
             DoctorRepositorySep = new DoctorRepository(_context);
+            ExaminationHistoryRepository = new GenericRepository<ExaminationHistory>(_context);
 
-    }
+        }
 
     protected virtual void Dispose(bool disposing)
         {

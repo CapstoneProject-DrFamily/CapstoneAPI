@@ -35,6 +35,9 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<Specialty, SpecialtyModel>();
             CreateMap<SpecialtyModel, Specialty>();
 
+            CreateMap<ExaminationHistory, ExaminationHistoryModel>();
+            CreateMap<ExaminationHistoryModel, ExaminationHistory>();
+
         }
     }
 }
