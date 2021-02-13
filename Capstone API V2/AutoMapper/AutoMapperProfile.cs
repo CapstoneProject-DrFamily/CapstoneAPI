@@ -38,6 +38,12 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<ExaminationHistory, ExaminationHistoryModel>();
             CreateMap<ExaminationHistoryModel, ExaminationHistory>();
 
+            CreateMap<Transaction, TransactionModel>();
+            CreateMap<TransactionModel, Transaction>();
+
+            CreateMap<SymptomDetail, SymptomDetailModel>();
+            CreateMap<SymptomDetailModel, SymptomDetail>();
+
         }
     }
 }

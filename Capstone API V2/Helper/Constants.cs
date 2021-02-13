@@ -16,5 +16,12 @@ namespace Capstone_API_V2.Helper
             public const string ROLE_PATIENT = "Patient";
             public const string ROLE_DOCTOR = "Doctor";
         }
+
+        public struct TransactionStatus
+        {
+            public const int OPEN = 0;
+            public const int PROCESS = 1;
+            public const int CLOSE = 2;
+        }
     }
 }
