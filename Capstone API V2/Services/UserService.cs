@@ -51,6 +51,25 @@ namespace Capstone_API_V2.Services
             return user;
         }
 
+        public async Task<User> UpdateUser(UserModel model)
+        {
+            var entity = await _unitOfWork.UserRepository.GetByUsername(model.Username);
+            if (entity != null)
+            {
+                entity.Disabled = model.Disabled;
+                entity.UpdBy = model.UpdBy;
+                entity.UpdDatetime = model.UpdDatetime;
+                entity.Username = model.Username;
+                entity.Password = model.Password;
+                entity.ProfileId = model.ProfileId;
+                entity.Waiting = model.Waiting;
+                _unitOfWork.UserRepository.Update(entity);
+                await _unitOfWork.SaveAsync(); 
+                return entity;
+            }
+            return null;
+        }
+
         public async Task<bool> DeleteUser(string username)
         {
             var entity = await _unitOfWork.UserRepository.GetByUsername(username);

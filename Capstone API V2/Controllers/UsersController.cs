@@ -69,10 +69,10 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] UserModel model)
+        public async Task<IActionResult> Update([FromBody] UserModel model)
         {
-            //var result = await _userService.UpdateAsync(model);
-            return Ok("Not implement yet");
+            var result = await _userService.UpdateUser(model);
+            return Ok(result);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Capstone_API_V2.Repositories
         Task<IEnumerable<User>> GetAll();
         Task<User> GetByUsername(string username);
         Task<User> Create(User user);
+        void Update(User user);
         void Delete(User user);
     }
 }

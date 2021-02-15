@@ -46,6 +46,12 @@ namespace Capstone_API_V2.Repositories
 
         }
 
+        public void Update(User user)
+        {
+            _context.Users.Attach(user);
+            _context.Users.Update(user);
+        }
+
         public void Delete(User user)
         {
             user.Disabled = true;
