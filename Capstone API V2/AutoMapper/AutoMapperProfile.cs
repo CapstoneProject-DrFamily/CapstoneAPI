@@ -1,5 +1,6 @@
 ﻿using Capstone_API_V2.Models;
 using Capstone_API_V2.ViewModels;
+using Capstone_API_V2.ViewModels.SimpleModel;
 using MapperProfile = AutoMapper.Profile;
 
 namespace Capstone_API_V2.AutoMapper
@@ -21,8 +22,11 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<PatientModel, Patient>();
 
             CreateMap<Doctor, DoctorModel>();
-            CreateMap<DoctorModel, Doctor>(); 
-            
+            CreateMap<DoctorModel, Doctor>();
+
+            CreateMap<Doctor, DoctorSimpModel>();
+            CreateMap<DoctorSimpModel, Doctor>();
+
             CreateMap<HealthRecord, HealthRecordModel>();
             CreateMap<HealthRecordModel, HealthRecord>();
 
