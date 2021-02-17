@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
+using Capstone_API_V2.ViewModels.SimpleModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -47,9 +48,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] PatientModel model)
+        public async Task<IActionResult> Create([FromBody] PatientSimpModel model)
         {
-            var result = await _patientService.CreateAsync(model);
+            var result = await _patientService.CreatePatient(model);
             if (result != null)
             {
                 return Created("", result);
@@ -69,9 +70,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] PatientModel model)
+        public async Task<IActionResult> Update([FromBody] PatientSimpModel model)
         {
-            var result = await _patientService.UpdateAsync(model);
+            var result = await _patientService.UpdatePatient(model);
             return Ok(result);
         }
 
