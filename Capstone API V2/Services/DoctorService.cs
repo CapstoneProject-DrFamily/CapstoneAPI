@@ -61,5 +61,22 @@ namespace Capstone_API_V2.Services
             var users = await _unitOfWork.DoctorRepositorySep.GetRequestDoctorInfo(profileID);
             return users;
         }
+
+        public async Task<List<DoctorModel>> GetAllDoctor(string fullname)
+        {
+            var doctors = await _unitOfWork.DoctorRepositorySep.GetAllDoctor(fullname);
+            return _mapper.Map<List<DoctorModel>>(doctors);
+        }
+
+        public async Task<DoctorModel> GetDoctorByID(int doctorId)
+        {
+            var doctor = await _unitOfWork.DoctorRepositorySep.GetDoctorByID(doctorId);
+            return _mapper.Map<DoctorModel>(doctor);
+        }
+
+        public Task<DoctorModel> GetDoctorByName(string fullname)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

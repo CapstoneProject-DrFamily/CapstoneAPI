@@ -13,5 +13,8 @@ namespace Capstone_API_V2.Services
         Task<DoctorRequestModel> GetRequestDoctorInfo(int profileID);
         Task<DoctorSimpModel> CreateDoctor(DoctorSimpModel dto); 
         Task<DoctorSimpModel> UpdateDoctor(DoctorSimpModel dto);
+        Task<List<DoctorModel>> GetAllDoctor(string fullname);
+        Task<DoctorModel> GetDoctorByID(int doctorId);
+        Task<DoctorModel> GetDoctorByName(string fullname);
     }
 }

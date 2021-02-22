@@ -30,5 +30,51 @@ namespace Capstone_API_V2.Repositories
                                        .SingleOrDefaultAsync();
             return doctorInfo;
         }
+
+        public async Task<List<Doctor>> GetAllDoctor(string fullname)
+        {
+            if (string.IsNullOrWhiteSpace(fullname))
+            {
+                return await _context.Doctors
+                .Include(specialty => specialty.Specialty)
+                .Include(profile => profile.Profile)
+                .ThenInclude(user => user.Users)
+                .ToListAsync();
+            } else
+
+
+            return await _context.Doctors
+                .Include(specialty => specialty.Specialty)
+                .Include(profile => profile.Profile)
+                .ThenInclude(user => user.Users)
+                .Where(t => t.Profile.FullName.Contains(fullname))
+                .ToListAsync();
+        }
+
+        public async Task<Doctor> GetDoctorByID(int doctorId)
+        {
+            var result = await _context.Doctors.Where(doctor => doctor.DoctorId.Equals(doctorId))
+                .Include(specialty => specialty.Specialty)
+                .Include(profile => profile.Profile)
+                .ThenInclude(user => user.Users)
+                .SingleOrDefaultAsync();
+
+            return result;
+        }
+
+        public async Task<Doctor> GetDoctorByName(string fullname)
+        {
+            var p = await _context.Profiles.Where(pr => pr.FullName.Equals(fullname)).Include(d => d.Doctors)
+                .Include(u => u.Users).Where(pr => pr.Users.SingleOrDefault().Disabled == false).SingleOrDefaultAsync();
+            
+            var result = await _context.Doctors.Where(doctor => doctor.DoctorId == p.Doctors.SingleOrDefault().DoctorId)
+                .Include(specialty => specialty.Specialty)
+                .Include(profile => profile.Profile)
+                .ThenInclude(user => user.Users).SingleOrDefaultAsync();
+
+            return result;
+        }
+
+
     }
 }

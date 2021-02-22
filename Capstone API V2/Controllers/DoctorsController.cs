@@ -22,16 +22,17 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string fullname)
         {
-            var result = await _doctorService.GetAll(includeProperties: "Specialty,Profile").ToListAsync();
+            //var result = await _doctorService.GetAll(includeProperties: "Specialty,Profile").ToListAsync();
+            var result = await _doctorService.GetAllDoctor(fullname);
             return Ok(result);
         }
 
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var result = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, includeProperties: "Specialty,Profile");
+            var result = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Profile.FullName.Contains(model.SearchValue) ,includeProperties: "Specialty,Profile");
             //var result = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Disabled == false);
             return Ok(result);
         }
@@ -39,9 +40,9 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("{doctorId}")]
         public async Task<IActionResult> GetById(int doctorId)
         {
-            //var result = await _doctorService.GetByIdAsync(doctorId);
+            var result = await _doctorService.GetDoctorByID(doctorId);
             
-            var result = await _doctorService.GetAll(filter: doctor => doctor.DoctorId == doctorId, includeProperties: "Specialty,Profile").ToListAsync();
+            //var result = await _doctorService.GetAll(filter: doctor => doctor.DoctorId == doctorId, includeProperties: "Specialty,Profile").ToListAsync();
 
             if (result == null)
             {
