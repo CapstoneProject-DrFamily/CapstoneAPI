@@ -19,5 +19,7 @@ namespace Capstone_API_V2.ViewModels
         public int RecordId { get; set; }
         public string Relationship { get; set; }
         public int AccountId { get; set; }
+        public ProfileModel Profile { get; set; }
+
     }
 }

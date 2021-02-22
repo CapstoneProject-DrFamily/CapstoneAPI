@@ -56,15 +56,23 @@ namespace Capstone_API_V2.Services
             return null;
         }
 
+        public override async Task<bool> DeleteAsync(object id)
+        {
+            var doctor = _unitOfWork.DoctorRepositorySep.GetDoctorByID((int) id).Result;
+            if (doctor == null || doctor.Profile.Users.SingleOrDefault().Disabled == true) throw new Exception("Not found doctor with id: " + id);
+            doctor.Profile.Users.SingleOrDefault().Disabled = true;
+            return await _unitOfWork.SaveAsync() > 0;
+        }
+
         public async Task<DoctorRequestModel> GetRequestDoctorInfo(int profileID)
         {
             var users = await _unitOfWork.DoctorRepositorySep.GetRequestDoctorInfo(profileID);
             return users;
         }
 
-        public async Task<List<DoctorModel>> GetAllDoctor(string fullname)
+        public async Task<List<DoctorModel>> GetAllDoctor()
         {
-            var doctors = await _unitOfWork.DoctorRepositorySep.GetAllDoctor(fullname);
+            var doctors = await _unitOfWork.DoctorRepositorySep.GetAllDoctor();
             return _mapper.Map<List<DoctorModel>>(doctors);
         }
 
@@ -74,9 +82,10 @@ namespace Capstone_API_V2.Services
             return _mapper.Map<DoctorModel>(doctor);
         }
 
-        public Task<DoctorModel> GetDoctorByName(string fullname)
+        public async Task<List<DoctorModel>> GetDoctorByName(string fullname)
         {
-            throw new NotImplementedException();
+            var doctors = await _unitOfWork.DoctorRepositorySep.GetDoctorByName(fullname);
+            return _mapper.Map<List<DoctorModel>>(doctors);
         }
     }
 }

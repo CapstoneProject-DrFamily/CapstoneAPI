@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Capstone_API_V2.Helper;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -30,10 +31,22 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var result = await _symptomService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
+            if (string.IsNullOrWhiteSpace(model.SearchValue))
+            {
+                model.SearchValue = Constants.SearchValue.DEFAULT_VALUE;
+            }
+
+            var symptoms = await _symptomService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
                 filter: symptom => symptom.Disabled == false
                 && symptom.Name.StartsWith(model.SearchValue),
                 orderBy: o => o.OrderBy(d => d.Name));
+            var result = new
+            {
+                symptoms,
+                symptoms.TotalPages,
+                symptoms.HasPreviousPage,
+                symptoms.HasNextPage
+            };
             return Ok(result);
         }
 

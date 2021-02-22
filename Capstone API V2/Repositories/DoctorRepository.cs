@@ -31,24 +31,16 @@ namespace Capstone_API_V2.Repositories
             return doctorInfo;
         }
 
-        public async Task<List<Doctor>> GetAllDoctor(string fullname)
+        public async Task<List<Doctor>> GetAllDoctor()
         {
-            if (string.IsNullOrWhiteSpace(fullname))
-            {
-                return await _context.Doctors
+            var result = await _context.Doctors
                 .Include(specialty => specialty.Specialty)
                 .Include(profile => profile.Profile)
                 .ThenInclude(user => user.Users)
+                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false)
                 .ToListAsync();
-            } else
 
-
-            return await _context.Doctors
-                .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.Profile)
-                .ThenInclude(user => user.Users)
-                .Where(t => t.Profile.FullName.Contains(fullname))
-                .ToListAsync();
+            return result;
         }
 
         public async Task<Doctor> GetDoctorByID(int doctorId)
@@ -57,24 +49,22 @@ namespace Capstone_API_V2.Repositories
                 .Include(specialty => specialty.Specialty)
                 .Include(profile => profile.Profile)
                 .ThenInclude(user => user.Users)
+                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false)
                 .SingleOrDefaultAsync();
 
             return result;
         }
 
-        public async Task<Doctor> GetDoctorByName(string fullname)
+        public async Task<List<Doctor>> GetDoctorByName(string fullname)
         {
-            var p = await _context.Profiles.Where(pr => pr.FullName.Equals(fullname)).Include(d => d.Doctors)
-                .Include(u => u.Users).Where(pr => pr.Users.SingleOrDefault().Disabled == false).SingleOrDefaultAsync();
-            
-            var result = await _context.Doctors.Where(doctor => doctor.DoctorId == p.Doctors.SingleOrDefault().DoctorId)
+            var result =  await _context.Doctors
                 .Include(specialty => specialty.Specialty)
                 .Include(profile => profile.Profile)
-                .ThenInclude(user => user.Users).SingleOrDefaultAsync();
+                .ThenInclude(user => user.Users)
+                .Where(t => t.Profile.FullName.Contains(fullname) && t.Profile.Users.SingleOrDefault().Disabled == false)
+                .ToListAsync();
 
             return result;
         }
-
-
     }
 }

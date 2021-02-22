@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Capstone_API_V2.Helper;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
 using Capstone_API_V2.ViewModels.SimpleModel;
@@ -24,22 +25,32 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _patientService.GetAll().ToListAsync();
+            var result = await _patientService.GetAllPatient();
             return Ok(result);
         }
 
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var result = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize);
-            //var result = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Disabled == false);
+            if (string.IsNullOrWhiteSpace(model.SearchValue))
+            {
+                model.SearchValue = Constants.SearchValue.DEFAULT_VALUE;
+            }
+            var patients = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Profile.FullName.Contains(model.SearchValue), includeProperties: "Profile");
+            var result = new
+            {
+                patients,
+                patients.TotalPages,
+                patients.HasPreviousPage,
+                patients.HasNextPage
+            };
             return Ok(result);
         }
 
         [HttpGet("{patientId}")]
         public async Task<IActionResult> GetById(int patientId)
         {
-            var result = await _patientService.GetByIdAsync(patientId);
+            var result = await _patientService.GetPatientByID(patientId);
             if (result == null)
             {
                 return NotFound();

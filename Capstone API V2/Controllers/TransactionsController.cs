@@ -32,9 +32,21 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
+            if (string.IsNullOrWhiteSpace(model.SearchValue))
+            {
+                model.SearchValue = Constants.TransactionStatus.OPEN.ToString();
+            }
             byte transactionStatus = byte.Parse(model.SearchValue);
 
-            var result = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: transaction => transaction.Status == transactionStatus, includeProperties: "SymptomDetails");
+            var transactions = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: transaction => transaction.Status == transactionStatus, includeProperties: "SymptomDetails");
+
+            var result = new
+            {
+                transactions,
+                transactions.TotalPages,
+                transactions.HasPreviousPage,
+                transactions.HasNextPage
+            };
             return Ok(result);
         }
 

@@ -10,8 +10,8 @@ namespace Capstone_API_V2.Repositories
     public interface IDoctorRepository
     {
         Task<DoctorRequestModel> GetRequestDoctorInfo(int profileID);
-        Task<List<Doctor>> GetAllDoctor(string fullname);
+        Task<List<Doctor>> GetAllDoctor();
         Task<Doctor> GetDoctorByID(int doctorId);
-        Task<Doctor> GetDoctorByName(string fullname);
+        Task<List<Doctor>> GetDoctorByName(string fullname);
     }
 }

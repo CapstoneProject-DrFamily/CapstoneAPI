@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Capstone_API_V2.Helper;
 using Capstone_API_V2.Models;
 using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
@@ -67,15 +68,32 @@ namespace Capstone_API_V2.Services
             return _unitOfWork.PatientRepositorySep.GetDependents(ID);
         }
 
-        /*public override async Task<bool> DeleteAsync(object id)
+        public override async Task<bool> DeleteAsync(object id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null) throw new Exception("Not found entity object with id: " + id);
-
-            entity.Disabled = true;
-
+            var patient = _unitOfWork.PatientRepositorySep.GetPatientByID((int)id).Result;
+            if (patient == null || patient.Profile.Users.SingleOrDefault().Disabled == true) throw new Exception("Not found patient with id: " + id);
+            if (Constants.Relationship.OWNER.Equals(patient.Relationship))
+            {
+                patient.Profile.Users.SingleOrDefault().Disabled = true;
+            }
+            else
+            {
+                _unitOfWork.DoctorRepository.Delete(id);
+            }
+            
             return await _unitOfWork.SaveAsync() > 0;
-        }*/
+        }
+
+        public async Task<List<PatientModel>> GetAllPatient()
+        {
+            var patients = await _unitOfWork.PatientRepositorySep.GetAllPatient();
+            return _mapper.Map<List<PatientModel>>(patients);
+        }
+
+        public async Task<PatientModel> GetPatientByID(int patientId)
+        {
+            var patient = await _unitOfWork.PatientRepositorySep.GetPatientByID(patientId);
+            return _mapper.Map<PatientModel>(patient);
+        }
     }
 }

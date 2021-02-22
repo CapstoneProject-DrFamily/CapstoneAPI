@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Capstone_API_V2.Helper;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
 using Capstone_API_V2.ViewModels.SimpleModel;
@@ -22,18 +23,29 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string fullname)
+        public async Task<IActionResult> GetAll()
         {
             //var result = await _doctorService.GetAll(includeProperties: "Specialty,Profile").ToListAsync();
-            var result = await _doctorService.GetAllDoctor(fullname);
+            var result = await _doctorService.GetAllDoctor();
             return Ok(result);
         }
 
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var result = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Profile.FullName.Contains(model.SearchValue) ,includeProperties: "Specialty,Profile");
+            if (string.IsNullOrWhiteSpace(model.SearchValue))
+            {
+                model.SearchValue = Constants.SearchValue.DEFAULT_VALUE;
+            }
+            var doctors = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Profile.FullName.Contains(model.SearchValue) ,includeProperties: "Specialty,Profile");
             //var result = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Disabled == false);
+            var result = new
+            {
+                doctors,
+                doctors.TotalPages,
+                doctors.HasPreviousPage,
+                doctors.HasNextPage
+            };
             return Ok(result);
         }
 

@@ -13,5 +13,7 @@ namespace Capstone_API_V2.Services
         IQueryable<DependentModel> GetDepdentByIdAsync(int ID);
         Task<PatientSimpModel> CreatePatient(PatientSimpModel dto);
         Task<PatientSimpModel> UpdatePatient(PatientSimpModel dto);
+        Task<List<PatientModel>> GetAllPatient();
+        Task<PatientModel> GetPatientByID(int patientId);
     }
 }

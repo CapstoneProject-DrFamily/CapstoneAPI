@@ -30,8 +30,15 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var result = await _healthRecordService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize);
+            var healthRecords = await _healthRecordService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize);
             //var result = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Disabled == false);
+            var result = new
+            {
+                healthRecords,
+                healthRecords.TotalPages,
+                healthRecords.HasPreviousPage,
+                healthRecords.HasNextPage
+            };
             return Ok(result);
         }
 
