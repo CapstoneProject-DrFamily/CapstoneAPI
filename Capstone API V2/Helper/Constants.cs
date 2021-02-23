@@ -35,5 +35,10 @@ namespace Capstone_API_V2.Helper
         {
             public const string OWNER = "owner";
         }
+
+        public struct Format
+        {
+            public const string DATETIME = "yyyy-MM-ddTHH:mm:ss.fffffff";
+        }
     }
 }

@@ -11,20 +11,19 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.Services
 {
-    public class MedicineService : BaseService<Medicine, MedicineModel>, IMedicineService
+    public class FamilyDoctorService : BaseService<Service, ServiceModel>, IFamilyDoctorService
     {
-        public MedicineService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public FamilyDoctorService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        protected override IGenericRepository<Medicine> _repository => _unitOfWork.MedicineRepository;
+        protected override IGenericRepository<Service> _repository => _unitOfWork.ServiceRepository;
 
-        public override async Task<MedicineModel> CreateAsync(MedicineModel dto)
+        public override async Task<ServiceModel> CreateAsync(ServiceModel dto)
         {
             //Increment index when inserted
-            dto.MedicineId = 0;
-
-            var entity = _mapper.Map<Medicine>(dto);
+            dto.ServiceId = 0;
+            var entity = _mapper.Map<Service>(dto);
             entity.Disabled = false;
             entity.InsBy = Constants.Roles.ROLE_ADMIN;
             entity.InsDatetime = DateTime.Now;
@@ -34,25 +33,23 @@ namespace Capstone_API_V2.Services
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();
 
-            return _mapper.Map<MedicineModel>(entity);
+            return _mapper.Map<ServiceModel>(entity);
         }
 
-        public override async Task<MedicineModel> UpdateAsync(MedicineModel dto)
+        public override async Task<ServiceModel> UpdateAsync(ServiceModel dto)
         {
-            var entity = await _unitOfWork.MedicineRepository.GetById(dto.MedicineId);
-            if (entity != null)
+            var entity = await _unitOfWork.ServiceRepository.GetById(dto.ServiceId);
+            if(entity != null)
             {
-                entity.Name = dto.Name;
-                entity.Form = dto.Form;
-                entity.Strength = dto.Strength;
-                entity.ActiveIngredient = dto.ActiveIngredient;
+                entity.ServiceName = dto.ServiceName;
+                entity.ServicePrice = dto.ServicePrice;
                 entity.UpdBy = Constants.Roles.ROLE_ADMIN;
                 entity.UpdDatetime = DateTime.Now;
 
                 _repository.Update(entity);
                 await _unitOfWork.SaveAsync();
 
-                return _mapper.Map<MedicineModel>(entity);
+                return _mapper.Map<ServiceModel>(entity);
             }
             return null;
         }
@@ -61,7 +58,7 @@ namespace Capstone_API_V2.Services
         {
             var entity = await _repository.GetById(id);
 
-            if (entity == null || entity.Disabled == true) throw new Exception("Not found entity object with id: " + id);
+            if (entity == null || entity.Disabled == true) throw new Exception("Not found service with id: " + id);
 
             entity.Disabled = true;
 

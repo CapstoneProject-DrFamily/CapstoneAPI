@@ -17,7 +17,6 @@ namespace Capstone_API_V2.UnitOfWork
         IGenericRepository<Role> RoleRepository { get; }
         IGenericRepository<Schedule> ScheduleRepository { get; }
         IGenericRepository<Service> ServiceRepository { get; }
-        IGenericRepository<ServiceDetail> ServiceDetailRepository { get; }
         IGenericRepository<Specialty> SpecialtyRepository { get; }
         IGenericRepository<Symptom> SymptomRepository { get; }
         IGenericRepository<SymptomDetail> SymptomDetailRepository { get; }

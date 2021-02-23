@@ -59,7 +59,7 @@ namespace Capstone_API_V2.Services
 
         public override async Task<bool> DeleteAsync(object id)
         {
-            var doctor = _unitOfWork.DoctorRepositorySep.GetDoctorByID((int) id).Result;
+            var doctor = await _unitOfWork.DoctorRepositorySep.GetDoctorByID((int) id);
             if (doctor == null || doctor.Profile.Users.SingleOrDefault().Disabled == true) throw new Exception("Not found doctor with id: " + id);
             doctor.Profile.Users.SingleOrDefault().Disabled = true;
             doctor.Disabled = true;
@@ -87,6 +87,12 @@ namespace Capstone_API_V2.Services
         public async Task<List<DoctorModel>> GetDoctorByName(string fullname)
         {
             var doctors = await _unitOfWork.DoctorRepositorySep.GetDoctorByName(fullname);
+            return _mapper.Map<List<DoctorModel>>(doctors);
+        }
+
+        public async Task<List<DoctorModel>> GetWaitingDoctor()
+        {
+            var doctors = await _unitOfWork.DoctorRepositorySep.GetWaitingDoctor();
             return _mapper.Map<List<DoctorModel>>(doctors);
         }
     }

@@ -38,8 +38,6 @@ namespace Capstone_API_V2.UnitOfWork
 
         public IGenericRepository<Service> ServiceRepository { get; set; }
 
-        public IGenericRepository<ServiceDetail> ServiceDetailRepository { get; set; }
-
         public IGenericRepository<Specialty> SpecialtyRepository { get; set; }
 
         public IGenericRepository<Symptom> SymptomRepository { get; set; }
@@ -74,7 +72,6 @@ namespace Capstone_API_V2.UnitOfWork
             RoleRepository = new GenericRepository<Role>(_context);
             ScheduleRepository = new GenericRepository<Schedule>(_context);
             ServiceRepository = new GenericRepository<Service>(_context);
-            ServiceDetailRepository = new GenericRepository<ServiceDetail>(_context);
             SpecialtyRepository = new GenericRepository<Specialty>(_context);
             SymptomRepository = new GenericRepository<Symptom>(_context);
             SymptomDetailRepository = new GenericRepository<SymptomDetail>(_context);

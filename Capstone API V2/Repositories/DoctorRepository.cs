@@ -66,5 +66,17 @@ namespace Capstone_API_V2.Repositories
 
             return result;
         }
+
+        public async Task<List<Doctor>> GetWaitingDoctor()
+        {
+            var result = await _context.Doctors
+                .Include(specialty => specialty.Specialty)
+                .Include(profile => profile.Profile)
+                .ThenInclude(user => user.Users)
+                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false && user.Profile.Users.SingleOrDefault().Waiting == true)
+                .ToListAsync();
+
+            return result;
+        }
     }
 }

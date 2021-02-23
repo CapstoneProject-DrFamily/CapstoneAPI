@@ -71,7 +71,7 @@ namespace Capstone_API_V2.Services
 
         public override async Task<bool> DeleteAsync(object id)
         {
-            var patient = _unitOfWork.PatientRepositorySep.GetPatientByID((int)id).Result;
+            var patient = await _unitOfWork.PatientRepositorySep.GetPatientByID((int)id);
             if (patient == null || patient.Profile.Users.SingleOrDefault().Disabled == true) throw new Exception("Not found patient with id: " + id);
             if (Constants.Relationship.OWNER.Equals(patient.Relationship))
             {

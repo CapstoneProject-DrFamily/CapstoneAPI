@@ -16,5 +16,6 @@ namespace Capstone_API_V2.Services
         Task<List<DoctorModel>> GetAllDoctor();
         Task<DoctorModel> GetDoctorByID(int doctorId);
         Task<List<DoctorModel>> GetDoctorByName(string fullname);
+        Task<List<DoctorModel>> GetWaitingDoctor();
     }
 }

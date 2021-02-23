@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Capstone_API_V2.Helper;
 using Capstone_API_V2.Models;
 using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
@@ -22,7 +23,7 @@ namespace Capstone_API_V2.Services
 
         public async Task<TransactionSimpModel> CreateTransaction(TransactionSimpModel dto)
         {
-            var transaction = new TransactionModel
+            var transaction = new Transaction
             {
                 TransactionId = Guid.NewGuid().ToString(),
                 DoctorId = dto.DoctorId,
@@ -42,8 +43,9 @@ namespace Capstone_API_V2.Services
             {
                 var symptomDetailModel = new SymptomDetailModel
                 {
+                    SymptomDetailId = 0,
                     SymptomId = symptomDetail.SymptomId,
-                    TransactionId = transaction.TransactionId
+                    TransactionId = dto.TransactionId
                 };
                 _unitOfWork.SymptomDetailRepository.Add(_mapper.Map<SymptomDetail>(symptomDetailModel));
             }

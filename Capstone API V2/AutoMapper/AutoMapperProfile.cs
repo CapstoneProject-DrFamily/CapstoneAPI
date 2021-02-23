@@ -51,6 +51,8 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<SymptomDetail, SymptomDetailModel>();
             CreateMap<SymptomDetailModel, SymptomDetail>();
 
+            CreateMap<Service, ServiceModel>();
+            CreateMap<ServiceModel, Service>();
         }
     }
 }

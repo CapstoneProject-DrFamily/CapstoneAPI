@@ -102,5 +102,16 @@ namespace Capstone_API_V2.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("waitingList")]
+        public async Task<IActionResult> GetWaitingDoctor()
+        {
+            var result = await _doctorService.GetWaitingDoctor();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }
