@@ -48,6 +48,7 @@ namespace Capstone_API_V2
             services.AddScoped<IExaminationHistoryService, ExaminationHistoryService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IFamilyDoctorService, FamilyDoctorService>();
+            services.AddScoped<IPrescriptionService, PrescriptionService>();
             _ = services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
             services.AddSwaggerGen(gen =>

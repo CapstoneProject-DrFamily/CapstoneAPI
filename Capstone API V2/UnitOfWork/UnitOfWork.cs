@@ -58,6 +58,7 @@ namespace Capstone_API_V2.UnitOfWork
 
         public ITransactionRepository TransactionRepositorySep { get; set; }
 
+        public IPrescriptionRepository PrescriptionRepositorySep { get ; set; }
 
         private void InitRepository()
         {
@@ -81,6 +82,7 @@ namespace Capstone_API_V2.UnitOfWork
             DoctorRepositorySep = new DoctorRepository(_context);
             ExaminationHistoryRepository = new GenericRepository<ExaminationHistory>(_context);
             TransactionRepositorySep = new TransactionRepository(_context);
+            PrescriptionRepositorySep = new PrescriptionRepository(_context);
 
         }
 

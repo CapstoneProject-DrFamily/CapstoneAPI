@@ -27,6 +27,7 @@ namespace Capstone_API_V2.UnitOfWork
         IDoctorRepository DoctorRepositorySep { get; set; }
         IGenericRepository<ExaminationHistory> ExaminationHistoryRepository { get; }
         ITransactionRepository TransactionRepositorySep { get; }
+        IPrescriptionRepository PrescriptionRepositorySep { get; set; }
 
 
 
