@@ -25,7 +25,7 @@ namespace Capstone_API_V2.Services
         {
             var transaction = new Transaction
             {
-                TransactionId = Guid.NewGuid().ToString(),
+                TransactionId = "TS-" + Guid.NewGuid().ToString(),
                 DoctorId = dto.DoctorId,
                 PatientId = dto.PatientId,
                 DateStart = DateTime.Now,
