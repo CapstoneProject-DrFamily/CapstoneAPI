@@ -19,7 +19,7 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<DoctorRequestModel> GetRequestDoctorInfo(int profileID)
         {
-            var doctorInfo = await _context.Doctors.Where(x => x.ProfileId == profileID)
+            var doctorInfo = await _context.Doctors.Where(x => x.ProfileId == profileID && x.Disabled == false)
                                        .Select(x => new DoctorRequestModel
                                        {
                                            DoctorId = x.DoctorId,
@@ -37,7 +37,7 @@ namespace Capstone_API_V2.Repositories
                 .Include(specialty => specialty.Specialty)
                 .Include(profile => profile.Profile)
                 .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false)
+                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false)
                 .ToListAsync();
 
             return result;
@@ -49,7 +49,7 @@ namespace Capstone_API_V2.Repositories
                 .Include(specialty => specialty.Specialty)
                 .Include(profile => profile.Profile)
                 .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false)
+                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false)
                 .SingleOrDefaultAsync();
 
             return result;
@@ -61,7 +61,7 @@ namespace Capstone_API_V2.Repositories
                 .Include(specialty => specialty.Specialty)
                 .Include(profile => profile.Profile)
                 .ThenInclude(user => user.Users)
-                .Where(t => t.Profile.FullName.Contains(fullname) && t.Profile.Users.SingleOrDefault().Disabled == false)
+                .Where(t => t.Profile.FullName.Contains(fullname) && t.Profile.Users.SingleOrDefault().Disabled == false && t.Disabled == false)
                 .ToListAsync();
 
             return result;

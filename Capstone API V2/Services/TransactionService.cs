@@ -3,6 +3,7 @@ using Capstone_API_V2.Models;
 using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
 using Capstone_API_V2.ViewModels;
+using Capstone_API_V2.ViewModels.SimpleModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +20,37 @@ namespace Capstone_API_V2.Services
 
         protected override IGenericRepository<Transaction> _repository => _unitOfWork.TransactionRepository;
 
-        public override async Task<TransactionModel> CreateAsync(TransactionModel dto)
+        public async Task<TransactionSimpModel> CreateTransaction(TransactionSimpModel dto)
         {
-            dto.TransactionId = Guid.NewGuid().ToString();
-            dto.Status = TransactionStatus.OPEN;
-            dto.Disabled = false;
+            var transaction = new TransactionModel
+            {
+                TransactionId = Guid.NewGuid().ToString(),
+                DoctorId = dto.DoctorId,
+                PatientId = dto.PatientId,
+                DateStart = DateTime.Now,
+                ServiceId = dto.ServiceId,
+                Location = dto.Location,
+                Note = dto.Note,
+                Status = TransactionStatus.OPEN,
+                Disabled = false
+            };
+            dto.TransactionId = transaction.TransactionId;
 
-            var entity = _mapper.Map<Transaction>(dto);
+            _unitOfWork.TransactionRepository.Add(_mapper.Map<Transaction>(transaction));
 
-            _repository.Add(entity);
+            foreach(SymptomDetailModel symptomDetail in dto.SymptomDetails)
+            {
+                var symptomDetailModel = new SymptomDetailModel
+                {
+                    SymptomId = symptomDetail.SymptomId,
+                    TransactionId = transaction.TransactionId
+                };
+                _unitOfWork.SymptomDetailRepository.Add(_mapper.Map<SymptomDetail>(symptomDetailModel));
+            }
+
             await _unitOfWork.SaveAsync();
 
-            return _mapper.Map<TransactionModel>(entity);
+            return _mapper.Map<TransactionSimpModel>(dto);
         }
 
         public async Task<List<TransactionModel>> GetAllTransaction()
@@ -55,11 +75,37 @@ namespace Capstone_API_V2.Services
         {
             var entity = await _repository.GetById(id);
 
-            if (entity == null || entity.Disabled == true) throw new Exception("Not found entity object with id: " + id);
+            if (entity == null || entity.Disabled == true) throw new Exception("Not found transaction with id: " + id);
 
             entity.Disabled = true;
 
             return await _unitOfWork.SaveAsync() > 0;
+        }
+
+        public async Task<TransactionSimpModel> UpdateTransaction(TransactionSimpModel dto)
+        {
+            var entity = await _unitOfWork.TransactionRepositorySep.GetTransactionByID(dto.TransactionId);
+
+            if(entity != null)
+            {
+                entity.DateEnd = DateTime.Now;
+                entity.ServiceId = dto.ServiceId;
+                entity.Location = dto.Location;
+                entity.Note = dto.Note;
+                entity.Status = dto.Status;
+                entity.PrescriptionId = dto.PrescriptionId;
+                entity.ExamId = dto.ExamId;
+                _unitOfWork.TransactionRepository.Update(entity);
+
+                foreach (SymptomDetailModel symptomDetail in dto.SymptomDetails)
+                {
+                    _unitOfWork.SymptomDetailRepository.Update(_mapper.Map<SymptomDetail>(symptomDetail));
+                }
+                await _unitOfWork.SaveAsync();
+                return dto;
+            }
+            return null;
+            
         }
     }
 }

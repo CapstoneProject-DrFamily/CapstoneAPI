@@ -58,6 +58,8 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
+
                 entity.Property(e => e.Experience)
                     .HasColumnName("experience")
                     .HasMaxLength(50);
@@ -530,6 +532,8 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("blood_type")
                     .HasMaxLength(3);
 
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
+
                 entity.Property(e => e.Height).HasColumnName("height");
 
                 entity.Property(e => e.InsBy)
@@ -650,20 +654,17 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.Gender)
                     .HasColumnName("gender")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.IdCard)
                     .HasColumnName("id_card")
-                    .HasMaxLength(12)
-                    .IsFixedLength();
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.Phone)
                     .HasColumnName("phone")
-                    .HasMaxLength(12)
-                    .IsFixedLength();
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -766,6 +767,10 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("service_name")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.ServicePrice)
+                    .HasColumnName("service_price")
+                    .HasColumnType("decimal(19, 4)");
+
                 entity.Property(e => e.UpdBy)
                     .HasColumnName("updBy")
                     .HasMaxLength(50);
@@ -847,14 +852,14 @@ namespace Capstone_API_V2.Models
 
             modelBuilder.Entity<SymptomDetail>(entity =>
             {
-                entity.HasKey(e => new { e.SymptomId, e.TransactionId })
-                    .HasName("symptom__pk");
-
                 entity.ToTable("SymptomDetail");
+
+                entity.Property(e => e.SymptomDetailId).HasColumnName("symptom_detail_id");
 
                 entity.Property(e => e.SymptomId).HasColumnName("symptom_id");
 
                 entity.Property(e => e.TransactionId)
+                    .IsRequired()
                     .HasColumnName("transaction_id")
                     .HasMaxLength(50);
 

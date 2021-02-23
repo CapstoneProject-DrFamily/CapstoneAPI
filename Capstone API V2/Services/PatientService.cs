@@ -29,6 +29,7 @@ namespace Capstone_API_V2.Services
             dto.PatientId = 0;
 
             var entity = _mapper.Map<Patient>(dto);
+            entity.Disabled = false;
             entity.InsBy = fullname;
             entity.InsDatetime = DateTime.Now;
             entity.UpdBy = fullname;
@@ -76,10 +77,7 @@ namespace Capstone_API_V2.Services
             {
                 patient.Profile.Users.SingleOrDefault().Disabled = true;
             }
-            else
-            {
-                _unitOfWork.DoctorRepository.Delete(id);
-            }
+            patient.Disabled = true;
             
             return await _unitOfWork.SaveAsync() > 0;
         }

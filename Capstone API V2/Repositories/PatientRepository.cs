@@ -22,7 +22,7 @@ namespace Capstone_API_V2.Repositories
             var result = await _context.Patients
                 .Include(profile => profile.Profile)
                 .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false)
+                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false)
                 .ToListAsync();
 
             return result;
@@ -31,7 +31,7 @@ namespace Capstone_API_V2.Repositories
         public IQueryable<DependentModel> GetDependents(int accountId)
         {
             var listDependent = _context.Patients
-                                                .Where(patient => patient.AccountId == accountId)
+                                                .Where(patient => patient.AccountId == accountId && patient.Disabled == false)
                                                 .Select(patient => new DependentModel 
                                                 {
                                                     PatientID = patient.PatientId,
@@ -47,7 +47,7 @@ namespace Capstone_API_V2.Repositories
             var result = await _context.Patients.Where(patient => patient.PatientId.Equals(patientId))
                 .Include(profile => profile.Profile)
                 .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false)
+                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false)
                 .SingleOrDefaultAsync();
 
             return result;

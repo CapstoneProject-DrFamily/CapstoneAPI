@@ -22,6 +22,7 @@ namespace Capstone_API_V2.Models
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
+        public decimal? ServicePrice { get; set; }
 
         public virtual ICollection<Transaction> Transactions { get; set; }
     }

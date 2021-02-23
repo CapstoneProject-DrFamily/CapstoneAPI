@@ -21,6 +21,9 @@ namespace Capstone_API_V2.Services
 
         public override async Task<ProfileModel> CreateAsync(ProfileModel dto)
         {
+            //Increment index when inserted
+            dto.ProfileId = 0;
+
             var entity = _mapper.Map<Profile>(dto);
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();

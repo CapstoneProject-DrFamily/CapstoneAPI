@@ -36,7 +36,7 @@ namespace Capstone_API_V2.Controllers
             {
                 model.SearchValue = Constants.SearchValue.DEFAULT_VALUE;
             }
-            var patients = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Profile.FullName.Contains(model.SearchValue), includeProperties: "Profile");
+            var patients = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Profile.FullName.Contains(model.SearchValue) && f.Disabled == false, includeProperties: "Profile");
             var result = new
             {
                 patients,

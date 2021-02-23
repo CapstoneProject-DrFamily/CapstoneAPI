@@ -26,6 +26,7 @@ namespace Capstone_API_V2.Services
             dto.DoctorId = 0;
 
             var entity = _mapper.Map<Doctor>(dto);
+            entity.Disabled = false;
             entity.InsBy = Constants.Roles.ROLE_ADMIN;
             entity.InsDatetime = DateTime.Now;
             entity.UpdBy = Constants.Roles.ROLE_ADMIN;
@@ -61,6 +62,7 @@ namespace Capstone_API_V2.Services
             var doctor = _unitOfWork.DoctorRepositorySep.GetDoctorByID((int) id).Result;
             if (doctor == null || doctor.Profile.Users.SingleOrDefault().Disabled == true) throw new Exception("Not found doctor with id: " + id);
             doctor.Profile.Users.SingleOrDefault().Disabled = true;
+            doctor.Disabled = true;
             return await _unitOfWork.SaveAsync() > 0;
         }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Capstone_API_V2.Helper;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
+using Capstone_API_V2.ViewModels.SimpleModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace Capstone_API_V2.Controllers
             }
             byte transactionStatus = byte.Parse(model.SearchValue);
 
-            var transactions = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: transaction => transaction.Status == transactionStatus, includeProperties: "SymptomDetails");
+            var transactions = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: transaction => transaction.Status == transactionStatus && transaction.Disabled == false, includeProperties: "SymptomDetails");
 
             var result = new
             {
@@ -65,9 +66,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TransactionModel model)
+        public async Task<IActionResult> Create([FromBody] TransactionSimpModel model)
         {
-            var result = await _transactionService.CreateAsync(model);
+            var result = await _transactionService.CreateTransaction(model);
             if (result != null)
             {
                 return Created("", result);
@@ -87,9 +88,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] TransactionModel model)
+        public async Task<IActionResult> Update([FromBody] TransactionSimpModel model)
         {
-            var result = await _transactionService.UpdateAsync(model);
+            var result = await _transactionService.UpdateTransaction(model);
             return Ok(result);
         }
     }

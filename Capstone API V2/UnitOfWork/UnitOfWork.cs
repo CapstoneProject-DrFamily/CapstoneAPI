@@ -23,10 +23,6 @@ namespace Capstone_API_V2.UnitOfWork
 
         public IGenericRepository<Feedback> FeedbackRepository { get; set; }
 
-        public IGenericRepository<Family> FamilyRepository { get; set; }
-
-        public IGenericRepository<FamilyDetail> FamilyDetailRepository { get; set; }
-
         public IGenericRepository<HealthRecord> HealthRecordRepository { get; set; }
 
         public IGenericRepository<Patient> PatientRepository { get; set; }
@@ -48,6 +44,8 @@ namespace Capstone_API_V2.UnitOfWork
 
         public IGenericRepository<Symptom> SymptomRepository { get; set; }
 
+        public IGenericRepository<SymptomDetail> SymptomDetailRepository { get; set; }
+
         public IGenericRepository<Transaction> TransactionRepository { get; set; }
 
         public IGenericRepository<User> UserGenRepository { get; set; }
@@ -68,8 +66,6 @@ namespace Capstone_API_V2.UnitOfWork
             MedicineRepository = new GenericRepository<Medicine>(_context);
             DoctorRepository = new GenericRepository<Doctor>(_context);
             FeedbackRepository = new GenericRepository<Feedback>(_context);
-            FamilyRepository = new GenericRepository<Family>(_context);
-            FamilyDetailRepository = new GenericRepository<FamilyDetail>(_context);
             HealthRecordRepository = new GenericRepository<HealthRecord>(_context);
             PatientRepository = new GenericRepository<Patient>(_context);
             PrescriptionRepository = new GenericRepository<Prescription>(_context);
@@ -81,6 +77,7 @@ namespace Capstone_API_V2.UnitOfWork
             ServiceDetailRepository = new GenericRepository<ServiceDetail>(_context);
             SpecialtyRepository = new GenericRepository<Specialty>(_context);
             SymptomRepository = new GenericRepository<Symptom>(_context);
+            SymptomDetailRepository = new GenericRepository<SymptomDetail>(_context);
             TransactionRepository = new GenericRepository<Transaction>(_context);           
             UserRepository = new UserRepository(_context);
             PatientRepositorySep = new PatientRepository(_context);

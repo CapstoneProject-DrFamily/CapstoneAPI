@@ -9,8 +9,6 @@ namespace Capstone_API_V2.UnitOfWork
         IGenericRepository<Medicine> MedicineRepository { get; }
         IGenericRepository<Doctor> DoctorRepository { get; }
         IGenericRepository<Feedback> FeedbackRepository { get; }
-        IGenericRepository<Family> FamilyRepository { get; }
-        IGenericRepository<FamilyDetail> FamilyDetailRepository { get; }
         IGenericRepository<HealthRecord> HealthRecordRepository { get; }
         IGenericRepository<Patient> PatientRepository { get; }
         IGenericRepository<Prescription> PrescriptionRepository { get; }
@@ -22,6 +20,7 @@ namespace Capstone_API_V2.UnitOfWork
         IGenericRepository<ServiceDetail> ServiceDetailRepository { get; }
         IGenericRepository<Specialty> SpecialtyRepository { get; }
         IGenericRepository<Symptom> SymptomRepository { get; }
+        IGenericRepository<SymptomDetail> SymptomDetailRepository { get; }
         IGenericRepository<Transaction> TransactionRepository { get; }
         IGenericRepository<User> UserGenRepository { get; }
         IUserRepository UserRepository { get; }

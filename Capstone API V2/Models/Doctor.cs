@@ -27,6 +27,7 @@ namespace Capstone_API_V2.Models
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
         public string School { get; set; }
+        public bool? Disabled { get; set; }
 
         public virtual Profile Profile { get; set; }
         public virtual Specialty Specialty { get; set; }

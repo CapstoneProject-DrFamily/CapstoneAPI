@@ -17,6 +17,7 @@ namespace Capstone_API_V2.ViewModels
         public SpecialtyModel Specialty { get; set; }
         public ProfileModel Profile { get; set; }
         public string School { get; set; }
+        public bool Disabled { get; set; }
         public string InsBy { get; set; }
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
