@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Capstone_API_V2.Controllers
 {
-    [Route("api/V1/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class TransactionsController : ControllerBase
     {
