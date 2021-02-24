@@ -33,13 +33,10 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            if (string.IsNullOrWhiteSpace(model.SearchValue))
-            {
-                model.SearchValue = Constants.TransactionStatus.OPEN.ToString();
-            }
-            byte transactionStatus = byte.Parse(model.SearchValue);
-
-            var transactions = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: transaction => transaction.Status == transactionStatus && transaction.Disabled == false, includeProperties: "SymptomDetails");
+            var transactions = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
+                filter: transaction => !string.IsNullOrWhiteSpace(model.SearchValue) ? transaction.Status == byte.Parse(model.SearchValue) 
+                && transaction.Disabled == false : transaction.Disabled == false, 
+                includeProperties: "SymptomDetails");
 
             var result = new
             {
@@ -54,9 +51,6 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("{transactionId}")]
         public async Task<IActionResult> GetById(string transactionId)
         {
-            //var result = await _transactionService.GetAll(filter: transaction => transaction.TransactionId == transactionId && transaction.Disabled == false, includeProperties: "SymptomDetails").ToListAsync();
-            //var result = await _transactionService.GetByIdAsync(transactionId);
-
             var result = await _transactionService.GetTransactionByID(transactionId);
             if (result == null)
             {

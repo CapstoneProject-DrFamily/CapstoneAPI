@@ -33,7 +33,10 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var doctors = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.Profile.FullName.Contains(model.SearchValue) && f.Disabled == false : f.Disabled == false,includeProperties: "Specialty,Profile");
+            var doctors = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
+                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.Profile.FullName.Contains(model.SearchValue) 
+                && f.Disabled == false : f.Disabled == false,
+                includeProperties: "Specialty,Profile");
             var result = new
             {
                 doctors,

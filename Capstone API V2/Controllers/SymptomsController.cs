@@ -31,14 +31,9 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            if (string.IsNullOrWhiteSpace(model.SearchValue))
-            {
-                model.SearchValue = Constants.SearchValue.DEFAULT_VALUE;
-            }
-
             var symptoms = await _symptomService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: symptom => symptom.Disabled == false
-                && symptom.Name.StartsWith(model.SearchValue),
+                filter: symptom => !string.IsNullOrWhiteSpace(model.SearchValue) ? symptom.Disabled == false
+                && symptom.Name.StartsWith(model.SearchValue) : symptom.Disabled == false,
                 orderBy: o => o.OrderBy(d => d.Name));
             var result = new
             {

@@ -30,7 +30,8 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var profiles = await _profileService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize);
+            var profiles = await _profileService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
+                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.FullName.Contains(model.SearchValue) : f.ProfileId != 0);
             var result = new
             {
                 profiles,

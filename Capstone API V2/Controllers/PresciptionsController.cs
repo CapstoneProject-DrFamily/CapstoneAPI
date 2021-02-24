@@ -30,11 +30,6 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            /*if (string.IsNullOrWhiteSpace(model.SearchValue))
-            {
-                model.SearchValue = Constants.TransactionStatus.OPEN.ToString();
-            }*/
-
             var prescriptions = await _prescriptionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, includeProperties: "PrescriptionDetails");
 
             var result = new
