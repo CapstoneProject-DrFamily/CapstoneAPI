@@ -33,8 +33,7 @@ namespace Capstone_API_V2.Controllers
         {
             var medicines = await _medicineService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
                 filter: medicine => !string.IsNullOrWhiteSpace(model.SearchValue) ? medicine.Disabled == false 
-                && medicine.Name.StartsWith(model.SearchValue) : medicine.Disabled == false,
-                orderBy: o => o.OrderBy(d => d.Name));
+                && medicine.Name.StartsWith(model.SearchValue) : medicine.Disabled == false);
             var result = new
             {
                 medicines,
