@@ -21,7 +21,10 @@ namespace Capstone_API_V2.ViewModels
         public int ExamId { get; set; }
         public int ServiceId { get; set; }
         public DoctorModel Doctor { get; set; }
+        public ExaminationHistoryModel Exam { get; set; }
         public PatientModel Patient { get; set; }
+        public PrescriptionModel Prescription { get; set; }
+        public ServiceModel Service { get; set; }
         public ICollection<SymptomDetailModel> SymptomDetails { get; set; }
     }
 }

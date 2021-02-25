@@ -21,7 +21,11 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Transactions.Where(transaction => transaction.Disabled == false)
                 .Include(transaction => transaction.Doctor)
+                .Include(transaction => transaction.Exam)
                 .Include(transaction => transaction.Patient)
+                .Include(transaction => transaction.Patient.Profile)
+                .Include(transaction => transaction.Prescription)
+                .Include(transaction => transaction.Service)
                 .Include(transaction => transaction.SymptomDetails)
                 .ThenInclude(symptomDetail => symptomDetail.Symptom).ToListAsync();
 
@@ -32,8 +36,10 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Transactions.Where(transaction => transaction.TransactionId.Equals(transactionID) && transaction.Disabled == false)
                 .Include(transaction => transaction.Doctor)
+                .Include(transaction => transaction.Exam)
                 .Include(transaction => transaction.Patient)
                 .Include(transaction => transaction.Patient.Profile)
+                .Include(transaction => transaction.Service)
                 .Include(transaction => transaction.SymptomDetails)
                 .ThenInclude(symptomDetail => symptomDetail.Symptom).SingleOrDefaultAsync();
 
