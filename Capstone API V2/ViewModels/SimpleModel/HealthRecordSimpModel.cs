@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Capstone_API_V2.ViewModels
+namespace Capstone_API_V2.ViewModels.SimpleModel
 {
-    public class HealthRecordModel
+    public class HealthRecordSimpModel
     {
         public int RecordId { get; set; }
         public string ConditionAtBirth { get; set; }
@@ -46,7 +46,5 @@ namespace Capstone_API_V2.ViewModels
         public string ContactTime { get; set; }
         public string ToiletType { get; set; }
         public string OtherRisks { get; set; }
-        public string InsBy { get; set; }
-        public string UpdBy { get; set; }
     }
 }

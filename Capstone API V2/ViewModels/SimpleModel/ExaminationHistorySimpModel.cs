@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Capstone_API_V2.ViewModels
+namespace Capstone_API_V2.ViewModels.SimpleModel
 {
-    public class ExaminationHistoryModel 
+    public class ExaminationHistorySimpModel
     {
         public int Id { get; set; }
         public string History { get; set; }
@@ -45,7 +45,5 @@ namespace Capstone_API_V2.ViewModels
         public string AbdominalUltrasound { get; set; }
         public string Conclusion { get; set; }
         public string Advisory { get; set; }
-        public string InsBy { get; set; }
-        public string UpdBy { get; set; }
     }
 }

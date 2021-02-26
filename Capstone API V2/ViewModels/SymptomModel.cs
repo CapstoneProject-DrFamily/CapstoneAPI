@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.ViewModels
 {
-    public class SymptomModel : BaseModel
+    public class SymptomModel 
     {
         public int SymptomId { get; set; }
         public string Name { get; set; }

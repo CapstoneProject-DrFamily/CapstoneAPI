@@ -21,8 +21,8 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Patients
                 .Include(profile => profile.Profile)
-                .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false)
+                .ThenInclude(patient => patient.Users)
+                .Where(patient => patient.Profile.Users.SingleOrDefault().Disabled == false && patient.Disabled == false)
                 .ToListAsync();
 
             return result;
@@ -45,11 +45,17 @@ namespace Capstone_API_V2.Repositories
         public async Task<Patient> GetPatientByID(int patientId)
         {
             var result = await _context.Patients.Where(patient => patient.PatientId.Equals(patientId))
-                .Include(profile => profile.Profile)
-                .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false)
+                .Include(patient => patient.Profile)
+                .ThenInclude(patient => patient.Users)
+                .Where(patient => patient.Disabled == false && patient.Profile.Users.SingleOrDefault().Disabled == false)
                 .SingleOrDefaultAsync();
-
+             if(result == null)
+            {
+                result = await _context.Patients.Where(patient => patient.PatientId.Equals(patientId))
+                .Include(patient => patient.Profile)
+                .Where(patient => patient.Disabled == false)
+                .SingleOrDefaultAsync();
+            }
             return result;
         }
     }

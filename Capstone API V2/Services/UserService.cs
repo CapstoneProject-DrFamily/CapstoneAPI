@@ -45,6 +45,9 @@ namespace Capstone_API_V2.Services
 
         public async Task<User> CreateUser(UserModel model)
         {
+            //Increment index when inserted
+            model.AccountId = 0; 
+
             var user = _mapper.Map<User>(model);
             user.InsBy = model.Username;
             user.InsDatetime = ConvertTimeZone();

@@ -45,7 +45,7 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetById(int examinationId)
         {
             var result = await _examinationHistoryService.GetByIdAsync(examinationId);
-            if (result == null || result.Disabled == true)
+            if (result == null)
             {
                 return NotFound();
             }

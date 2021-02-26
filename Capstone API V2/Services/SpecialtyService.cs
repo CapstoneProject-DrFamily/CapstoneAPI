@@ -21,6 +21,9 @@ namespace Capstone_API_V2.Services
 
         public override async Task<SpecialtyModel> CreateAsync(SpecialtyModel dto)
         {
+            //Increment index when inserted
+            dto.SpecialtyId = 0;
+
             var entity = _mapper.Map<Specialty>(dto);
             entity.Disabled = false;
             entity.InsBy = Constants.Roles.ROLE_ADMIN;

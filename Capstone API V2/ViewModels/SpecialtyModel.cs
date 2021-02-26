@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.ViewModels
 {
-    public class SpecialtyModel : BaseModel
+    public class SpecialtyModel 
     {
         public int SpecialtyId { get; set; }
         public string Name { get; set; }

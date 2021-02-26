@@ -21,6 +21,9 @@ namespace Capstone_API_V2.Services
 
         public override async Task<SymptomModel> CreateAsync(SymptomModel dto)
         {
+            //Increment index when inserted
+            dto.SymptomId = 0;
+
             var entity = _mapper.Map<Symptom>(dto);
             entity.Disabled = false;
             entity.InsBy = Constants.Roles.ROLE_ADMIN;
