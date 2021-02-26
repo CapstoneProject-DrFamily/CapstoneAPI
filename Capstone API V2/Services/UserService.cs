@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Capstone_API_V2.Helper;
 using Capstone_API_V2.Models;
+using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
 using Capstone_API_V2.ViewModels;
 using System;
@@ -10,16 +11,15 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.Services
 {
-    public class UserService : IUserService
+    public class UserService : BaseService<User, UserModel>, IUserService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
+
+        protected override IGenericRepository<User> _repository => _unitOfWork.UserGenRepository;
+
         public async Task<bool> CheckPassWord(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
@@ -46,6 +46,10 @@ namespace Capstone_API_V2.Services
         public async Task<User> CreateUser(UserModel model)
         {
             var user = _mapper.Map<User>(model);
+            user.InsBy = model.Username;
+            user.InsDatetime = ConvertTimeZone();
+            user.UpdBy = model.Username;
+            user.UpdDatetime = ConvertTimeZone();
             await _unitOfWork.UserRepository.Create(user);
             await _unitOfWork.SaveAsync();
             return user;
@@ -57,8 +61,8 @@ namespace Capstone_API_V2.Services
             if (entity != null)
             {
                 entity.Disabled = model.Disabled;
-                entity.UpdBy = model.UpdBy;
-                entity.UpdDatetime = model.UpdDatetime;
+                entity.UpdBy = model.Username;
+                entity.UpdDatetime = ConvertTimeZone();
                 entity.Username = model.Username;
                 entity.Password = model.Password;
                 entity.ProfileId = model.ProfileId;

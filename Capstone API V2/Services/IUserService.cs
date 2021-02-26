@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.Services
 {
-    public interface IUserService 
+    public interface IUserService : IBaseService<User, UserModel>
     {
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetByUserName(string username, string action = "");

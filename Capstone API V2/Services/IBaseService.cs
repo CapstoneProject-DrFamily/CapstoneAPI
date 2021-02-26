@@ -20,5 +20,6 @@ namespace Capstone_API_V2.Services
         Task<TDto> UpdateAsync(TDto dto);
         Task<bool> DeleteAsync(object id);
         Task<TDto> GetByIdAsync(object id);
+        DateTime ConvertTimeZone();
     }
 }

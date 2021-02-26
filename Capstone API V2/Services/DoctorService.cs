@@ -28,9 +28,9 @@ namespace Capstone_API_V2.Services
             var entity = _mapper.Map<Doctor>(dto);
             entity.Disabled = false;
             entity.InsBy = Constants.Roles.ROLE_ADMIN;
-            entity.InsDatetime = DateTime.Now;
+            entity.InsDatetime = ConvertTimeZone();
             entity.UpdBy = Constants.Roles.ROLE_ADMIN;
-            entity.UpdDatetime = DateTime.Now;
+            entity.UpdDatetime = ConvertTimeZone();
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();
 
@@ -49,7 +49,7 @@ namespace Capstone_API_V2.Services
                 entity.ProfileId = dto.ProfileId;
                 entity.School = dto.School;
                 entity.UpdBy = Constants.Roles.ROLE_ADMIN;
-                entity.UpdDatetime = DateTime.Now;
+                entity.UpdDatetime = ConvertTimeZone();
                 _unitOfWork.DoctorRepository.Update(entity);
                 await _unitOfWork.SaveAsync();
                 return dto;

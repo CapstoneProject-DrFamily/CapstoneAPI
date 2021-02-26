@@ -25,7 +25,6 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            //var result = await _transactionService.GetAll(filter: transaction => transaction.Disabled == false, includeProperties: "SymptomDetails,Symtoms").ToListAsync();
             var result = await _transactionService.GetAllTransaction();
             return Ok(result);
         }
@@ -34,9 +33,9 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
             var transactions = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
-                filter: transaction => !string.IsNullOrWhiteSpace(model.SearchValue) ? transaction.Status == byte.Parse(model.SearchValue) 
-                && transaction.Disabled == false : transaction.Disabled == false, 
-                includeProperties: "Doctor,Exam,Patient,Patient.Profile,Prescription,Service,SymptomDetails,SymptomDetails.Symptom");
+                filter: transaction => !string.IsNullOrWhiteSpace(model.SearchValue) ? transaction.TransactionId.Equals(model.SearchValue)
+                && transaction.Disabled == false : transaction.Disabled == false && transaction.Status != 0, 
+                includeProperties: "Doctor,Doctor.Profile,Exam,Patient,Patient.Profile,Prescription,Service,SymptomDetails,SymptomDetails.Symptom");
 
             var result = new
             {

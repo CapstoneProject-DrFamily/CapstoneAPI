@@ -26,10 +26,10 @@ namespace Capstone_API_V2.Services
                 PrescriptionId = 0,
                 Description = dto.Description,
                 InsBy = dto.InsBy,
-                InsDatetime = DateTime.Now,
+                InsDatetime = ConvertTimeZone(),
                 UpdBy = dto.UpdBy,
-                UpdDatetime = DateTime.Now
-            };
+                UpdDatetime = ConvertTimeZone()
+        };
             dto.PrescriptionId = prescription.PrescriptionId;
 
             _unitOfWork.PrescriptionRepository.Add(_mapper.Map<Prescription>(prescription));
@@ -96,7 +96,7 @@ namespace Capstone_API_V2.Services
             if (entity != null)
             {
                 entity.UpdBy = dto.UpdBy;
-                entity.InsDatetime = DateTime.Now;
+                entity.UpdDatetime = ConvertTimeZone();
                 entity.Description = dto.Description;
 
                 _unitOfWork.PrescriptionRepository.Update(entity);

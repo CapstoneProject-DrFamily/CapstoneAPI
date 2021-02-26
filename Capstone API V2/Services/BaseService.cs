@@ -71,5 +71,16 @@ namespace Capstone_API_V2.Services
         {
             return _mapper.ProjectTo<TDto>(_repository.GetAll(filter, orderBy, includeProperties));
         }
+
+        public DateTime ConvertTimeZone()
+        {
+            DateTime serverTime = DateTime.Now; // gives you current Time in server timeZone
+            DateTime utcTime = serverTime.ToUniversalTime(); // convert it to Utc using timezone setting of server computer
+            TimeZoneInfo localZone = TimeZoneInfo.Local;
+
+            TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById(localZone.Id);
+            DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, tzi);
+            return localTime;
+        }
     }
 }

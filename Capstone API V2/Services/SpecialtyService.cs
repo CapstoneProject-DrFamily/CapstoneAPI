@@ -24,14 +24,28 @@ namespace Capstone_API_V2.Services
             var entity = _mapper.Map<Specialty>(dto);
             entity.Disabled = false;
             entity.InsBy = Constants.Roles.ROLE_ADMIN;
-            entity.InsDatetime = DateTime.Now;
+            entity.InsDatetime = ConvertTimeZone();
             entity.UpdBy = Constants.Roles.ROLE_ADMIN;
-            entity.UpdDatetime = DateTime.Now;
+            entity.UpdDatetime = ConvertTimeZone();
 
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();
 
             return _mapper.Map<SpecialtyModel>(entity);
+        }
+
+        public async override Task<SpecialtyModel> UpdateAsync(SpecialtyModel dto)
+        {
+            var entity = await _unitOfWork.SpecialtyRepository.GetById(dto.SpecialtyId);
+            if (entity != null)
+            {
+                entity.UpdBy = Constants.Roles.ROLE_ADMIN;
+                entity.UpdDatetime = ConvertTimeZone();
+                _unitOfWork.SpecialtyRepository.Update(entity);
+                await _unitOfWork.SaveAsync();
+                return dto;
+            }
+            return null;
         }
 
         public override async Task<bool> DeleteAsync(object id)

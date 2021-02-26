@@ -28,7 +28,7 @@ namespace Capstone_API_V2.Services
                 TransactionId = "TS-" + Guid.NewGuid().ToString(),
                 DoctorId = dto.DoctorId,
                 PatientId = dto.PatientId,
-                DateStart = DateTime.Now,
+                DateStart = ConvertTimeZone(),
                 ServiceId = dto.ServiceId,
                 Location = dto.Location,
                 Note = dto.Note,
@@ -90,7 +90,7 @@ namespace Capstone_API_V2.Services
 
             if(entity != null)
             {
-                entity.DateEnd = DateTime.Now;
+                entity.DateEnd = ConvertTimeZone();
                 entity.ServiceId = dto.ServiceId;
                 entity.Location = dto.Location;
                 entity.Note = dto.Note;

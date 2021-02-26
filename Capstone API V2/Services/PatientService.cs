@@ -31,9 +31,9 @@ namespace Capstone_API_V2.Services
             var entity = _mapper.Map<Patient>(dto);
             entity.Disabled = false;
             entity.InsBy = fullname;
-            entity.InsDatetime = DateTime.Now;
+            entity.InsDatetime = ConvertTimeZone();
             entity.UpdBy = fullname;
-            entity.UpdDatetime = DateTime.Now;
+            entity.UpdDatetime = ConvertTimeZone();
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();
 
@@ -56,7 +56,7 @@ namespace Capstone_API_V2.Services
                 entity.RecordId = dto.RecordId;
                 entity.Relationship = dto.Relationship;
                 entity.UpdBy = fullname;
-                entity.UpdDatetime = DateTime.Now;
+                entity.UpdDatetime = ConvertTimeZone();
                 _unitOfWork.PatientRepository.Update(entity);
                 await _unitOfWork.SaveAsync();
                 return dto;

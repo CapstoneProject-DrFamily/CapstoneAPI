@@ -34,7 +34,11 @@ namespace Capstone_API_V2.Controllers
         {
             var patients = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
                 filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.Profile.FullName.Contains(model.SearchValue) 
-                && f.Disabled == false : f.Disabled == false, 
+                && f.Disabled == false
+                && f.Profile.Users.SingleOrDefault().Disabled == false
+                && f.ProfileId == f.Profile.Users.SingleOrDefault().ProfileId : f.Disabled == false 
+                && f.ProfileId == f.Profile.Users.SingleOrDefault().ProfileId
+                && f.Profile.Users.SingleOrDefault().Disabled == false, 
                 includeProperties: "Profile,Profile.Users");
             var result = new
             {
