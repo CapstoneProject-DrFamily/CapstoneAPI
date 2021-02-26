@@ -76,9 +76,7 @@ namespace Capstone_API_V2.Services
         {
             DateTime serverTime = DateTime.Now; // gives you current Time in server timeZone
             DateTime utcTime = serverTime.ToUniversalTime(); // convert it to Utc using timezone setting of server computer
-            TimeZoneInfo localZone = TimeZoneInfo.Local;
-
-            TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById(localZone.Id);
+            TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById(Constants.Format.VN_TIMEZONE_ID);
             DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, tzi);
             return localTime;
         }

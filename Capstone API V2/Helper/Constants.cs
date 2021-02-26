@@ -39,6 +39,7 @@ namespace Capstone_API_V2.Helper
         public struct Format
         {
             public const string DATETIME = "yyyy-MM-ddTHH:mm:ss.fffffff";
+            public const string VN_TIMEZONE_ID = "SE Asia Standard Time";
         }
     }
 }
