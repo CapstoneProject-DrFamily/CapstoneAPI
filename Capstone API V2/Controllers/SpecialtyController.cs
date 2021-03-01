@@ -48,7 +48,7 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetById(int specialtyId)
         {
             var result = await _specialtyService.GetByIdAsync(specialtyId);
-            if (result == null)
+            if (result == null || result.Disabled == true)
             {
                 return NotFound();
             }

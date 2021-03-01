@@ -53,11 +53,11 @@ namespace Capstone_API_V2.Services
             return _mapper.Map<TDto>(entity);
         }
 
-        public virtual async Task<TDto> GetByIdAsync(object id)
+        public virtual async Task<TEntity> GetByIdAsync(object id)
         {
             if (id != null)
             {
-                return _mapper.Map<TDto>(await _repository.GetById(id));
+                return _mapper.Map<TEntity>(await _repository.GetById(id));
             }
             return null;
         }
