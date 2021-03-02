@@ -12,10 +12,10 @@ namespace Capstone_API_V2.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class SpecialtyController : Controller
+    public class SpecialtiesController : Controller
     {
         private readonly ISpecialtyService _specialtyService;
-        public SpecialtyController(ISpecialtyService specialtyService)
+        public SpecialtiesController(ISpecialtyService specialtyService)
         {
             _specialtyService = specialtyService;
         }
