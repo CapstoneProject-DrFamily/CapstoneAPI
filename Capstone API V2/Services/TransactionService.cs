@@ -84,25 +84,18 @@ namespace Capstone_API_V2.Services
             return await _unitOfWork.SaveAsync() > 0;
         }
 
-        public async Task<TransactionSimpModel> UpdateTransaction(TransactionSimpModel dto)
+        public async Task<TransactionPutModel> UpdateTransaction(TransactionPutModel dto)
         {
             var entity = await _unitOfWork.TransactionRepositorySep.GetTransactionByID(dto.TransactionId);
-
             if(entity != null)
             {
                 entity.DateEnd = ConvertTimeZone();
-                entity.ServiceId = dto.ServiceId;
                 entity.Location = dto.Location;
                 entity.Note = dto.Note;
                 entity.Status = dto.Status;
                 entity.PrescriptionId = dto.PrescriptionId;
                 entity.ExamId = dto.ExamId;
                 _unitOfWork.TransactionRepository.Update(entity);
-
-                foreach (SymptomDetailModel symptomDetail in dto.SymptomDetails)
-                {
-                    _unitOfWork.SymptomDetailRepository.Update(_mapper.Map<SymptomDetail>(symptomDetail));
-                }
                 await _unitOfWork.SaveAsync();
                 return dto;
             }

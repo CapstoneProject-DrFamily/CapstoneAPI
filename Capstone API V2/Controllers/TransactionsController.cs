@@ -81,7 +81,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] TransactionSimpModel model)
+        public async Task<IActionResult> Update([FromBody] TransactionPutModel model)
         {
             var result = await _transactionService.UpdateTransaction(model);
             return Ok(result);
