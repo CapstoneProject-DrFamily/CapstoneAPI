@@ -896,11 +896,13 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.DoctorId).HasColumnName("doctor_id");
 
+                entity.Property(e => e.EstimatedTime)
+                    .HasColumnName("estimatedTime")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.ExamId).HasColumnName("exam_id");
 
-                entity.Property(e => e.Location)
-                    .HasColumnName("location")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Location).HasColumnName("location");
 
                 entity.Property(e => e.Note).HasColumnName("note");
 

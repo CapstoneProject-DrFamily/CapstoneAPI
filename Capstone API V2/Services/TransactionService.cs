@@ -92,6 +92,7 @@ namespace Capstone_API_V2.Services
                 entity.DateEnd = ConvertTimeZone();
                 entity.Location = dto.Location;
                 entity.Note = dto.Note;
+                entity.EstimatedTime = dto.EstimatedTime;
                 entity.Status = dto.Status;
                 entity.PrescriptionId = dto.PrescriptionId;
                 entity.ExamId = dto.ExamId;

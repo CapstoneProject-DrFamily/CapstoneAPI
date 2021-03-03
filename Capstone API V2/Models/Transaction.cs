@@ -20,6 +20,7 @@ namespace Capstone_API_V2.Models
         public int? PrescriptionId { get; set; }
         public DateTime? DateStart { get; set; }
         public DateTime? DateEnd { get; set; }
+        public string EstimatedTime { get; set; }
         public byte? Status { get; set; }
         public string Location { get; set; }
         public string Note { get; set; }
