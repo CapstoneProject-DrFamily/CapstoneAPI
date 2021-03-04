@@ -60,8 +60,15 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<Prescription, PrescriptionSimpModel>();
             CreateMap<PrescriptionSimpModel, Prescription>();
 
+            CreateMap<Profile, ProfileSimpModel>();
+            CreateMap<ProfileSimpModel, Profile>();
+
             CreateMap<PrescriptionDetail, PrescriptionDetailModel>();
             CreateMap<PrescriptionDetailModel, PrescriptionDetail>();
+
+            CreateMap<Transaction, TransactionSimpModel>();
+            CreateMap<TransactionSimpModel, Transaction>();
+
         }
     }
 }
