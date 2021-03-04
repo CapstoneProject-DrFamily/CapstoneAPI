@@ -60,7 +60,7 @@ namespace Capstone_API_V2.Services
 
         public async Task<User> UpdateUser(UserModel model)
         {
-            var entity = await _unitOfWork.UserRepository.GetByUsername(model.Username);
+            var entity = await _unitOfWork.UserGenRepository.GetById(model.AccountId);
             if (entity != null)
             {
                 entity.Disabled = model.Disabled;
@@ -77,9 +77,9 @@ namespace Capstone_API_V2.Services
             return null;
         }
 
-        public async Task<bool> DeleteUser(string username)
+        public async Task<bool> DeleteUser(int accountId)
         {
-            var entity = await _unitOfWork.UserRepository.GetByUsername(username);
+            var entity = await _unitOfWork.UserGenRepository.GetById(accountId);
             if (entity != null && entity.Disabled == false)
             {
                 if (entity.RoleId == Constants.Roles.ROLE_DOCTOR_ID || entity.RoleId == Constants.Roles.ROLE_PATIENT_ID)
@@ -111,7 +111,6 @@ namespace Capstone_API_V2.Services
             }
             return entity;
         }
-
 
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {

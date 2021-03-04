@@ -76,7 +76,8 @@ namespace Capstone_API_V2.UnitOfWork
             SpecialtyRepository = new GenericRepository<Specialty>(_context);
             SymptomRepository = new GenericRepository<Symptom>(_context);
             SymptomDetailRepository = new GenericRepository<SymptomDetail>(_context);
-            TransactionRepository = new GenericRepository<Transaction>(_context);           
+            TransactionRepository = new GenericRepository<Transaction>(_context);
+            UserGenRepository = new GenericRepository<User>(_context);
             UserRepository = new UserRepository(_context);
             PatientRepositorySep = new PatientRepository(_context);
             DoctorRepositorySep = new DoctorRepository(_context);

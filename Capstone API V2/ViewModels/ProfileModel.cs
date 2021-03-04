@@ -15,6 +15,8 @@ namespace Capstone_API_V2.ViewModels
         public string Image { get; set; }
         public string Email { get; set; }
         public string IdCard { get; set; }
-        public  ICollection<UserModel> Users { get; set; }
+        public ICollection<UserModel> Users { get; set; }
+        public ICollection<DoctorModel> Doctors { get; set; }
+        public ICollection<PatientModel> Patients { get; set; }
     }
 }

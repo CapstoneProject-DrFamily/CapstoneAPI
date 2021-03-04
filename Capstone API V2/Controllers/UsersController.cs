@@ -34,11 +34,22 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }*/
 
-        [HttpGet("{username}")]
+        /*[HttpGet("{account/username}")]
         public async Task<IActionResult> GetById(string username)
         {
             //var result = await _userService.GetByIdAsync(medicineId);
             var result = await _userService.GetByUserName(username);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }*/
+
+        [HttpGet("{accountId}")]
+        public async Task<IActionResult> GetById(int accountId)
+        {
+            var result = await _userService.GetByIdAsync(accountId);
             if (result == null)
             {
                 return NotFound();
@@ -57,10 +68,10 @@ namespace Capstone_API_V2.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("{username}")]
-        public async Task<IActionResult> Delete(string username)
+        [HttpDelete("{accountId}")]
+        public async Task<IActionResult> Delete(int accountId)
         {
-            var result = await _userService.DeleteUser(username);
+            var result = await _userService.DeleteUser(accountId);
             if (result)
             {
                 return NoContent();

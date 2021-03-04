@@ -12,6 +12,6 @@ namespace Capstone_API_V2.Services
         Task<User> CreateUser(UserModel user);
         Task<bool> CheckPassWord(string username, string password);
         Task<User> UpdateUser(UserModel user);
-        Task<bool> DeleteUser(string username);
+        Task<bool> DeleteUser(int accountId);
     }
 }

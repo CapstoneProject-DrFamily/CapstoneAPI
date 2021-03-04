@@ -46,12 +46,30 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("{profileId}")]
         public async Task<IActionResult> GetById(int profileId)
         {
-            var result = await _profileService.GetByIdAsync(profileId);
-            if (result == null)
+            var result = await _profileService.GetAll(filter: f => f.ProfileId == profileId, includeProperties: "Users,Patients,Doctors").SingleOrDefaultAsync();
+            /*if (result == null)
             {
                 return NotFound();
             }
-            return Ok(result);
+            return Ok(result);*/
+            if (result != null)
+            {
+                if(result.Doctors.Count == 1)
+                {
+                    if(result.Doctors.SingleOrDefault().Disabled == false)
+                    {
+                        return Ok(result);
+                    }
+                }
+                if (result.Patients.Count == 1)
+                {
+                    if (result.Patients.SingleOrDefault().Disabled == false)
+                    {
+                        return Ok(result);
+                    }
+                }
+            }
+            return NotFound();
         }
 
         [HttpPost]
