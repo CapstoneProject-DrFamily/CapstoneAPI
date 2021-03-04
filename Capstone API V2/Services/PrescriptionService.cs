@@ -42,10 +42,11 @@ namespace Capstone_API_V2.Services
                     MedicineId = prescriptionDetail.MedicineId,
                     PrescriptionId = dto.PrescriptionId,
                     Method = prescriptionDetail.Method,
-                    NumberOfTime = prescriptionDetail.NumberOfTime,
-                    QuantityPerTime = prescriptionDetail.QuantityPerTime,
-                    TimesPerDay = prescriptionDetail.TimesPerDay,
-
+                    AfternoonQuantity = prescriptionDetail.AfternoonQuantity,
+                    MorningQuantity = prescriptionDetail.MorningQuantity,
+                    NoonQuantity = prescriptionDetail.NoonQuantity,
+                    TotalQuantity = prescriptionDetail.TotalQuantity,
+                    Type = prescriptionDetail.Type
                 };
                 _unitOfWork.PrescriptionDetailRepository.Add(_mapper.Map<PrescriptionDetail>(prescriptionDetailModel));
             }

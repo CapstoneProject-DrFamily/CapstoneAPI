@@ -606,19 +606,26 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.PrescriptionDetailId).HasColumnName("prescription_detail_id");
 
+                entity.Property(e => e.AfternoonQuantity).HasColumnName("afternoon_quantity");
+
                 entity.Property(e => e.MedicineId).HasColumnName("medicine_id");
 
                 entity.Property(e => e.Method)
                     .HasColumnName("method")
                     .HasMaxLength(15);
 
-                entity.Property(e => e.NumberOfTime).HasColumnName("number_of_time");
+                entity.Property(e => e.MorningQuantity).HasColumnName("morning_quantity");
+
+                entity.Property(e => e.NoonQuantity).HasColumnName("noon_quantity");
 
                 entity.Property(e => e.PrescriptionId).HasColumnName("prescription_id");
 
-                entity.Property(e => e.QuantityPerTime).HasColumnName("quantity_per_time");
+                entity.Property(e => e.TotalQuantity).HasColumnName("total_quantity");
 
-                entity.Property(e => e.TimesPerDay).HasColumnName("times_per_day");
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasColumnName("type")
+                    .HasMaxLength(15);
 
                 entity.HasOne(d => d.Medicine)
                     .WithMany(p => p.PrescriptionDetails)
