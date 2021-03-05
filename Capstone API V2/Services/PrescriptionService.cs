@@ -30,29 +30,31 @@ namespace Capstone_API_V2.Services
                 UpdBy = dto.UpdBy,
                 UpdDatetime = ConvertTimeZone()
         };
+
+            _repository.Add(prescription);
+            await _unitOfWork.SaveAsync();
             dto.PrescriptionId = prescription.PrescriptionId;
 
-            _unitOfWork.PrescriptionRepository.Add(_mapper.Map<Prescription>(prescription));
-
-            foreach (PrescriptionDetailModel prescriptionDetail in dto.PrescriptionDetails)
+            foreach (PrescriptionDetailModel dtoPrescriptionDetail in dto.PrescriptionDetails)
             {
                 var prescriptionDetailModel = new PrescriptionDetailModel
                 {
                     PrescriptionDetailId = 0,
-                    MedicineId = prescriptionDetail.MedicineId,
+                    MedicineId = dtoPrescriptionDetail.MedicineId,
                     PrescriptionId = dto.PrescriptionId,
-                    Method = prescriptionDetail.Method,
-                    AfternoonQuantity = prescriptionDetail.AfternoonQuantity,
-                    MorningQuantity = prescriptionDetail.MorningQuantity,
-                    NoonQuantity = prescriptionDetail.NoonQuantity,
-                    TotalQuantity = prescriptionDetail.TotalQuantity,
-                    Type = prescriptionDetail.Type
+                    Method = dtoPrescriptionDetail.Method,
+                    AfternoonQuantity = dtoPrescriptionDetail.AfternoonQuantity,
+                    MorningQuantity = dtoPrescriptionDetail.MorningQuantity,
+                    NoonQuantity = dtoPrescriptionDetail.NoonQuantity,
+                    TotalQuantity = dtoPrescriptionDetail.TotalQuantity,
+                    Type = dtoPrescriptionDetail.Type
                 };
-                _unitOfWork.PrescriptionDetailRepository.Add(_mapper.Map<PrescriptionDetail>(prescriptionDetailModel));
+                var prescriptionDetail = _mapper.Map<PrescriptionDetail>(prescriptionDetailModel); 
+                _unitOfWork.PrescriptionDetailRepository.Add(prescriptionDetail);
+                await _unitOfWork.SaveAsync();
+                dtoPrescriptionDetail.PrescriptionDetailId = prescriptionDetail.PrescriptionDetailId;
+                dtoPrescriptionDetail.PrescriptionId = prescriptionDetail.PrescriptionId;
             }
-
-            await _unitOfWork.SaveAsync();
-
             return _mapper.Map<PrescriptionSimpModel>(dto);
         }
 
