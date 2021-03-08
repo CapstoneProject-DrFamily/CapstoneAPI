@@ -34,6 +34,25 @@ namespace Capstone_API_V2.Repositories
             return result;
         }
 
+        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID)
+        {
+            var transactions = _context.Transactions
+                                                .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false)
+                                                .Select(transaction => new TransactionHistoryModel
+                                                {
+                                                    TransactionId = transaction.TransactionId,
+                                                    DateStart = transaction.DateStart,
+                                                    DateEnd = transaction.DateEnd,
+                                                    DoctorName = transaction.Doctor.Profile.FullName,
+                                                    PatientName = transaction.Patient.Profile.FullName,
+                                                    Location = transaction.Location,
+                                                    ServiceName = transaction.Service.ServiceName,
+                                                    ServicePrice = transaction.Service.ServicePrice,
+                                                    Status = transaction.Status
+                                                }).OrderBy(o => o.DateStart);
+            return transactions;
+        }
+
         public async Task<Transaction> GetTransactionByID(string transactionID)
         {
             var result = await _context.Transactions.Where(transaction => transaction.TransactionId.Equals(transactionID) && transaction.Disabled == false)
@@ -49,6 +68,25 @@ namespace Capstone_API_V2.Repositories
                 .ThenInclude(symptomDetail => symptomDetail.Symptom).SingleOrDefaultAsync();
 
             return result;
+        }
+
+        public IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID)
+        {
+            var transactions = _context.Transactions
+                                                .Where(transaction => transaction.PatientId == patientID && transaction.Disabled == false)
+                                                .Select(transaction => new TransactionHistoryModel
+                                                {
+                                                    TransactionId = transaction.TransactionId,
+                                                    DateStart = transaction.DateStart,
+                                                    DateEnd = transaction.DateEnd,
+                                                    DoctorName = transaction.Doctor.Profile.FullName,
+                                                    PatientName = transaction.Patient.Profile.FullName,
+                                                    Location = transaction.Location,
+                                                    ServiceName = transaction.Service.ServiceName,
+                                                    ServicePrice = transaction.Service.ServicePrice,
+                                                    Status = transaction.Status
+                                                }).OrderBy(o => o.DateStart);
+            return transactions;
         }
     }
 }

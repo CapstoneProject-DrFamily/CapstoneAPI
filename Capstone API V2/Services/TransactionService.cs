@@ -103,5 +103,15 @@ namespace Capstone_API_V2.Services
             return null;
             
         }
+
+        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorIDAsync(int doctorID)
+        {
+            return _unitOfWork.TransactionRepositorySep.GetTransactionByDoctorID(doctorID);
+        }
+
+        public IQueryable<TransactionHistoryModel> GetTransactionByPatientIDAsync(int patientID)
+        {
+            return _unitOfWork.TransactionRepositorySep.GetTransactionByPatientID(patientID);
+        }
     }
 }

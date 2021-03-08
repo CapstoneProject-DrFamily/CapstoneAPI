@@ -58,6 +58,28 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
+        [HttpGet("doctors/{doctorId}")]
+        public async Task<IActionResult> GetByDoctorId(int doctorId)
+        {
+            var result = await _transactionService.GetTransactionByDoctorIDAsync(doctorId).ToListAsync();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("patients/{patientId}")]
+        public async Task<IActionResult> GetByPatientId(int patientId)
+        {
+            var result = await _transactionService.GetTransactionByPatientIDAsync(patientId).ToListAsync();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TransactionSimpModel model)
         {
