@@ -49,6 +49,7 @@ namespace Capstone_API_V2
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IFamilyDoctorService, FamilyDoctorService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
             _ = services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
             services.AddSwaggerGen(gen =>

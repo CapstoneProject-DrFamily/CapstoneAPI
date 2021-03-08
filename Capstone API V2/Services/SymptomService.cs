@@ -42,6 +42,9 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.SymptomRepository.GetById(dto.SymptomId);
             if(entity != null)
             {
+                entity.Type = dto.Type;
+                entity.Description = dto.Description;
+                entity.Name = dto.Name;
                 entity.UpdBy = Constants.Roles.ROLE_ADMIN;
                 entity.UpdDatetime = ConvertTimeZone();
                 _unitOfWork.SymptomRepository.Update(entity);
@@ -55,7 +58,7 @@ namespace Capstone_API_V2.Services
         {
             var entity = await _repository.GetById(id);
 
-            if (entity == null || entity.Disabled == true) throw new Exception("Not found entity object with id: " + id);
+            if (entity == null || entity.Disabled == true) throw new Exception("Not found symptom object with id: " + id);
 
             entity.Disabled = true;
 

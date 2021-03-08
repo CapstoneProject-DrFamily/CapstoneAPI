@@ -42,6 +42,9 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.SpecialtyRepository.GetById(dto.SpecialtyId);
             if (entity != null)
             {
+                entity.Name = dto.Name;
+                entity.Image = dto.Image;
+                entity.Description = dto.Description;
                 entity.UpdBy = Constants.Roles.ROLE_ADMIN;
                 entity.UpdDatetime = ConvertTimeZone();
                 _unitOfWork.SpecialtyRepository.Update(entity);

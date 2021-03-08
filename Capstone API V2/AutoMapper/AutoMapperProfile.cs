@@ -69,6 +69,8 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<Transaction, TransactionSimpModel>();
             CreateMap<TransactionSimpModel, Transaction>();
 
+            CreateMap<Feedback, FeedbackModel>();
+            CreateMap<FeedbackModel, Feedback>();
         }
     }
 }
