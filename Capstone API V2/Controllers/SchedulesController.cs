@@ -12,25 +12,25 @@ namespace Capstone_API_V2.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class FeedbacksController : ControllerBase
+    public class SchedulesController : ControllerBase
     {
-        private readonly IFeedbackService _feedbackService;
-        public FeedbacksController(IFeedbackService feedbackService)
+        private readonly IScheduleService _scheduleService;
+        public SchedulesController(IScheduleService scheduleService)
         {
-            _feedbackService = feedbackService;
+            _scheduleService = scheduleService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _feedbackService.GetAll().ToListAsync();
+            var result = await _scheduleService.GetAll().ToListAsync();
             return Ok(result);
         }
 
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var feedbacks = await _feedbackService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize);
+            var feedbacks = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize);
             var result = new
             {
                 feedbacks,
@@ -41,10 +41,10 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{feedbackId}")]
-        public async Task<IActionResult> GetById(int feedbackId)
+        [HttpGet("{scheduleId}")]
+        public async Task<IActionResult> GetById(int scheduleId)
         {
-            var result = await _feedbackService.GetByIdAsync(feedbackId);
+            var result = await _scheduleService.GetByIdAsync(scheduleId);
             if (result == null)
             {
                 return NotFound();
@@ -53,9 +53,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] FeedbackModel model)
+        public async Task<IActionResult> Create([FromBody] ScheduleModel model)
         {
-            var result = await _feedbackService.CreateAsync(model);
+            var result = await _scheduleService.CreateAsync(model);
             if (result != null)
             {
                 return Created("", result);
@@ -63,10 +63,10 @@ namespace Capstone_API_V2.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("{feedbackId}")]
-        public async Task<IActionResult> Delete(int feedbackId)
+        [HttpDelete("{scheduleId}")]
+        public async Task<IActionResult> Delete(int scheduleId)
         {
-            var result = await _feedbackService.DeleteAsync(feedbackId);
+            var result = await _scheduleService.DeleteAsync(scheduleId);
             if (result)
             {
                 return NoContent();
@@ -75,9 +75,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] FeedbackModel model)
+        public async Task<IActionResult> Update([FromBody] ScheduleModel model)
         {
-            var result = await _feedbackService.UpdateAsync(model);
+            var result = await _scheduleService.UpdateAsync(model);
             return Ok(result);
         }
     }

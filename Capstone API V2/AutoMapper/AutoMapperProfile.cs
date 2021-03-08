@@ -71,6 +71,9 @@ namespace Capstone_API_V2.AutoMapper
 
             CreateMap<Feedback, FeedbackModel>();
             CreateMap<FeedbackModel, Feedback>();
+
+            CreateMap<Schedule, ScheduleModel>();
+            CreateMap<ScheduleModel, Schedule>();
         }
     }
 }
