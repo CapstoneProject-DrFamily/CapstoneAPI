@@ -38,6 +38,7 @@ namespace Capstone_API_V2.Repositories
                                                     DependentImage = patient.Profile.Image,
                                                     DependentName = patient.Profile.FullName,
                                                     DependentRelationShip = patient.Relationship,
+                                                    ProfileID = patient.ProfileId
                                                 });
             return listDependent;
         }
