@@ -38,18 +38,19 @@ namespace Capstone_API_V2.Services
             dto.TransactionId = transaction.TransactionId;
 
             _unitOfWork.TransactionRepository.Add(_mapper.Map<Transaction>(transaction));
-
-            foreach(SymptomDetailModel symptomDetail in dto.SymptomDetails)
+            if(dto.SymptomDetails != null)
             {
-                var symptomDetailModel = new SymptomDetailModel
+                foreach (SymptomDetailModel symptomDetail in dto.SymptomDetails)
                 {
-                    SymptomDetailId = 0,
-                    SymptomId = symptomDetail.SymptomId,
-                    TransactionId = dto.TransactionId
-                };
-                _unitOfWork.SymptomDetailRepository.Add(_mapper.Map<SymptomDetail>(symptomDetailModel));
+                    var symptomDetailModel = new SymptomDetailModel
+                    {
+                        SymptomDetailId = 0,
+                        SymptomId = symptomDetail.SymptomId,
+                        TransactionId = dto.TransactionId
+                    };
+                    _unitOfWork.SymptomDetailRepository.Add(_mapper.Map<SymptomDetail>(symptomDetailModel));
+                }
             }
-
             await _unitOfWork.SaveAsync();
 
             return _mapper.Map<TransactionSimpModel>(dto);
