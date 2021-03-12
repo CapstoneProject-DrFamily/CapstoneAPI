@@ -37,7 +37,7 @@ namespace Capstone_API_V2.Repositories
         public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID)
         {
             var transactions = _context.Transactions
-                                                .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false)
+                                                .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status != 0)
                                                 .Select(transaction => new TransactionHistoryModel
                                                 {
                                                     TransactionId = transaction.TransactionId,
@@ -73,7 +73,7 @@ namespace Capstone_API_V2.Repositories
         public IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID)
         {
             var transactions = _context.Transactions
-                                                .Where(transaction => transaction.PatientId == patientID && transaction.Disabled == false)
+                                                .Where(transaction => transaction.PatientId == patientID && transaction.Disabled == false && transaction.Status != 0)
                                                 .Select(transaction => new TransactionHistoryModel
                                                 {
                                                     TransactionId = transaction.TransactionId,
