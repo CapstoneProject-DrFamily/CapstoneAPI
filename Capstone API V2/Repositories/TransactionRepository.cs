@@ -34,10 +34,10 @@ namespace Capstone_API_V2.Repositories
             return result;
         }
 
-        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID)
+        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, byte status)
         {
             var transactions = _context.Transactions
-                                                .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status != 0)
+                                                .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status == status)
                                                 .Select(transaction => new TransactionHistoryModel
                                                 {
                                                     TransactionId = transaction.TransactionId,
@@ -49,7 +49,7 @@ namespace Capstone_API_V2.Repositories
                                                     ServiceName = transaction.Service.ServiceName,
                                                     ServicePrice = transaction.Service.ServicePrice,
                                                     Status = transaction.Status
-                                                }).OrderBy(o => o.DateStart);
+                                                }).OrderByDescending(o => o.DateStart);
             return transactions;
         }
 
@@ -70,10 +70,10 @@ namespace Capstone_API_V2.Repositories
             return result;
         }
 
-        public IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID)
+        public IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID, byte status)
         {
             var transactions = _context.Transactions
-                                                .Where(transaction => transaction.PatientId == patientID && transaction.Disabled == false && transaction.Status != 0)
+                                                .Where(transaction => transaction.PatientId == patientID && transaction.Disabled == false && transaction.Status == status)
                                                 .Select(transaction => new TransactionHistoryModel
                                                 {
                                                     TransactionId = transaction.TransactionId,
@@ -85,7 +85,7 @@ namespace Capstone_API_V2.Repositories
                                                     ServiceName = transaction.Service.ServiceName,
                                                     ServicePrice = transaction.Service.ServicePrice,
                                                     Status = transaction.Status
-                                                }).OrderBy(o => o.DateStart);
+                                                }).OrderByDescending(o => o.DateStart);
             return transactions;
         }
     }

@@ -58,10 +58,10 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("doctors/{doctorId}")]
-        public async Task<IActionResult> GetByDoctorId(int doctorId)
+        [HttpGet("doctors/{doctorId}/{status}")]
+        public async Task<IActionResult> GetByDoctorId(int doctorId, byte status)
         {
-            var result = await _transactionService.GetTransactionByDoctorIDAsync(doctorId).ToListAsync();
+            var result = await _transactionService.GetTransactionByDoctorIDAsync(doctorId, status).ToListAsync();
             if (result == null)
             {
                 return NotFound();
@@ -69,10 +69,10 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("patients/{patientId}")]
-        public async Task<IActionResult> GetByPatientId(int patientId)
+        [HttpGet("patients/{patientId}/{status}")]
+        public async Task<IActionResult> GetByPatientId(int patientId, byte status)
         {
-            var result = await _transactionService.GetTransactionByPatientIDAsync(patientId).ToListAsync();
+            var result = await _transactionService.GetTransactionByPatientIDAsync(patientId, status).ToListAsync();
             if (result == null)
             {
                 return NotFound();
