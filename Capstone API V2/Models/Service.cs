@@ -23,7 +23,9 @@ namespace Capstone_API_V2.Models
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
         public decimal? ServicePrice { get; set; }
+        public int? SpecialtyId { get; set; }
 
+        public virtual Specialty Specialty { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

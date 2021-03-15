@@ -11,6 +11,7 @@ namespace Capstone_API_V2.Models
     {
         public Transaction()
         {
+            Feedbacks = new HashSet<Feedback>();
             SymptomDetails = new HashSet<SymptomDetail>();
         }
 
@@ -33,6 +34,7 @@ namespace Capstone_API_V2.Models
         public virtual Patient Patient { get; set; }
         public virtual Prescription Prescription { get; set; }
         public virtual Service Service { get; set; }
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<SymptomDetail> SymptomDetails { get; set; }
     }
 }

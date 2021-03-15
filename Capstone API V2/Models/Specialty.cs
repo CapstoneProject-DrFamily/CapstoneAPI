@@ -12,6 +12,7 @@ namespace Capstone_API_V2.Models
         public Specialty()
         {
             Doctors = new HashSet<Doctor>();
+            Services = new HashSet<Service>();
         }
 
         public int SpecialtyId { get; set; }
@@ -25,5 +26,6 @@ namespace Capstone_API_V2.Models
         public DateTime? UpdDatetime { get; set; }
 
         public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual ICollection<Service> Services { get; set; }
     }
 }

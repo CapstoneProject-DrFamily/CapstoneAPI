@@ -18,8 +18,10 @@ namespace Capstone_API_V2.Models
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
+        public string TransactionId { get; set; }
 
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
+        public virtual Transaction Transaction { get; set; }
     }
 }

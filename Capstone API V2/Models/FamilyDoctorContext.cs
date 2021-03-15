@@ -19,6 +19,7 @@ namespace Capstone_API_V2.Models
         {
         }
 
+        public virtual DbSet<AppForm> AppForms { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<ExaminationHistory> ExaminationHistories { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
@@ -48,6 +49,27 @@ namespace Capstone_API_V2.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AppForm>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("AppForm");
+
+                entity.Property(e => e.AppName)
+                    .HasColumnName("app_name")
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.FormJson).HasColumnName("form_json");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Doctor>(entity =>
             {
                 entity.ToTable("Doctor");
@@ -264,6 +286,10 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.RatingPoint).HasColumnName("rating_point");
 
+                entity.Property(e => e.TransactionId)
+                    .HasColumnName("transaction_id")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.UpdBy)
                     .HasColumnName("updBy")
                     .HasMaxLength(50);
@@ -281,6 +307,11 @@ namespace Capstone_API_V2.Models
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.PatientId)
                     .HasConstraintName("FK_Feedback_Patients");
+
+                entity.HasOne(d => d.Transaction)
+                    .WithMany(p => p.Feedbacks)
+                    .HasForeignKey(d => d.TransactionId)
+                    .HasConstraintName("FK_Feedback_Transaction1");
             });
 
             modelBuilder.Entity<HealthRecord>(entity =>
@@ -778,6 +809,8 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("service_price")
                     .HasColumnType("decimal(19, 4)");
 
+                entity.Property(e => e.SpecialtyId).HasColumnName("specialty_id");
+
                 entity.Property(e => e.UpdBy)
                     .HasColumnName("updBy")
                     .HasMaxLength(50);
@@ -785,6 +818,11 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.UpdDatetime)
                     .HasColumnName("updDatetime")
                     .HasColumnType("datetime");
+
+                entity.HasOne(d => d.Specialty)
+                    .WithMany(p => p.Services)
+                    .HasForeignKey(d => d.SpecialtyId)
+                    .HasConstraintName("FK_Service_Specialty");
             });
 
             modelBuilder.Entity<Specialty>(entity =>

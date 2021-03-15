@@ -11,5 +11,6 @@ namespace Capstone_API_V2.ViewModels
         public string Name { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
+        public virtual ICollection<ServiceModel> Services { get; set; }
     }
 }
