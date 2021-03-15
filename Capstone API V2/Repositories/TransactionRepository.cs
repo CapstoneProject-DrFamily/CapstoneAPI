@@ -34,10 +34,10 @@ namespace Capstone_API_V2.Repositories
             return result;
         }
 
-        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, byte status)
+        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, int status)
         {
             var transactions = _context.Transactions
-                                                .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status == status)
+                                                .Where(transaction => status != -1? transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status == (byte)status : transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status != 0)
                                                 .Select(transaction => new TransactionHistoryModel
                                                 {
                                                     TransactionId = transaction.TransactionId,
@@ -70,10 +70,10 @@ namespace Capstone_API_V2.Repositories
             return result;
         }
 
-        public IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID, byte status)
+        public IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID, int status)
         {
             var transactions = _context.Transactions
-                                                .Where(transaction => transaction.PatientId == patientID && transaction.Disabled == false && transaction.Status == status)
+                                                .Where(transaction => status != -1 ? transaction.PatientId == patientID && transaction.Disabled == false && transaction.Status == status : transaction.PatientId == patientID && transaction.Disabled == false && transaction.Status != 0)
                                                 .Select(transaction => new TransactionHistoryModel
                                                 {
                                                     TransactionId = transaction.TransactionId,

@@ -11,7 +11,7 @@ namespace Capstone_API_V2.Repositories
     {
         Task<List<Transaction>> GetAllTransaction();
         Task<Transaction> GetTransactionByID(string transactionID);
-        IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, byte status);
-        IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID, byte status);
+        IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, int status);
+        IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID, int status);
     }
 }

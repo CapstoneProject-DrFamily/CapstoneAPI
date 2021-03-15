@@ -14,7 +14,7 @@ namespace Capstone_API_V2.Services
         Task<TransactionPutModel> UpdateTransaction(TransactionPutModel dto);
         Task<List<TransactionModel>> GetAllTransaction();
         Task<TransactionModel> GetTransactionByID(string transactionID);
-        IQueryable<TransactionHistoryModel> GetTransactionByDoctorIDAsync(int doctorID, byte status);
-        IQueryable<TransactionHistoryModel> GetTransactionByPatientIDAsync(int patientID, byte status);
+        IQueryable<TransactionHistoryModel> GetTransactionByDoctorIDAsync(int doctorID, int status);
+        IQueryable<TransactionHistoryModel> GetTransactionByPatientIDAsync(int patientID, int status);
     }
 }

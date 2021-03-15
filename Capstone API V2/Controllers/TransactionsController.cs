@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Capstone_API_V2.Helper;
@@ -58,8 +59,8 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("doctors/{doctorId}/{status}")]
-        public async Task<IActionResult> GetByDoctorId(int doctorId, byte status)
+        [HttpGet("doctors/{doctorId}")]
+        public async Task<IActionResult> GetByDoctorId(int doctorId,[Required] int status)
         {
             var result = await _transactionService.GetTransactionByDoctorIDAsync(doctorId, status).ToListAsync();
             if (result == null)
@@ -69,8 +70,8 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("patients/{patientId}/{status}")]
-        public async Task<IActionResult> GetByPatientId(int patientId, byte status)
+        [HttpGet("patients/{patientId}")]
+        public async Task<IActionResult> GetByPatientId(int patientId,[Required] int status)
         {
             var result = await _transactionService.GetTransactionByPatientIDAsync(patientId, status).ToListAsync();
             if (result == null)
