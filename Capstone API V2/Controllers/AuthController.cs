@@ -73,7 +73,7 @@ namespace Capstone_API_V2.Controllers
 
                 List<Profile> lstProfiles = new List<Profile>(user.Profiles);
                 int profileId = 0;
-                if(lstProfiles != null)
+                if(lstProfiles.Count != 0)
                 {
                     profileId = lstProfiles.First().ProfileId;
                 }
