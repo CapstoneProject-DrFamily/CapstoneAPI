@@ -23,7 +23,6 @@ namespace Capstone_API_V2.Models
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
-        public int RecordId { get; set; }
         public string Relationship { get; set; }
         public bool? Disabled { get; set; }
 

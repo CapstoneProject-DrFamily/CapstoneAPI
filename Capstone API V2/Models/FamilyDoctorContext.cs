@@ -590,8 +590,6 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("insDatetime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.RecordId).HasColumnName("record_id");
-
                 entity.Property(e => e.Relationship)
                     .HasColumnName("relationship")
                     .HasMaxLength(50);

@@ -22,7 +22,7 @@ namespace Capstone_API_V2.Services
 
         public async Task<PatientSimpModel> CreatePatient(PatientSimpModel dto)
         {
-            var profile = await _unitOfWork.ProfileRepository.GetById(dto.ProfileId);
+            var profile = await _unitOfWork.ProfileRepository.GetById(dto.PatientId);
             string fullname = profile.FullName;
 
             var entity = _mapper.Map<Patient>(dto);
@@ -48,9 +48,7 @@ namespace Capstone_API_V2.Services
                 entity.Height = dto.Height;
                 entity.Weight = dto.Weight;
                 entity.BloodType = dto.BloodType;
-                entity.PatientNavigation.ProfileId = dto.ProfileId;
                 //entity.AccountId = dto.AccountId;
-                entity.RecordId = dto.RecordId;
                 entity.Relationship = dto.Relationship;
                 entity.UpdBy = fullname;
                 entity.UpdDatetime = ConvertTimeZone();
