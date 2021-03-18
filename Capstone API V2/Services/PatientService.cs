@@ -40,7 +40,7 @@ namespace Capstone_API_V2.Services
         public async Task<PatientSimpModel> UpdatePatient(PatientSimpModel dto)
         {
             var entity = await _unitOfWork.PatientRepository.GetById(dto.PatientId);
-            var profile = await _unitOfWork.ProfileRepository.GetById(entity.PatientNavigation.ProfileId);
+            var profile = await _unitOfWork.ProfileRepository.GetById(dto.PatientId);
             string fullname = profile.FullName;
 
             if (entity != null)
