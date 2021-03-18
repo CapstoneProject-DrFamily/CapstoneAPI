@@ -64,7 +64,7 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<User> GetByUsername(string username)
         {
-            var user = await _context.Users.Where(x => x.Username == username)
+            var user = await _context.Users.Where(x => x.Username == username).Include(x => x.Profiles)
                                        .SingleOrDefaultAsync();
             return user;
         }

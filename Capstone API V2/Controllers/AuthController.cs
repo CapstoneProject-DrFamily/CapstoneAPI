@@ -1,4 +1,5 @@
-﻿using Capstone_API_V2.Services;
+﻿using Capstone_API_V2.Models;
+using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,13 +71,20 @@ namespace Capstone_API_V2.Controllers
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
                     );
 
+                List<Profile> lstProfiles = new List<Profile>(user.Profiles);
+                int profileId = 0;
+                if(lstProfiles != null)
+                {
+                    profileId = lstProfiles.First().ProfileId;
+                }
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     userId = user.AccountId,
                     phone = model.PhoneNumber,
                     role = role,
-                    //profileId = user.ProfileId,
+                    profileId = profileId,
                     /*email = user.Email,
                     fullName = user.FullName,
                     username = user.Username,
