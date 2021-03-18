@@ -50,13 +50,6 @@ namespace Capstone_API_V2.Repositories
                 .ThenInclude(patient => patient.Account)
                 .Where(patient => patient.Disabled == false && patient.PatientNavigation.Account.Disabled == false)
                 .SingleOrDefaultAsync();
-             if(result == null)
-            {
-                result = await _context.Patients.Where(patient => patient.PatientId.Equals(patientId))
-                .Include(patient => patient.PatientNavigation)
-                .Where(patient => patient.Disabled == false)
-                .SingleOrDefaultAsync();
-            }
             return result;
         }
     }
