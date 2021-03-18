@@ -7,7 +7,7 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
 {
     public class FeedbackSimpModel
     {
-        public int FeedbackId { get; set; }
+        public string FeedbackId { get; set; }
         public double? RatingPoint { get; set; }
         public string Note { get; set; }
         public int? DoctorId { get; set; }

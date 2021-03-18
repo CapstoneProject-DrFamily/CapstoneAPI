@@ -95,8 +95,8 @@ namespace Capstone_API_V2.Services
                 entity.Note = dto.Note;
                 entity.EstimatedTime = dto.EstimatedTime;
                 entity.Status = dto.Status;
-                entity.PrescriptionId = dto.PrescriptionId;
-                entity.ExamId = dto.ExamId;
+                //entity.PrescriptionId = dto.PrescriptionId;
+                //entity.ExamId = dto.ExamId;
                 _unitOfWork.TransactionRepository.Update(entity);
                 await _unitOfWork.SaveAsync();
                 return dto;

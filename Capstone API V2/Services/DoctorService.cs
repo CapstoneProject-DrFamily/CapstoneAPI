@@ -22,9 +22,6 @@ namespace Capstone_API_V2.Services
 
         public async Task<DoctorSimpModel> CreateDoctor(DoctorSimpModel dto)
         {
-            //Increment index when inserted
-            dto.DoctorId = 0;
-
             var entity = _mapper.Map<Doctor>(dto);
             entity.Disabled = false;
             entity.InsBy = Constants.Roles.ROLE_ADMIN;
@@ -46,7 +43,7 @@ namespace Capstone_API_V2.Services
                 entity.Degree = dto.Degree;
                 entity.Experience = dto.Experience;
                 entity.SpecialtyId = dto.SpecialtyId;
-                entity.ProfileId = dto.ProfileId;
+                //entity.ProfileId = dto.ProfileId;
                 entity.School = dto.School;
                 entity.UpdBy = Constants.Roles.ROLE_ADMIN;
                 entity.UpdDatetime = ConvertTimeZone();
@@ -60,8 +57,8 @@ namespace Capstone_API_V2.Services
         public override async Task<bool> DeleteAsync(object id)
         {
             var doctor = await _unitOfWork.DoctorRepositorySep.GetDoctorByID((int) id);
-            if (doctor == null || doctor.Profile.Users.SingleOrDefault().Disabled == true) throw new Exception("Not found doctor with id: " + id);
-            doctor.Profile.Users.SingleOrDefault().Disabled = true;
+            if (doctor == null || doctor.DoctorNavigation.Account.Disabled == true) throw new Exception("Not found doctor with id: " + id);
+            doctor.DoctorNavigation.Account.Disabled = true;
             doctor.Disabled = true;
             return await _unitOfWork.SaveAsync() > 0;
         }

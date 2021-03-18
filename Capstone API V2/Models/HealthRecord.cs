@@ -9,11 +9,6 @@ namespace Capstone_API_V2.Models
 {
     public partial class HealthRecord
     {
-        public HealthRecord()
-        {
-            Patients = new HashSet<Patient>();
-        }
-
         public int RecordId { get; set; }
         public string ConditionAtBirth { get; set; }
         public double? BirthWeight { get; set; }
@@ -58,6 +53,6 @@ namespace Capstone_API_V2.Models
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
 
-        public virtual ICollection<Patient> Patients { get; set; }
+        public virtual Patient Record { get; set; }
     }
 }

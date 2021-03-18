@@ -9,13 +9,6 @@ namespace Capstone_API_V2.Models
 {
     public partial class Profile
     {
-        public Profile()
-        {
-            Doctors = new HashSet<Doctor>();
-            Patients = new HashSet<Patient>();
-            Users = new HashSet<User>();
-        }
-
         public int ProfileId { get; set; }
         public string FullName { get; set; }
         public DateTime? Birthday { get; set; }
@@ -24,9 +17,10 @@ namespace Capstone_API_V2.Models
         public string Image { get; set; }
         public string Email { get; set; }
         public string IdCard { get; set; }
+        public int AccountId { get; set; }
 
-        public virtual ICollection<Doctor> Doctors { get; set; }
-        public virtual ICollection<Patient> Patients { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public virtual User Account { get; set; }
+        public virtual Doctor Doctor { get; set; }
+        public virtual Patient Patient { get; set; }
     }
 }

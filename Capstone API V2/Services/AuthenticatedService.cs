@@ -27,7 +27,6 @@ namespace Capstone_API_V2.Services
 
             var currentUser = await _uow.UserRepository.GetByUsername(user.PhoneNumber);
 
-
             if (currentUser == null)
             {
                 var user_info = new User()
@@ -36,11 +35,13 @@ namespace Capstone_API_V2.Services
                     RoleId = role_id,
                     Disabled = false,
                     Waiting = true,
-                    /*Photo = user_firebase.PhotoUrl,
-                    InsBy = Constants.Roles.ROLE_ADMIN,
-                    InsDatetime = DateTime.Now,
-                    UpdBy = Constants.Roles.ROLE_ADMIN,
-                    UpdDatetime = DateTime.Now*/
+                    //Photo = user_firebase.PhotoUrl,
+                    InsBy = user.PhoneNumber,
+                    InsDatetime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now.ToUniversalTime(),
+                    TimeZoneInfo.FindSystemTimeZoneById(Constants.Format.VN_TIMEZONE_ID)),
+                    UpdBy = user.PhoneNumber,
+                    UpdDatetime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now.ToUniversalTime(),
+                    TimeZoneInfo.FindSystemTimeZoneById(Constants.Format.VN_TIMEZONE_ID))
                 };
 
                 await _uow.UserRepository.Create(user_info);

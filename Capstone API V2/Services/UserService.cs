@@ -68,7 +68,7 @@ namespace Capstone_API_V2.Services
                 entity.UpdDatetime = ConvertTimeZone();
                 entity.Username = model.Username;
                 entity.Password = model.Password;
-                entity.ProfileId = model.ProfileId;
+                //entity.ProfileId = model.ProfileId;
                 entity.Waiting = model.Waiting;
                 _unitOfWork.UserRepository.Update(entity);
                 await _unitOfWork.SaveAsync(); 

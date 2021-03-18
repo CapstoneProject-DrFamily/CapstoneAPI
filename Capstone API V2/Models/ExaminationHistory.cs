@@ -9,12 +9,7 @@ namespace Capstone_API_V2.Models
 {
     public partial class ExaminationHistory
     {
-        public ExaminationHistory()
-        {
-            Transactions = new HashSet<Transaction>();
-        }
-
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string History { get; set; }
         public double? PulseRate { get; set; }
         public double? Temperature { get; set; }
@@ -57,6 +52,6 @@ namespace Capstone_API_V2.Models
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
 
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual Transaction IdNavigation { get; set; }
     }
 }

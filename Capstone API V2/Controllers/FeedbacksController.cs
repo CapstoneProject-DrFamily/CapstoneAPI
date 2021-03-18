@@ -31,7 +31,7 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
             var feedbacks = await _feedbackService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,  
-                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.TransactionId.Equals(model.SearchValue) : f.FeedbackId != 0, 
+                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.FeedbackId.Equals(model.SearchValue) : !f.FeedbackId.Equals(""), 
                 orderBy: o => o.OrderByDescending(feedback => feedback.InsDatetime));
             var result = new
             {

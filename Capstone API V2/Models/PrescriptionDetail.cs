@@ -10,7 +10,7 @@ namespace Capstone_API_V2.Models
     public partial class PrescriptionDetail
     {
         public int PrescriptionDetailId { get; set; }
-        public int PrescriptionId { get; set; }
+        public string PrescriptionId { get; set; }
         public int MedicineId { get; set; }
         public int? MorningQuantity { get; set; }
         public string Method { get; set; }

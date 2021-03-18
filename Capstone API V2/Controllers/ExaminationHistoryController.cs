@@ -42,7 +42,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet("{examinationId}")]
-        public async Task<IActionResult> GetById(int examinationId)
+        public async Task<IActionResult> GetById(string examinationId)
         {
             var result = await _examinationHistoryService.GetByIdAsync(examinationId);
             if (result == null)
@@ -64,7 +64,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpDelete("{examinationId}")]
-        public async Task<IActionResult> Delete(int examinationId)
+        public async Task<IActionResult> Delete(string examinationId)
         {
             var result = await _examinationHistoryService.DeleteAsync(examinationId);
             if (result)

@@ -20,9 +20,6 @@ namespace Capstone_API_V2.Services
 
         public override async Task<HealthRecordModel> CreateAsync(HealthRecordModel dto)
         {
-            //Increment index when inserted
-            dto.RecordId = 0;
-
             var entity = _mapper.Map<HealthRecord>(dto);
             entity.InsDatetime = ConvertTimeZone();
             entity.UpdDatetime = ConvertTimeZone();

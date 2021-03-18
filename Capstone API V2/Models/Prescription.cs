@@ -12,17 +12,16 @@ namespace Capstone_API_V2.Models
         public Prescription()
         {
             PrescriptionDetails = new HashSet<PrescriptionDetail>();
-            Transactions = new HashSet<Transaction>();
         }
 
-        public int PrescriptionId { get; set; }
+        public string PrescriptionId { get; set; }
         public string Description { get; set; }
         public string InsBy { get; set; }
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
 
+        public virtual Transaction PrescriptionNavigation { get; set; }
         public virtual ICollection<PrescriptionDetail> PrescriptionDetails { get; set; }
-        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

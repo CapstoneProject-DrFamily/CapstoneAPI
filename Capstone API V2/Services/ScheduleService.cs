@@ -41,9 +41,8 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.ScheduleRepository.GetById(dto.ScheduleId);
             if (entity != null)
             {
-                entity.Date = dto.Date;
+                entity.AppointmentTime = dto.AppointmentTime;
                 entity.Status = dto.Status;
-                entity.Time = dto.Time;
                 entity.UpdBy = dto.UpdBy;
                 entity.UpdDatetime = ConvertTimeZone();
                 _repository.Update(entity);

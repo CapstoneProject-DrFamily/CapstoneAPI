@@ -21,9 +21,6 @@ namespace Capstone_API_V2.Services
 
         public override async Task<ExaminationHistoryModel> CreateAsync(ExaminationHistoryModel dto)
         {
-            //Increment index when inserted
-            dto.Id = 0;
-
             var entity = _mapper.Map<ExaminationHistory>(dto);
             entity.InsDatetime = ConvertTimeZone();
             entity.UpdDatetime = ConvertTimeZone();

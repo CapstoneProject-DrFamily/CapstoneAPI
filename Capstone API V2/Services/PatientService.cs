@@ -25,9 +25,6 @@ namespace Capstone_API_V2.Services
             var profile = await _unitOfWork.ProfileRepository.GetById(dto.ProfileId);
             string fullname = profile.FullName;
 
-            //Increment index when inserted
-            dto.PatientId = 0;
-
             var entity = _mapper.Map<Patient>(dto);
             entity.Disabled = false;
             entity.InsBy = fullname;
@@ -43,7 +40,7 @@ namespace Capstone_API_V2.Services
         public async Task<PatientSimpModel> UpdatePatient(PatientSimpModel dto)
         {
             var entity = await _unitOfWork.PatientRepository.GetById(dto.PatientId);
-            var profile = await _unitOfWork.ProfileRepository.GetById(entity.ProfileId);
+            var profile = await _unitOfWork.ProfileRepository.GetById(entity.PatientNavigation.ProfileId);
             string fullname = profile.FullName;
 
             if (entity != null)
@@ -51,8 +48,8 @@ namespace Capstone_API_V2.Services
                 entity.Height = dto.Height;
                 entity.Weight = dto.Weight;
                 entity.BloodType = dto.BloodType;
-                entity.ProfileId = dto.ProfileId;
-                entity.AccountId = dto.AccountId;
+                entity.PatientNavigation.ProfileId = dto.ProfileId;
+                //entity.AccountId = dto.AccountId;
                 entity.RecordId = dto.RecordId;
                 entity.Relationship = dto.Relationship;
                 entity.UpdBy = fullname;
@@ -73,12 +70,14 @@ namespace Capstone_API_V2.Services
         {
             var patient = await _unitOfWork.PatientRepositorySep.GetPatientByID((int)id);
             if (patient == null) throw new Exception("Not found patient with id: " + id);
+            
+            patient.Disabled = true;
+
             if (Constants.Relationship.OWNER.Equals(patient.Relationship))
             {
-                patient.Profile.Users.SingleOrDefault().Disabled = true;
+                patient.PatientNavigation.Account.Disabled = true;
             }
-            patient.Disabled = true;
-            
+
             return await _unitOfWork.SaveAsync() > 0;
         }
 

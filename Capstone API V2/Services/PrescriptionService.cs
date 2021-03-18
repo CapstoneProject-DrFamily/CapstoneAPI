@@ -23,7 +23,7 @@ namespace Capstone_API_V2.Services
         {
             var prescription = new Prescription
             {
-                PrescriptionId = 0,
+                PrescriptionId = dto.PrescriptionId,
                 Description = dto.Description,
                 InsBy = dto.InsBy,
                 InsDatetime = ConvertTimeZone(),
@@ -72,7 +72,7 @@ namespace Capstone_API_V2.Services
             return prescriptions;
         }
 
-        public async Task<PrescriptionModel> GetPrescriptionByID(int prescriptionID)
+        public async Task<PrescriptionModel> GetPrescriptionByID(string prescriptionID)
         {
             var entity = await _unitOfWork.PrescriptionRepositorySep.GetPrescriptionByID(prescriptionID);
             return _mapper.Map<PrescriptionModel>(entity);
@@ -80,7 +80,7 @@ namespace Capstone_API_V2.Services
 
         public override async Task<bool> DeleteAsync(object id)
         {
-            var prescription = await _unitOfWork.PrescriptionRepositorySep.GetPrescriptionByID((int)id);
+            var prescription = await _unitOfWork.PrescriptionRepositorySep.GetPrescriptionByID(id.ToString());
 
             if (prescription == null) throw new Exception("Not found prescription with id: " + id);
             foreach(PrescriptionDetail prescriptionDetail in prescription.PrescriptionDetails)

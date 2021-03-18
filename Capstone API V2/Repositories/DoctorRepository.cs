@@ -19,12 +19,12 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<DoctorRequestModel> GetRequestDoctorInfo(int profileID)
         {
-            var doctorInfo = await _context.Doctors.Where(x => x.ProfileId == profileID && x.Disabled == false)
+            var doctorInfo = await _context.Doctors.Where(x => x.DoctorNavigation.ProfileId == profileID && x.Disabled == false)
                                        .Select(x => new DoctorRequestModel
                                        {
                                            DoctorId = x.DoctorId,
-                                           DoctorImage = x.Profile.Image,
-                                           DoctorName = x.Profile.FullName,
+                                           DoctorImage = x.DoctorNavigation.Image,
+                                           DoctorName = x.DoctorNavigation.FullName,
                                            DoctorSpecialty = x.Specialty.Name,
                                        })
                                        .SingleOrDefaultAsync();
@@ -35,9 +35,9 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Doctors
                 .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.Profile)
-                .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false)
+                .Include(profile => profile.DoctorNavigation)
+                .ThenInclude(user => user.Account)
+                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false)
                 .ToListAsync();
 
             return result;
@@ -47,9 +47,9 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Doctors.Where(doctor => doctor.DoctorId.Equals(doctorId))
                 .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.Profile)
-                .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false)
+                .Include(profile => profile.DoctorNavigation)
+                .ThenInclude(user => user.Account)
+                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false)
                 .SingleOrDefaultAsync();
 
             return result;
@@ -59,9 +59,9 @@ namespace Capstone_API_V2.Repositories
         {
             var result =  await _context.Doctors
                 .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.Profile)
-                .ThenInclude(user => user.Users)
-                .Where(t => t.Profile.FullName.Contains(fullname) && t.Profile.Users.SingleOrDefault().Disabled == false && t.Disabled == false)
+                .Include(profile => profile.DoctorNavigation)
+                .ThenInclude(user => user.Account)
+                .Where(t => t.DoctorNavigation.FullName.Contains(fullname) && t.DoctorNavigation.Account.Disabled == false && t.Disabled == false)
                 .ToListAsync();
 
             return result;
@@ -71,9 +71,9 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Doctors
                 .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.Profile)
-                .ThenInclude(user => user.Users)
-                .Where(user => user.Profile.Users.SingleOrDefault().Disabled == false && user.Disabled == false && user.Profile.Users.SingleOrDefault().Waiting == true)
+                .Include(profile => profile.DoctorNavigation)
+                .ThenInclude(user => user.Account)
+                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false && user.DoctorNavigation.Account.Waiting == true)
                 .ToListAsync();
 
             return result;

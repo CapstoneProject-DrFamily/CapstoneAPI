@@ -7,7 +7,7 @@ namespace Capstone_API_V2.ViewModels
 {
     public class ExaminationHistoryModel 
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string History { get; set; }
         public double? PulseRate { get; set; }
         public double? Temperature { get; set; }

@@ -10,11 +10,11 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
         public string TransactionId { get; set; }
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
-        public int? PrescriptionId { get; set; }
+        //public int? PrescriptionId { get; set; }
         public string EstimatedTime { get; set; }
         public byte Status { get; set; }
         public string Location { get; set; }
         public string Note { get; set; }
-        public int? ExamId { get; set; }
+        //public int? ExamId { get; set; }
     }
 }

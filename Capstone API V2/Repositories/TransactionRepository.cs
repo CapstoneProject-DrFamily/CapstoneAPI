@@ -22,10 +22,10 @@ namespace Capstone_API_V2.Repositories
             var result = await _context.Transactions.Where(transaction => transaction.Disabled == false && transaction.Status != 0)
                 .Include(transaction => transaction.Doctor)
                 .Include(transaction => transaction.Doctor.Specialty)
-                .Include(transaction => transaction.Doctor.Profile)
-                .Include(transaction => transaction.Exam)
+                .Include(transaction => transaction.Doctor.DoctorNavigation)
+                .Include(transaction => transaction.ExaminationHistory)
                 .Include(transaction => transaction.Patient)
-                .Include(transaction => transaction.Patient.Profile)
+                .Include(transaction => transaction.Patient.PatientNavigation)
                 .Include(transaction => transaction.Prescription)
                 .Include(transaction => transaction.Service)
                 .Include(transaction => transaction.SymptomDetails)
@@ -43,8 +43,8 @@ namespace Capstone_API_V2.Repositories
                                                     TransactionId = transaction.TransactionId,
                                                     DateStart = transaction.DateStart,
                                                     DateEnd = transaction.DateEnd,
-                                                    DoctorName = transaction.Doctor.Profile.FullName,
-                                                    PatientName = transaction.Patient.Profile.FullName,
+                                                    DoctorName = transaction.Doctor.DoctorNavigation.FullName,
+                                                    PatientName = transaction.Patient.PatientNavigation.FullName,
                                                     Location = transaction.Location,
                                                     ServiceName = transaction.Service.ServiceName,
                                                     ServicePrice = transaction.Service.ServicePrice,
@@ -58,10 +58,10 @@ namespace Capstone_API_V2.Repositories
             var result = await _context.Transactions.Where(transaction => transaction.TransactionId.Equals(transactionID) && transaction.Disabled == false)
                 .Include(transaction => transaction.Doctor)
                 .Include(transaction => transaction.Doctor.Specialty)
-                .Include(transaction => transaction.Doctor.Profile)
-                .Include(transaction => transaction.Exam)
+                .Include(transaction => transaction.Doctor.DoctorNavigation)
+                .Include(transaction => transaction.ExaminationHistory)
                 .Include(transaction => transaction.Patient)
-                .Include(transaction => transaction.Patient.Profile)
+                .Include(transaction => transaction.Patient.PatientNavigation)
                 .Include(transaction => transaction.Prescription)
                 .Include(transaction => transaction.Service)
                 .Include(transaction => transaction.SymptomDetails)
@@ -79,8 +79,8 @@ namespace Capstone_API_V2.Repositories
                                                     TransactionId = transaction.TransactionId,
                                                     DateStart = transaction.DateStart,
                                                     DateEnd = transaction.DateEnd,
-                                                    DoctorName = transaction.Doctor.Profile.FullName,
-                                                    PatientName = transaction.Patient.Profile.FullName,
+                                                    DoctorName = transaction.Doctor.DoctorNavigation.FullName,
+                                                    PatientName = transaction.Patient.PatientNavigation.FullName,
                                                     Location = transaction.Location,
                                                     ServiceName = transaction.Service.ServiceName,
                                                     ServicePrice = transaction.Service.ServicePrice,

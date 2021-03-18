@@ -75,7 +75,7 @@ namespace Capstone_API_V2.Controllers
                     userId = user.AccountId,
                     phone = model.PhoneNumber,
                     role = role,
-                    profileId = user.ProfileId,
+                    //profileId = user.ProfileId,
                     /*email = user.Email,
                     fullName = user.FullName,
                     username = user.Username,

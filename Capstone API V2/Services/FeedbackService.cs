@@ -20,9 +20,6 @@ namespace Capstone_API_V2.Services
 
         public override async Task<FeedbackModel> CreateAsync(FeedbackModel dto)
         {
-            //Increment index when inserted
-            dto.FeedbackId = 0;
-
             var entity = _mapper.Map<Feedback>(dto);
             entity.InsBy = dto.InsBy;
             entity.InsDatetime = ConvertTimeZone();

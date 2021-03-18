@@ -13,6 +13,6 @@ namespace Capstone_API_V2.Services
         Task<PrescriptionSimpModel> CreatePrescription(PrescriptionSimpModel dto);
         Task<PrescriptionSimpModel> UpdatePrescription(PrescriptionSimpModel dto);
         Task<List<PrescriptionModel>> GetAllPrescription();
-        Task<PrescriptionModel> GetPrescriptionByID(int prescriptionID);
+        Task<PrescriptionModel> GetPrescriptionByID(string prescriptionID);
     }
 }

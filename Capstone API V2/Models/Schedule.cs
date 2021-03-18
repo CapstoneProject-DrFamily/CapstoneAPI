@@ -11,8 +11,7 @@ namespace Capstone_API_V2.Models
     {
         public int ScheduleId { get; set; }
         public int? DoctorId { get; set; }
-        public DateTime? Date { get; set; }
-        public TimeSpan? Time { get; set; }
+        public DateTime? AppointmentTime { get; set; }
         public bool? Status { get; set; }
         public bool? Disabled { get; set; }
         public string InsBy { get; set; }

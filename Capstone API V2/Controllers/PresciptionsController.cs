@@ -43,7 +43,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet("{prescriptionId}")]
-        public async Task<IActionResult> GetById(int prescriptionId)
+        public async Task<IActionResult> GetById(string prescriptionId)
         {
             var result = await _prescriptionService.GetPrescriptionByID(prescriptionId);
             if (result == null)
@@ -65,7 +65,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpDelete("{prescriptionId}")]
-        public async Task<IActionResult> Delete(int prescriptionId)
+        public async Task<IActionResult> Delete(string prescriptionId)
         {
             var result = await _prescriptionService.DeleteAsync(prescriptionId);
             if (result)

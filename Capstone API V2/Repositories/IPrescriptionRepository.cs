@@ -9,6 +9,6 @@ namespace Capstone_API_V2.Repositories
     public interface IPrescriptionRepository
     {
         Task<List<Prescription>> GetAllPrescription();
-        Task<Prescription> GetPrescriptionByID(int prescriptionID);
+        Task<Prescription> GetPrescriptionByID(string prescriptionID);
     }
 }

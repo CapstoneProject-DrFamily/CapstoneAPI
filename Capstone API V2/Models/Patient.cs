@@ -19,18 +19,16 @@ namespace Capstone_API_V2.Models
         public double? Height { get; set; }
         public double? Weight { get; set; }
         public string BloodType { get; set; }
-        public int ProfileId { get; set; }
         public string InsBy { get; set; }
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
         public int RecordId { get; set; }
         public string Relationship { get; set; }
-        public int AccountId { get; set; }
         public bool? Disabled { get; set; }
 
-        public virtual Profile Profile { get; set; }
-        public virtual HealthRecord Record { get; set; }
+        public virtual Profile PatientNavigation { get; set; }
+        public virtual HealthRecord HealthRecord { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }

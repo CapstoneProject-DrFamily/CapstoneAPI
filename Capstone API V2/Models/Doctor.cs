@@ -21,7 +21,6 @@ namespace Capstone_API_V2.Models
         public string Experience { get; set; }
         public string Description { get; set; }
         public int SpecialtyId { get; set; }
-        public int ProfileId { get; set; }
         public string InsBy { get; set; }
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
@@ -29,7 +28,7 @@ namespace Capstone_API_V2.Models
         public string School { get; set; }
         public bool? Disabled { get; set; }
 
-        public virtual Profile Profile { get; set; }
+        public virtual Profile DoctorNavigation { get; set; }
         public virtual Specialty Specialty { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Schedule> Schedules { get; set; }

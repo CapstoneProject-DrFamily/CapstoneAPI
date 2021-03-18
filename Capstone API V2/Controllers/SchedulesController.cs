@@ -30,7 +30,7 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var feedbacks = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize);
+            var feedbacks = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new
             {
                 feedbacks,

@@ -9,6 +9,11 @@ namespace Capstone_API_V2.Models
 {
     public partial class User
     {
+        public User()
+        {
+            Profiles = new HashSet<Profile>();
+        }
+
         public int AccountId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -18,10 +23,9 @@ namespace Capstone_API_V2.Models
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
-        public int? ProfileId { get; set; }
         public bool? Waiting { get; set; }
 
-        public virtual Profile Profile { get; set; }
         public virtual Role Role { get; set; }
+        public virtual ICollection<Profile> Profiles { get; set; }
     }
 }
