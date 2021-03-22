@@ -36,9 +36,9 @@ namespace Capstone_API_V2.Controllers
                 filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.PatientNavigation.FullName.Contains(model.SearchValue) 
                 && f.Disabled == false
                 && f.PatientNavigation.Account.Disabled == false
-                && f.PatientNavigation.ProfileId == f.PatientId : f.Disabled == false 
+                && f.PatientNavigation.ProfileId == f.PatientId && f.Relationship.Equals(Constants.Relationship.OWNER) : f.Disabled == false 
                 && f.PatientNavigation.AccountId == f.PatientNavigation.Account.AccountId
-                && f.PatientNavigation.Account.Disabled == false, 
+                && f.PatientNavigation.Account.Disabled == false && f.Relationship.Equals(Constants.Relationship.OWNER), 
                 includeProperties: "PatientNavigation,PatientNavigation.Account");
             var result = new
             {
