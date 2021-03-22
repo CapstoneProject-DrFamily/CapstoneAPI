@@ -27,7 +27,6 @@ namespace Capstone_API_V2.Services
             entity.Disabled = false;
             entity.InsBy = dto.InsBy;
             entity.InsDatetime = ConvertTimeZone();
-            entity.UpdBy = dto.UpdBy;
             entity.UpdDatetime = ConvertTimeZone();
 
             _repository.Add(entity);
@@ -44,7 +43,7 @@ namespace Capstone_API_V2.Services
                 entity.AppointmentTime = dto.AppointmentTime;
                 entity.Status = dto.Status;
                 entity.UpdBy = dto.UpdBy;
-                entity.UpdDatetime = ConvertTimeZone();
+                entity.UpdDatetime = dto.UpdDatetime;
                 _repository.Update(entity);
                 await _unitOfWork.SaveAsync();
                 return dto;

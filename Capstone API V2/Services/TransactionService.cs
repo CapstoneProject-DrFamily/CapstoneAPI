@@ -36,6 +36,7 @@ namespace Capstone_API_V2.Services
                 Disabled = false
             };
             dto.TransactionId = transaction.TransactionId;
+            dto.DateStart = transaction.DateStart;
 
             _unitOfWork.TransactionRepository.Add(_mapper.Map<Transaction>(transaction));
             if(dto.SymptomDetails != null)
@@ -105,9 +106,9 @@ namespace Capstone_API_V2.Services
             
         }
 
-        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorIDAsync(int doctorID, int status)
+        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorIDAsync(int doctorID, int status, DateTime dateStart)
         {
-            return _unitOfWork.TransactionRepositorySep.GetTransactionByDoctorID(doctorID, status);
+            return _unitOfWork.TransactionRepositorySep.GetTransactionByDoctorID(doctorID, status, dateStart);
         }
 
         public IQueryable<TransactionHistoryModel> GetTransactionByPatientIDAsync(int patientID, int status)

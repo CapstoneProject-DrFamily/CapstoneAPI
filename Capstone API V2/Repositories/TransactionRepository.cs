@@ -34,8 +34,30 @@ namespace Capstone_API_V2.Repositories
             return result;
         }
 
-        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, int status)
+        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, int status, DateTime dateStart)
         {
+            if(status == -1 && dateStart != null)
+            {
+                var transactionss = _context.Transactions
+                                                .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false && dateStart.Date.Equals(transaction.DateStart.Value.Date) && transaction.Status == 0)
+                                                .Select(transaction => new TransactionHistoryModel
+                                                {
+                                                    TransactionId = transaction.TransactionId,
+                                                    DateStart = transaction.DateStart,
+                                                    DateEnd = transaction.DateEnd,
+                                                    DoctorName = transaction.Doctor.DoctorNavigation.FullName,
+                                                    PatientId = transaction.PatientId,
+                                                    PatientName = transaction.Patient.PatientNavigation.FullName,
+                                                    Relationship = transaction.Patient.Relationship,
+                                                    Location = transaction.Location,
+                                                    ServiceName = transaction.Service.ServiceName,
+                                                    ServicePrice = transaction.Service.ServicePrice,
+                                                    Status = transaction.Status,
+                                                    Note = transaction.Note
+                                                }).OrderByDescending(o => o.DateStart);
+                return transactionss;
+            }
+
             var transactions = _context.Transactions
                                                 .Where(transaction => status != -1? transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status == (byte)status : transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status != 0)
                                                 .Select(transaction => new TransactionHistoryModel
@@ -44,11 +66,14 @@ namespace Capstone_API_V2.Repositories
                                                     DateStart = transaction.DateStart,
                                                     DateEnd = transaction.DateEnd,
                                                     DoctorName = transaction.Doctor.DoctorNavigation.FullName,
+                                                    PatientId = transaction.PatientId,
                                                     PatientName = transaction.Patient.PatientNavigation.FullName,
+                                                    Relationship = transaction.Patient.Relationship,
                                                     Location = transaction.Location,
                                                     ServiceName = transaction.Service.ServiceName,
                                                     ServicePrice = transaction.Service.ServicePrice,
-                                                    Status = transaction.Status
+                                                    Status = transaction.Status,
+                                                    Note = transaction.Note
                                                 }).OrderByDescending(o => o.DateStart);
             return transactions;
         }
@@ -80,11 +105,14 @@ namespace Capstone_API_V2.Repositories
                                                     DateStart = transaction.DateStart,
                                                     DateEnd = transaction.DateEnd,
                                                     DoctorName = transaction.Doctor.DoctorNavigation.FullName,
+                                                    PatientId = transaction.PatientId,
                                                     PatientName = transaction.Patient.PatientNavigation.FullName,
+                                                    Relationship = transaction.Patient.Relationship,
                                                     Location = transaction.Location,
                                                     ServiceName = transaction.Service.ServiceName,
                                                     ServicePrice = transaction.Service.ServicePrice,
-                                                    Status = transaction.Status
+                                                    Status = transaction.Status,
+                                                    Note = transaction.Note
                                                 }).OrderByDescending(o => o.DateStart);
             return transactions;
         }

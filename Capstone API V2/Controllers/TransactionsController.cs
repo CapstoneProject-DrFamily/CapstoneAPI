@@ -60,9 +60,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet("doctors/{doctorId}")]
-        public async Task<IActionResult> GetByDoctorId(int doctorId,[Required] int status)
+        public async Task<IActionResult> GetByDoctorId(int doctorId,[Required] int status, DateTime dateStart)
         {
-            var result = await _transactionService.GetTransactionByDoctorIDAsync(doctorId, status).ToListAsync();
+            var result = await _transactionService.GetTransactionByDoctorIDAsync(doctorId, status, dateStart).ToListAsync();
             if (result == null)
             {
                 return NotFound();

@@ -8,8 +8,8 @@ namespace Capstone_API_V2.ViewModels
     public class TransactionHistoryModel
     {
         public string TransactionId { get; set; }
-        /*public int DoctorId { get; set; }
-        public int PatientId { get; set; }*/
+        //public int DoctorId { get; set; }
+        public int? PatientId { get; set; }
         public DateTime? DateStart { get; set; }
         public DateTime? DateEnd { get; set; }
         //public string EstimatedTime { get; set; }
@@ -18,6 +18,7 @@ namespace Capstone_API_V2.ViewModels
         public string Note { get; set; }
         public string DoctorName { get; set; }
         public string PatientName { get; set; }
+        public string Relationship { get; set; }
         public string ServiceName { get; set; }
         public decimal? ServicePrice { get; set; }
         /*public bool Disabled { get; set; }
