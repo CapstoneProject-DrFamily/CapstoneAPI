@@ -47,7 +47,8 @@ namespace Capstone_API_V2.Services
                     MorningQuantity = dtoPrescriptionDetail.MorningQuantity,
                     NoonQuantity = dtoPrescriptionDetail.NoonQuantity,
                     TotalQuantity = dtoPrescriptionDetail.TotalQuantity,
-                    Type = dtoPrescriptionDetail.Type
+                    Type = dtoPrescriptionDetail.Type,
+                    TotalDays = dtoPrescriptionDetail.TotalDays
                 };
                 var prescriptionDetail = _mapper.Map<PrescriptionDetail>(prescriptionDetailModel); 
                 _unitOfWork.PrescriptionDetailRepository.Add(prescriptionDetail);

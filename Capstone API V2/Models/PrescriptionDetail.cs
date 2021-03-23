@@ -18,6 +18,7 @@ namespace Capstone_API_V2.Models
         public int TotalQuantity { get; set; }
         public int? AfternoonQuantity { get; set; }
         public string Type { get; set; }
+        public int? TotalDays { get; set; }
 
         public virtual Medicine Medicine { get; set; }
         public virtual Prescription Prescription { get; set; }

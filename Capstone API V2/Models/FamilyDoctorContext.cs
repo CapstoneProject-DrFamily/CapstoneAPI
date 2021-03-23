@@ -667,6 +667,8 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("prescription_id")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.TotalDays).HasColumnName("total_days");
+
                 entity.Property(e => e.TotalQuantity).HasColumnName("total_quantity");
 
                 entity.Property(e => e.Type)
