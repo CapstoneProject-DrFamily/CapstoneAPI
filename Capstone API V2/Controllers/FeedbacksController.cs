@@ -60,7 +60,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet("{feedbackId}")]
-        public async Task<IActionResult> GetById(int feedbackId)
+        public async Task<IActionResult> GetById(string feedbackId)
         {
             var result = await _feedbackService.GetByIdAsync(feedbackId);
             if (result == null)
@@ -82,7 +82,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpDelete("{feedbackId}")]
-        public async Task<IActionResult> Delete(int feedbackId)
+        public async Task<IActionResult> Delete(string feedbackId)
         {
             var result = await _feedbackService.DeleteAsync(feedbackId);
             if (result)

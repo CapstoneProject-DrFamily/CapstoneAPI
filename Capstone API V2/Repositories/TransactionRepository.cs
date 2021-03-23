@@ -36,7 +36,7 @@ namespace Capstone_API_V2.Repositories
 
         public IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, int status, DateTime dateStart)
         {
-            if(status == -1 && dateStart != null)
+            if(status == -1 && dateStart != DateTime.MinValue)
             {
                 var transactionss = _context.Transactions
                                                 .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false && dateStart.Date.Equals(transaction.DateStart.Value.Date) && transaction.Status == 0)
