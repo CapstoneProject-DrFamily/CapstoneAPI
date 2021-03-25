@@ -70,6 +70,12 @@ namespace Capstone_API_V2.Controllers
                 filter: f => f.SpecialtyId == specialtyId && f.Disabled == false && f.DoctorNavigation.Account.Disabled == false && f.Schedules.Single().Status == false,
                 includeProperties: "Specialty,DoctorNavigation,DoctorNavigation.Account,Schedules", orderBy: o => o.OrderBy(s => s.Schedules.SingleOrDefault().AppointmentTime));
 
+            foreach (var doctor in doctors)
+            {
+                doctor.Schedules = doctor.Schedules.OrderBy(s => s.AppointmentTime).ToList();
+            }
+
+
             var result = new
             {
                 doctors,
