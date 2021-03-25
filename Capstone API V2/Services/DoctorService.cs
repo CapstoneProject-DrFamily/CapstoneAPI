@@ -78,7 +78,17 @@ namespace Capstone_API_V2.Services
         public async Task<DoctorModel> GetDoctorByID(int doctorId)
         {
             var doctor = await _unitOfWork.DoctorRepositorySep.GetDoctorByID(doctorId);
-            return _mapper.Map<DoctorModel>(doctor);
+            if(doctor != null)
+            {
+                var ratingPoint = (from feedback in doctor.Feedbacks where doctor.Feedbacks.Count != 0 select feedback.RatingPoint).Average();
+                var totalDoneTransaction = (from transaction in doctor.Transactions where doctor.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count();
+                var result = _mapper.Map<DoctorModel>(doctor);
+                result.RatingPoint = ratingPoint;
+                result.TotalDoneTransaction = totalDoneTransaction;
+
+                return result;
+            }
+            return null;
         }
 
         public async Task<List<DoctorModel>> GetDoctorByName(string fullname)

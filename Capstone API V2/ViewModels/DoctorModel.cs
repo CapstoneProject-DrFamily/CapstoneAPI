@@ -21,5 +21,7 @@ namespace Capstone_API_V2.ViewModels
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
+        public double? RatingPoint { get; set; }
+        public int TotalDoneTransaction { get; set; }
     }
 }

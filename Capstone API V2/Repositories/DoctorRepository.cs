@@ -47,6 +47,8 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Doctors.Where(doctor => doctor.DoctorId.Equals(doctorId))
                 .Include(specialty => specialty.Specialty)
+                .Include(feedback => feedback.Feedbacks)
+                .Include(transaction => transaction.Transactions)
                 .Include(profile => profile.DoctorNavigation)
                 .ThenInclude(user => user.Account)
                 .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false)

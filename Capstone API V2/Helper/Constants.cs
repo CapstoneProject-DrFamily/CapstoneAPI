@@ -21,7 +21,7 @@ namespace Capstone_API_V2.Helper
         {
             public const int OPEN = 0;
             public const int PROCESS = 1;
-            public const int CLOSE = 2;
+            public const int DONE = 3;
         }
 
         public struct SearchValue
