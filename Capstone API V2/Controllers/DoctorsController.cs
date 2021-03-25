@@ -72,9 +72,10 @@ namespace Capstone_API_V2.Controllers
 
             foreach (var doctor in doctors)
             {
-                doctor.Schedules = doctor.Schedules.OrderBy(s => s.AppointmentTime).ToList();
+                var schedules = doctor.Schedules;
+                var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= DateTime.Now select schedule;
+                doctor.Schedules = querySchedules.OrderBy(o => o.AppointmentTime).ToList();
             }
-
 
             var result = new
             {
