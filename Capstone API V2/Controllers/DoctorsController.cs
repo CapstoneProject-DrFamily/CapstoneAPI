@@ -72,8 +72,9 @@ namespace Capstone_API_V2.Controllers
 
             foreach (var doctor in doctors)
             {
+                var localTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById(Constants.Format.VN_TIMEZONE_ID)).AddHours(1.5);
                 var schedules = doctor.Schedules;
-                var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= DateTime.Now.AddHours(1.5) select schedule;
+                var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= localTime select schedule;
                 doctor.Schedules = querySchedules.OrderBy(o => o.AppointmentTime).ToList();
             }
 
