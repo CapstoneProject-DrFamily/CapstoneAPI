@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
+using Capstone_API_V2.ViewModels.SimpleModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll(DateTime startDate, DateTime endDate, int doctorId)
         {
-            var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false, orderBy: o => o.OrderBy(s => s.AppointmentTime)).ToListAsync();
+            var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false, orderBy: o => o.OrderBy(s => s.AppointmentTime), includeProperties: "ScheduleNavigation").ToListAsync();
             return Ok(result);
         }
 
@@ -42,7 +43,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet("{scheduleId}")]
-        public async Task<IActionResult> GetById(int scheduleId)
+        public async Task<IActionResult> GetById(string scheduleId)
         {
             var result = await _scheduleService.GetByIdAsync(scheduleId);
             if (result == null)
@@ -53,9 +54,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ScheduleModel model)
+        public async Task<IActionResult> Create([FromBody] ScheduleSimpModel model)
         {
-            var result = await _scheduleService.CreateAsync(model);
+            var result = await _scheduleService.CreateScheduleAsync(model);
             if (result != null)
             {
                 return Created("", result);
@@ -64,7 +65,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpDelete("{scheduleId}")]
-        public async Task<IActionResult> Delete(int scheduleId)
+        public async Task<IActionResult> Delete(string scheduleId)
         {
             var result = await _scheduleService.DeleteAsync(scheduleId);
             if (result)
@@ -75,9 +76,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] ScheduleModel model)
+        public async Task<IActionResult> Update([FromBody] ScheduleSimpModel model)
         {
-            var result = await _scheduleService.UpdateAsync(model);
+            var result = await _scheduleService.UpdateScheduleAsync(model);
             return Ok(result);
         }
     }

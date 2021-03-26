@@ -67,13 +67,19 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<PrescriptionDetailModel, PrescriptionDetail>();
 
             CreateMap<Transaction, TransactionSimpModel>();
-            CreateMap<TransactionSimpModel, Transaction>();
+            CreateMap<TransactionSimpModel, Transaction>(); 
+            
+            CreateMap<Transaction, TransactionPutModel>();
+            CreateMap<TransactionPutModel, Transaction>();
 
             CreateMap<Feedback, FeedbackModel>();
             CreateMap<FeedbackModel, Feedback>();
 
             CreateMap<Schedule, ScheduleModel>();
             CreateMap<ScheduleModel, Schedule>();
+
+            CreateMap<Schedule, ScheduleSimpModel>();
+            CreateMap<ScheduleSimpModel, Schedule>();
         }
     }
 }

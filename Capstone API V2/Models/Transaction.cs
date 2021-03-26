@@ -32,6 +32,7 @@ namespace Capstone_API_V2.Models
         public virtual ExaminationHistory ExaminationHistory { get; set; }
         public virtual Feedback Feedback { get; set; }
         public virtual Prescription Prescription { get; set; }
+        public virtual Schedule Schedule { get; set; }
         public virtual ICollection<SymptomDetail> SymptomDetails { get; set; }
     }
 }

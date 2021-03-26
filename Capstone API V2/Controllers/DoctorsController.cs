@@ -67,14 +67,14 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetDoctorBySpecialtyId([FromRoute]int specialtyId, [FromQuery]ResourceParameter model)
         {
             var doctors = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: f => f.SpecialtyId == specialtyId && f.Disabled == false && f.DoctorNavigation.Account.Disabled == false && f.Schedules.Single().Status == false,
+                filter: f => f.SpecialtyId == specialtyId && f.Disabled == false && f.DoctorNavigation.Account.Disabled == false && f.Schedules.SingleOrDefault().Status == false,
                 includeProperties: "Specialty,DoctorNavigation,DoctorNavigation.Account,Schedules", orderBy: o => o.OrderBy(s => s.Schedules.SingleOrDefault().AppointmentTime));
 
             foreach (var doctor in doctors)
             {
                 var localTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById(Constants.Format.VN_TIMEZONE_ID)).AddHours(1.5);
                 var schedules = doctor.Schedules;
-                var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= localTime select schedule;
+                var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= localTime && schedule.Status == false select schedule;
                 doctor.Schedules = querySchedules.OrderBy(o => o.AppointmentTime).ToList();
             }
 

@@ -771,7 +771,9 @@ namespace Capstone_API_V2.Models
             {
                 entity.ToTable("Schedule");
 
-                entity.Property(e => e.ScheduleId).HasColumnName("schedule_id");
+                entity.Property(e => e.ScheduleId)
+                    .HasColumnName("schedule_id")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.AppointmentTime)
                     .HasColumnName("appointment_time")
@@ -803,6 +805,12 @@ namespace Capstone_API_V2.Models
                     .WithMany(p => p.Schedules)
                     .HasForeignKey(d => d.DoctorId)
                     .HasConstraintName("FK_Schedule_Doctors");
+
+                entity.HasOne(d => d.ScheduleNavigation)
+                    .WithOne(p => p.Schedule)
+                    .HasForeignKey<Schedule>(d => d.ScheduleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Schedule_Transaction");
             });
 
             modelBuilder.Entity<Service>(entity =>

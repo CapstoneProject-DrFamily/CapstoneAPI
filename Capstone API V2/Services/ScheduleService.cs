@@ -3,6 +3,7 @@ using Capstone_API_V2.Models;
 using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
 using Capstone_API_V2.ViewModels;
+using Capstone_API_V2.ViewModels.SimpleModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,8 @@ namespace Capstone_API_V2.Services
 
         protected override IGenericRepository<Schedule> _repository => _unitOfWork.ScheduleRepository;
 
-        public override async Task<ScheduleModel> CreateAsync(ScheduleModel dto)
+        public async Task<ScheduleSimpModel> CreateScheduleAsync(ScheduleSimpModel dto)
         {
-            //Increment index when inserted
-            dto.ScheduleId = 0;
-
             var entity = _mapper.Map<Schedule>(dto);
             entity.Disabled = false;
             entity.InsBy = dto.InsBy;
@@ -32,10 +30,10 @@ namespace Capstone_API_V2.Services
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();
 
-            return _mapper.Map<ScheduleModel>(entity);
+            return _mapper.Map<ScheduleSimpModel>(entity);
         }
 
-        public async override Task<ScheduleModel> UpdateAsync(ScheduleModel dto)
+        public async Task<ScheduleSimpModel> UpdateScheduleAsync(ScheduleSimpModel dto)
         {
             var entity = await _unitOfWork.ScheduleRepository.GetById(dto.ScheduleId);
             if (entity != null)
