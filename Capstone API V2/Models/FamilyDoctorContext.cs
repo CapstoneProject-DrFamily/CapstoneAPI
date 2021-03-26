@@ -288,9 +288,7 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("insDatetime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Note)
-                    .HasColumnName("note")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Note).HasColumnName("note");
 
                 entity.Property(e => e.PatientId).HasColumnName("patient_id");
 

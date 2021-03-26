@@ -24,7 +24,10 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll(DateTime startDate, DateTime endDate, int doctorId)
         {
-            var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false, orderBy: o => o.OrderBy(s => s.AppointmentTime), includeProperties: "ScheduleNavigation").ToListAsync();
+            var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false, 
+                orderBy: o => o.OrderBy(s => s.AppointmentTime), 
+                includeProperties: "ScheduleNavigation,ScheduleNavigation.Doctor,Doctor.DoctorNavigation,ScheduleNavigation.Patient,ScheduleNavigation.Patient.PatientNavigation,ScheduleNavigation.Service")
+                .ToListAsync();
             return Ok(result);
         }
 

@@ -72,6 +72,18 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<Transaction, TransactionPutModel>();
             CreateMap<TransactionPutModel, Transaction>();
 
+            CreateMap<Transaction, TransactionSimpModel>();
+            CreateMap<TransactionSimpModel, Transaction>();
+
+            CreateMap<Transaction, TransactionHistoryModel>()
+                .ForMember(des => des.DoctorName, act => act.MapFrom(src => src.Doctor.DoctorNavigation.FullName))
+                .ForMember(des => des.PatientId, act => act.MapFrom(src => src.PatientId))
+                .ForMember(des => des.PatientName, act => act.MapFrom(src => src.Patient.PatientNavigation.FullName))
+                .ForMember(des => des.Relationship, act => act.MapFrom(src => src.Patient.Relationship))
+                .ForMember(des => des.ServiceName, act => act.MapFrom(src =>src.Service.ServiceName))
+                .ForMember(des => des.ServicePrice, act => act.MapFrom(src => src.Service.ServicePrice));
+
+
             CreateMap<Feedback, FeedbackModel>();
             CreateMap<FeedbackModel, Feedback>();
 

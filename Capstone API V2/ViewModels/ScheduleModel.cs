@@ -15,7 +15,7 @@ namespace Capstone_API_V2.ViewModels
         public string InsBy { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
-        public TransactionPutModel ScheduleNavigation { get; set; }
 
+        public TransactionHistoryModel ScheduleNavigation { get; set; }
     }
 }

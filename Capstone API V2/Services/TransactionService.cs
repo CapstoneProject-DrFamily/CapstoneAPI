@@ -27,7 +27,7 @@ namespace Capstone_API_V2.Services
             {
                 TransactionId = "TS-" + Guid.NewGuid().ToString(),
                 DoctorId = dto.DoctorId,
-                PatientId = dto.PatientId,
+                PatientId = dto.PatientId != 0 ? dto.PatientId : null,
                 DateStart = ConvertTimeZone(),
                 ServiceId = dto.ServiceId,
                 Location = dto.Location,
