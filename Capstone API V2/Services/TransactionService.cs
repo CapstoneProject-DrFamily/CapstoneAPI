@@ -92,7 +92,7 @@ namespace Capstone_API_V2.Services
             if(entity != null)
             {
                 entity.DoctorId = dto.DoctorId;
-                entity.PatientId = dto.PatientId;
+                entity.PatientId = dto.PatientId != 0 ? dto.PatientId : null;
                 entity.DateEnd = ConvertTimeZone();
                 entity.Location = dto.Location;
                 entity.Note = dto.Note;
