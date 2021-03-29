@@ -45,12 +45,12 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("patients/{patientId}")]
+        [HttpGet("Patients/{patientId}")]
         public async Task<IActionResult> Get([FromRoute]int patientId, [FromQuery] ResourceParameter model)
         {
             var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
                 filter: f => f.Disabled == false && f.Status == true && f.ScheduleNavigation.Status == 0 && f.ScheduleNavigation.PatientId == patientId,
-                includeProperties: "Doctor,Doctor.DoctorNavigation,ScheduleNavigation,ScheduleNavigation.Service",
+                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,ScheduleNavigation,ScheduleNavigation.Service",
                 orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new
             {
