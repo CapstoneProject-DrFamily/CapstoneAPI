@@ -67,7 +67,7 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetDoctorBySpecialtyId([FromRoute]int specialtyId, [FromQuery]ResourceParameter model)
         {
             var doctors = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: f => f.SpecialtyId == specialtyId && f.Disabled == false && f.DoctorNavigation.Account.Disabled == false && f.Schedules.SingleOrDefault().Status == false,
+                filter: f => f.SpecialtyId == specialtyId && f.Disabled == false && f.DoctorNavigation.Account.Disabled == false && f.Schedules.Count > 0,
                 includeProperties: "Specialty,DoctorNavigation,DoctorNavigation.Account,Schedules", orderBy: o => o.OrderBy(s => s.Schedules.SingleOrDefault().AppointmentTime));
 
             foreach (var doctor in doctors)
