@@ -19,5 +19,7 @@ namespace Capstone_API_V2.ViewModels
         public DateTime? UpdDatetime { get; set; }*/
         //public int ProfileId { get; set; }
         public bool Waiting { get; set; }
+        public string NotiToken { get; set; }
+
     }
 }

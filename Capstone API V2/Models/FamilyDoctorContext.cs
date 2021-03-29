@@ -1020,6 +1020,8 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("insDatetime")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.NotiToken).HasColumnName("notiToken");
+
                 entity.Property(e => e.Password)
                     .HasColumnName("password")
                     .HasMaxLength(50);

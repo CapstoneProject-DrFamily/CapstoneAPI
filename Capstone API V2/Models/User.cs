@@ -24,6 +24,7 @@ namespace Capstone_API_V2.Models
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
         public bool? Waiting { get; set; }
+        public string NotiToken { get; set; }
 
         public virtual Role Role { get; set; }
         public virtual ICollection<Profile> Profiles { get; set; }

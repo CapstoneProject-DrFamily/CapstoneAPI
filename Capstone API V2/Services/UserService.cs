@@ -70,6 +70,7 @@ namespace Capstone_API_V2.Services
                 entity.Password = model.Password;
                 //entity.ProfileId = model.ProfileId;
                 entity.Waiting = model.Waiting;
+                entity.NotiToken = model.NotiToken;
                 _unitOfWork.UserRepository.Update(entity);
                 await _unitOfWork.SaveAsync(); 
                 return entity;
