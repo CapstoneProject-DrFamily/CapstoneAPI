@@ -11,6 +11,8 @@ namespace Capstone_API_V2.ViewModels
         public String DoctorName { get; set; }
         public String DoctorSpecialty { get; set; }
         public String DoctorImage { get; set; }
+        public int DoctorServiceId { get; set; }
+
 
     }
 }

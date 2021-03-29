@@ -26,6 +26,7 @@ namespace Capstone_API_V2.Repositories
                                            DoctorImage = x.DoctorNavigation.Image,
                                            DoctorName = x.DoctorNavigation.FullName,
                                            DoctorSpecialty = x.Specialty.Name,
+                                           DoctorServiceId = x.SpecialtyId,
                                        })
                                        .SingleOrDefaultAsync();
             return doctorInfo;
