@@ -34,13 +34,30 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
-            var feedbacks = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Disabled == false, orderBy: o => o.OrderBy(d => d.AppointmentTime));
+            var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, filter: f => f.Disabled == false, orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new
             {
-                feedbacks,
-                feedbacks.TotalPages,
-                feedbacks.HasPreviousPage,
-                feedbacks.HasNextPage
+                schedules,
+                schedules.TotalPages,
+                schedules.HasPreviousPage,
+                schedules.HasNextPage
+            };
+            return Ok(result);
+        }
+
+        [HttpGet("patients/{patientId}")]
+        public async Task<IActionResult> Get([FromRoute]int patientId, [FromQuery] ResourceParameter model)
+        {
+            var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
+                filter: f => f.Disabled == false && f.Status == true && f.ScheduleNavigation.Status == 0 && f.ScheduleNavigation.PatientId == patientId,
+                includeProperties: "Doctor,Doctor.DoctorNavigation,ScheduleNavigation,ScheduleNavigation.Service",
+                orderBy: o => o.OrderBy(d => d.AppointmentTime));
+            var result = new
+            {
+                schedules,
+                schedules.TotalPages,
+                schedules.HasPreviousPage,
+                schedules.HasNextPage
             };
             return Ok(result);
         }
