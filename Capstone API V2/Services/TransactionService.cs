@@ -91,6 +91,8 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.TransactionRepositorySep.GetTransactionByID(dto.TransactionId);
             if(entity != null)
             {
+                entity.DoctorId = dto.DoctorId;
+                entity.PatientId = dto.PatientId;
                 entity.DateEnd = ConvertTimeZone();
                 entity.Location = dto.Location;
                 entity.Note = dto.Note;
