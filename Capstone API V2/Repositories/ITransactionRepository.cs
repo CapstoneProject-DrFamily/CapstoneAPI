@@ -13,5 +13,6 @@ namespace Capstone_API_V2.Repositories
         Task<Transaction> GetTransactionByID(string transactionID);
         IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, int status, DateTime dateStart);
         IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID, int status);
+        bool CheckOldPatient(int patientId, int doctorId);
     }
 }

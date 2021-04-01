@@ -10,7 +10,7 @@ namespace Capstone_API_V2.Services
 {
     public interface IScheduleService : IBaseService<Schedule, ScheduleModel>
     {
-        Task<ScheduleSimpModel> CreateScheduleAsync(ScheduleSimpModel dto);
+        Task<ScheduleSimpModel> CreateScheduleAsync(List<ScheduleSimpModel> dto);
         Task<ScheduleSimpModel> UpdateScheduleAsync(ScheduleSimpModel dto);
     }
 }

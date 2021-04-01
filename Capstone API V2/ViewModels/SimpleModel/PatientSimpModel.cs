@@ -12,6 +12,8 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
         public double Weight { get; set; }
         public string BloodType { get; set; }
         public string Relationship { get; set; }
+        public string Location { get; set; }
+
         //public int AccountId { get; set; }
     }
 }

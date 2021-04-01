@@ -1,4 +1,5 @@
-﻿using Capstone_API_V2.Models;
+﻿using Capstone_API_V2.Helper;
+using Capstone_API_V2.Models;
 using Capstone_API_V2.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -115,6 +116,12 @@ namespace Capstone_API_V2.Repositories
                                                     Note = transaction.Note
                                                 }).OrderByDescending(o => o.DateStart);
             return transactions;
+        }
+
+        public bool CheckOldPatient(int patientId, int doctorId)
+        {
+            var result = _context.Transactions.Any(t => t.PatientId == patientId && t.DoctorId == doctorId && t.Status == Constants.TransactionStatus.DONE);
+            return result;
         }
     }
 }

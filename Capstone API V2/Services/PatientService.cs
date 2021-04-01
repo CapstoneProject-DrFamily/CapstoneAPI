@@ -50,6 +50,7 @@ namespace Capstone_API_V2.Services
                 entity.BloodType = dto.BloodType;
                 //entity.AccountId = dto.AccountId;
                 entity.Relationship = dto.Relationship;
+                entity.Location = dto.Location;
                 entity.UpdBy = fullname;
                 entity.UpdDatetime = ConvertTimeZone();
                 _unitOfWork.PatientRepository.Update(entity);

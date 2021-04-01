@@ -19,7 +19,8 @@ namespace Capstone_API_V2.Models
         {
         }
 
-        public virtual DbSet<AppForm> AppForms { get; set; }
+        public virtual DbSet<AppConfig> AppConfigs { get; set; }
+        public virtual DbSet<Disease> Diseases { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<ExaminationHistory> ExaminationHistories { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
@@ -49,25 +50,101 @@ namespace Capstone_API_V2.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppForm>(entity =>
+            modelBuilder.Entity<AppConfig>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToTable("AppForm");
+                entity.ToTable("AppConfig");
+
+                entity.Property(e => e.AppId)
+                    .HasColumnName("app_id")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AppName)
                     .HasColumnName("app_name")
                     .HasMaxLength(15);
 
-                entity.Property(e => e.FormJson).HasColumnName("form_json");
+                entity.Property(e => e.ConfigValue).HasColumnName("config_value");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
+                entity.Property(e => e.InsBy)
+                    .HasColumnName("insBy")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.InsDatetime)
+                    .HasColumnName("insDatetime")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.UpdBy)
+                    .HasColumnName("updBy")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UpdDatetime)
+                    .HasColumnName("updDatetime")
+                    .HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<Disease>(entity =>
+            {
+                entity.HasKey(e => e.Mãbệnh)
+                    .HasName("PK_Disease1");
+
+                entity.ToTable("Disease");
+
+                entity.Property(e => e.Mãbệnh)
+                    .HasColumnName("MÃBỆNH")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.ChapterName)
+                    .HasColumnName("CHAPTER NAME")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.DiseaseName)
+                    .HasColumnName("DISEASE NAME")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.MainGroupNameI)
+                    .HasColumnName("MAIN GROUP NAME I")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.MãChương)
+                    .HasColumnName("MÃ CHƯƠNG")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.MãLoại)
+                    .HasColumnName("MÃ LOẠI")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.MãNhómBáoCáoBộYTế)
+                    .HasColumnName("MÃ NHÓM BÁO CÁO BỘ Y TẾ")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.MãNhómChính)
+                    .HasColumnName("MÃ NHÓM CHÍNH")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.MãNhómCầnChiTiếtHơn)
+                    .HasColumnName("MÃ NHÓM CẦN CHI TIẾT HƠN")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.TypeName)
+                    .HasColumnName("TYPE NAME")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.TênBệnh)
+                    .HasColumnName("TÊN BỆNH")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.TênChương)
+                    .HasColumnName("TÊN CHƯƠNG")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.TênLoại)
+                    .HasColumnName("TÊN LOẠI")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.TênNhómChính)
+                    .HasColumnName("TÊN NHÓM CHÍNH")
+                    .HasMaxLength(255);
             });
 
             modelBuilder.Entity<Doctor>(entity =>
@@ -129,9 +206,7 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("id")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.AbdominalUltrasound)
-                    .HasColumnName("abdominal_ultrasound")
-                    .HasMaxLength(50);
+                entity.Property(e => e.AbdominalUltrasound).HasColumnName("abdominal_ultrasound");
 
                 entity.Property(e => e.Activity)
                     .HasColumnName("activity")
@@ -139,9 +214,7 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.Advisory).HasColumnName("advisory");
 
-                entity.Property(e => e.BloodChemistry)
-                    .HasColumnName("blood_chemistry")
-                    .HasMaxLength(50);
+                entity.Property(e => e.BloodChemistry).HasColumnName("blood_chemistry");
 
                 entity.Property(e => e.BloodPressure).HasColumnName("blood_pressure");
 
@@ -169,9 +242,7 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.Height).HasColumnName("height");
 
-                entity.Property(e => e.Hematology)
-                    .HasColumnName("hematology")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Hematology).HasColumnName("hematology");
 
                 entity.Property(e => e.History).HasColumnName("history");
 
@@ -255,9 +326,7 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("updDatetime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.UrineBiochemistry)
-                    .HasColumnName("urine_biochemistry")
-                    .HasMaxLength(50);
+                entity.Property(e => e.UrineBiochemistry).HasColumnName("urine_biochemistry");
 
                 entity.Property(e => e.WaistCircumference).HasColumnName("waist_circumference");
 
@@ -588,6 +657,8 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("insDatetime")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.Location).HasColumnName("location");
+
                 entity.Property(e => e.Relationship)
                     .HasColumnName("relationship")
                     .HasMaxLength(50);
@@ -619,6 +690,10 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
+                entity.Property(e => e.DiseaseId)
+                    .HasColumnName("disease_id")
+                    .HasMaxLength(255);
+
                 entity.Property(e => e.InsBy)
                     .HasColumnName("insBy")
                     .HasMaxLength(50);
@@ -627,6 +702,8 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("insDatetime")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.IsTemplate).HasColumnName("isTemplate");
+
                 entity.Property(e => e.UpdBy)
                     .HasColumnName("updBy")
                     .HasMaxLength(50);
@@ -634,6 +711,11 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.UpdDatetime)
                     .HasColumnName("updDatetime")
                     .HasColumnType("datetime");
+
+                entity.HasOne(d => d.Disease)
+                    .WithMany(p => p.Prescriptions)
+                    .HasForeignKey(d => d.DiseaseId)
+                    .HasConstraintName("FK_Prescription_Disease");
 
                 entity.HasOne(d => d.PrescriptionNavigation)
                     .WithOne(p => p.Prescription)

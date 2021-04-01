@@ -11,6 +11,7 @@ namespace Capstone_API_V2.Services
     public interface ITransactionService : IBaseService<Transaction, TransactionModel>
     {
         Task<TransactionSimpModel> CreateTransaction(TransactionSimpModel dto);
+        Task<List<TransactionSimpModel>> CreateTransactions(List<TransactionSimpModel> dtos);
         Task<TransactionPutModel> UpdateTransaction(TransactionPutModel dto);
         Task<List<TransactionModel>> GetAllTransaction();
         Task<TransactionModel> GetTransactionByID(string transactionID);

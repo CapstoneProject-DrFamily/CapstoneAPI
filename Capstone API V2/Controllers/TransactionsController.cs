@@ -92,6 +92,17 @@ namespace Capstone_API_V2.Controllers
             return BadRequest();
         }
 
+        [HttpPost("GeneratedSchedule")]
+        public async Task<IActionResult> CreateTransactions([FromBody] List<TransactionSimpModel> model)
+        {
+            var result = await _transactionService.CreateTransactions(model);
+            if (result != null)
+            {
+                return Created("", result);
+            }
+            return BadRequest();
+        }
+
         [HttpDelete("{transactionId}")]
         public async Task<IActionResult> Delete(string transactionId)
         {

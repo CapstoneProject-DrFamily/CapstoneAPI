@@ -19,18 +19,21 @@ namespace Capstone_API_V2.Services
 
         protected override IGenericRepository<Schedule> _repository => _unitOfWork.ScheduleRepository;
 
-        public async Task<ScheduleSimpModel> CreateScheduleAsync(ScheduleSimpModel dto)
+        public async Task<ScheduleSimpModel> CreateScheduleAsync(List<ScheduleSimpModel> dto)
         {
-            var entity = _mapper.Map<Schedule>(dto);
-            entity.Disabled = false;
-            entity.InsBy = dto.InsBy;
-            entity.InsDatetime = ConvertTimeZone();
-            entity.UpdDatetime = ConvertTimeZone();
+            foreach(var schedule in dto)
+            {
+                var entity = _mapper.Map<Schedule>(schedule);
+                entity.Disabled = false;
+                entity.InsBy = schedule.InsBy;
+                entity.InsDatetime = ConvertTimeZone();
+                entity.UpdDatetime = ConvertTimeZone();
 
-            _repository.Add(entity);
+                _repository.Add(entity);
+            }
             await _unitOfWork.SaveAsync();
 
-            return _mapper.Map<ScheduleSimpModel>(entity);
+            return _mapper.Map<ScheduleSimpModel>(dto);
         }
 
         public async Task<ScheduleSimpModel> UpdateScheduleAsync(ScheduleSimpModel dto)

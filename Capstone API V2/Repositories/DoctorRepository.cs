@@ -19,7 +19,7 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<DoctorRequestModel> GetRequestDoctorInfo(int profileID)
         {
-            var doctorInfo = await _context.Doctors.Where(x => x.DoctorNavigation.ProfileId == profileID && x.Disabled == false)
+            var doctorInfo = await _context.Doctors.Where(x => x.DoctorNavigation.ProfileId == profileID && x.Disabled == false).Include(x => x.Transactions).Include(x => x.Feedbacks)
                                        .Select(x => new DoctorRequestModel
                                        {
                                            DoctorId = x.DoctorId,
@@ -27,8 +27,10 @@ namespace Capstone_API_V2.Repositories
                                            DoctorName = x.DoctorNavigation.FullName,
                                            DoctorSpecialty = x.Specialty.Name,
                                            DoctorServiceId = x.SpecialtyId,
-                                       })
-                                       .SingleOrDefaultAsync();
+                                           RatingPoint = (from feedback in x.Feedbacks where x.Feedbacks.Count != 0 select feedback.RatingPoint).Average(),
+                                           BookedCount = (from transaction in x.Transactions  where x.Transactions.SingleOrDefault().Status == 3 select transaction).Count(),
+                                           FeedbackCount = x.Feedbacks.Count()
+                                       }).SingleOrDefaultAsync();
             return doctorInfo;
         }
 

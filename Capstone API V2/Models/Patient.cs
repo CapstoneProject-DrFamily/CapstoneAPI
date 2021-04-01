@@ -25,6 +25,7 @@ namespace Capstone_API_V2.Models
         public DateTime? UpdDatetime { get; set; }
         public string Relationship { get; set; }
         public bool? Disabled { get; set; }
+        public string Location { get; set; }
 
         public virtual Profile PatientNavigation { get; set; }
         public virtual HealthRecord HealthRecord { get; set; }

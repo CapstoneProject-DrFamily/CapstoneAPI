@@ -9,6 +9,8 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
     {
         public string PrescriptionId { get; set; }
         public string Description { get; set; }
+        public bool? IsTemplate { get; set; }
+        public string DiseaseId { get; set; }
         public string InsBy { get; set; }
         public string UpdBy { get; set; }
         public ICollection<PrescriptionDetailModel> PrescriptionDetails { get; set; }

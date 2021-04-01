@@ -21,6 +21,7 @@ namespace Capstone_API_V2.Services
 
         protected override IGenericRepository<Transaction> _repository => _unitOfWork.TransactionRepository;
 
+
         public async Task<TransactionSimpModel> CreateTransaction(TransactionSimpModel dto)
         {
             var transaction = new Transaction
@@ -57,6 +58,31 @@ namespace Capstone_API_V2.Services
             return _mapper.Map<TransactionSimpModel>(dto);
         }
 
+        public async Task<List<TransactionSimpModel>> CreateTransactions(List<TransactionSimpModel> dtos)
+        {
+            foreach(var dto in dtos)
+            {
+                var transaction = new Transaction
+                {
+                    TransactionId = "TS-" + Guid.NewGuid().ToString(),
+                    DoctorId = dto.DoctorId,
+                    PatientId = dto.PatientId != 0 ? dto.PatientId : null,
+                    DateStart = ConvertTimeZone(),
+                    ServiceId = dto.ServiceId,
+                    Location = dto.Location,
+                    Note = dto.Note,
+                    Status = TransactionStatus.OPEN,
+                    Disabled = false
+                };
+                dto.TransactionId = transaction.TransactionId;
+                dto.DateStart = transaction.DateStart;
+
+                _unitOfWork.TransactionRepository.Add(_mapper.Map<Transaction>(transaction));
+            }
+            await _unitOfWork.SaveAsync();
+            return dtos;
+        }
+
         public async Task<List<TransactionModel>> GetAllTransaction()
         {
             List<TransactionModel> transactions = new List<TransactionModel>();
@@ -72,7 +98,9 @@ namespace Capstone_API_V2.Services
         public async Task<TransactionModel> GetTransactionByID(string transactionID)
         {
             var entity = await _unitOfWork.TransactionRepositorySep.GetTransactionByID(transactionID);
-            return _mapper.Map<TransactionModel>(entity);
+            var result = _mapper.Map<TransactionModel>(entity);
+            result.isOldPatient = _unitOfWork.TransactionRepositorySep.CheckOldPatient(result.PatientId, result.DoctorId);
+            return result;
         }
 
         public override async Task<bool> DeleteAsync(object id)

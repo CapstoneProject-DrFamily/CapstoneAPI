@@ -45,11 +45,28 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("Patients/{patientId}")]
-        public async Task<IActionResult> Get([FromRoute]int patientId, [FromQuery] ResourceParameter model)
+        [HttpGet("Patients/{patientId}/Upcoming")]
+        public async Task<IActionResult> GetUpcomingSchedule([FromRoute]int patientId, [FromQuery] ResourceParameter model)
         {
             var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: f => f.Disabled == false && f.Status == true && f.ScheduleNavigation.Status == 0 && f.ScheduleNavigation.PatientId == patientId,
+                filter: f => _scheduleService.ConvertTimeZone() >= f.AppointmentTime && f.Disabled == false && f.Status == true && f.ScheduleNavigation.Status == 0 && f.ScheduleNavigation.PatientId == patientId,
+                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,ScheduleNavigation,ScheduleNavigation.Service",
+                orderBy: o => o.OrderBy(d => d.AppointmentTime));
+            var result = new
+            {
+                schedules,
+                schedules.TotalPages,
+                schedules.HasPreviousPage,
+                schedules.HasNextPage
+            };
+            return Ok(result);
+        }
+
+        [HttpGet("Patients/{patientId}/Overtime")]
+        public async Task<IActionResult> GetOvertimeSchedule([FromRoute]int patientId, [FromQuery] ResourceParameter model)
+        {
+            var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
+                filter: f => _scheduleService.ConvertTimeZone() < f.AppointmentTime && f.Disabled == false && f.Status == true && f.ScheduleNavigation.Status == 0 && f.ScheduleNavigation.PatientId == patientId,
                 includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,ScheduleNavigation,ScheduleNavigation.Service",
                 orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new
@@ -74,7 +91,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ScheduleSimpModel model)
+        public async Task<IActionResult> Create([FromBody] List<ScheduleSimpModel> model)
         {
             var result = await _scheduleService.CreateScheduleAsync(model);
             if (result != null)

@@ -21,6 +21,7 @@ namespace Capstone_API_V2.ViewModels
         public bool Disabled { get; set; }
         public int ExamId { get; set; }
         public int ServiceId { get; set; }
+        public bool isOldPatient { get; set; }
         public DoctorModel Doctor { get; set; }
         public ExaminationHistoryModel ExaminationHistory { get; set; }
         public PatientModel Patient { get; set; }

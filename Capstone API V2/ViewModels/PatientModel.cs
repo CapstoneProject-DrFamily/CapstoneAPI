@@ -16,6 +16,7 @@ namespace Capstone_API_V2.ViewModels
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
+        public string Location { get; set; }
         public string Relationship { get; set; }
         //public int AccountId { get; set; }
         public ProfileModel PatientNavigation { get; set; }
