@@ -14,20 +14,25 @@ namespace Capstone_API_V2.Models
             Prescriptions = new HashSet<Prescription>();
         }
 
-        public string Mãbệnh { get; set; }
-        public string MãChương { get; set; }
+        public string DiseaseCode { get; set; }
+        public string ChapterCode { get; set; }
         public string ChapterName { get; set; }
         public string TênChương { get; set; }
-        public string MãNhómChính { get; set; }
-        public string MainGroupNameI { get; set; }
+        public string MainGroupCode { get; set; }
+        public string MainGroupName { get; set; }
         public string TênNhómChính { get; set; }
-        public string MãLoại { get; set; }
+        public string TypeCode { get; set; }
         public string TypeName { get; set; }
         public string TênLoại { get; set; }
         public string DiseaseName { get; set; }
         public string TênBệnh { get; set; }
         public string MãNhómBáoCáoBộYTế { get; set; }
         public string MãNhómCầnChiTiếtHơn { get; set; }
+        public bool? Disabled { get; set; }
+        public string InsBy { get; set; }
+        public DateTime? InsDatetime { get; set; }
+        public string UpdBy { get; set; }
+        public DateTime? UpdDatetime { get; set; }
 
         public virtual ICollection<Prescription> Prescriptions { get; set; }
     }

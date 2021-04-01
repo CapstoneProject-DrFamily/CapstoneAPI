@@ -22,14 +22,14 @@ namespace Capstone_API_V2.UnitOfWork
         IGenericRepository<SymptomDetail> SymptomDetailRepository { get; }
         IGenericRepository<Transaction> TransactionRepository { get; }
         IGenericRepository<User> UserGenRepository { get; }
+        IGenericRepository<Disease> DiseaseRepository { get; }
         IUserRepository UserRepository { get; }
         IPatientRepository PatientRepositorySep { get; set; }
         IDoctorRepository DoctorRepositorySep { get; set; }
         IGenericRepository<ExaminationHistory> ExaminationHistoryRepository { get; }
         ITransactionRepository TransactionRepositorySep { get; }
         IPrescriptionRepository PrescriptionRepositorySep { get; set; }
-
-
+        IDiseaseRepository DiseaseRepositorySep { get; set; }
 
         Task<int> SaveAsync();
     }

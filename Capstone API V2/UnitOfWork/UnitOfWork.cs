@@ -48,6 +48,8 @@ namespace Capstone_API_V2.UnitOfWork
 
         public IGenericRepository<User> UserGenRepository { get; set; }
 
+        public IGenericRepository<Disease> DiseaseRepository { get; set; }
+
         public IUserRepository UserRepository { get; set; }
 
         public IPatientRepository PatientRepositorySep { get; set; }
@@ -59,6 +61,8 @@ namespace Capstone_API_V2.UnitOfWork
         public ITransactionRepository TransactionRepositorySep { get; set; }
 
         public IPrescriptionRepository PrescriptionRepositorySep { get ; set; }
+
+        public IDiseaseRepository DiseaseRepositorySep { get; set; }
 
         private void InitRepository()
         {
@@ -84,6 +88,8 @@ namespace Capstone_API_V2.UnitOfWork
             ExaminationHistoryRepository = new GenericRepository<ExaminationHistory>(_context);
             TransactionRepositorySep = new TransactionRepository(_context);
             PrescriptionRepositorySep = new PrescriptionRepository(_context);
+            DiseaseRepository = new GenericRepository<Disease>(_context);
+            DiseaseRepositorySep = new DiseaseRepository(_context);
 
         }
 

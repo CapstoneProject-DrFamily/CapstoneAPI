@@ -85,49 +85,59 @@ namespace Capstone_API_V2.Models
 
             modelBuilder.Entity<Disease>(entity =>
             {
-                entity.HasKey(e => e.Mãbệnh)
+                entity.HasKey(e => e.DiseaseCode)
                     .HasName("PK_Disease1");
 
                 entity.ToTable("Disease");
 
-                entity.Property(e => e.Mãbệnh)
-                    .HasColumnName("MÃBỆNH")
+                entity.Property(e => e.DiseaseCode)
+                    .HasColumnName("disease_code")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.ChapterCode)
+                    .HasColumnName("chapter_code")
                     .HasMaxLength(255);
 
                 entity.Property(e => e.ChapterName)
-                    .HasColumnName("CHAPTER NAME")
+                    .HasColumnName("chapter_name")
                     .HasMaxLength(255);
+
+                entity.Property(e => e.Disabled).HasColumnName("disabled");
 
                 entity.Property(e => e.DiseaseName)
-                    .HasColumnName("DISEASE NAME")
+                    .HasColumnName("disease_name")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.MainGroupNameI)
-                    .HasColumnName("MAIN GROUP NAME I")
+                entity.Property(e => e.InsBy)
+                    .HasColumnName("insBy")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.InsDatetime)
+                    .HasColumnName("insDatetime")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.MainGroupCode)
+                    .HasColumnName("main_group_code")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.MãChương)
-                    .HasColumnName("MÃ CHƯƠNG")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.MãLoại)
-                    .HasColumnName("MÃ LOẠI")
+                entity.Property(e => e.MainGroupName)
+                    .HasColumnName("main_group_name")
                     .HasMaxLength(255);
 
                 entity.Property(e => e.MãNhómBáoCáoBộYTế)
                     .HasColumnName("MÃ NHÓM BÁO CÁO BỘ Y TẾ")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.MãNhómChính)
-                    .HasColumnName("MÃ NHÓM CHÍNH")
-                    .HasMaxLength(255);
-
                 entity.Property(e => e.MãNhómCầnChiTiếtHơn)
                     .HasColumnName("MÃ NHÓM CẦN CHI TIẾT HƠN")
                     .HasMaxLength(255);
 
+                entity.Property(e => e.TypeCode)
+                    .HasColumnName("type_code")
+                    .HasMaxLength(255);
+
                 entity.Property(e => e.TypeName)
-                    .HasColumnName("TYPE NAME")
+                    .HasColumnName("type_name")
                     .HasMaxLength(255);
 
                 entity.Property(e => e.TênBệnh)
@@ -145,6 +155,14 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.TênNhómChính)
                     .HasColumnName("TÊN NHÓM CHÍNH")
                     .HasMaxLength(255);
+
+                entity.Property(e => e.UpdBy)
+                    .HasColumnName("updBy")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UpdDatetime)
+                    .HasColumnName("updDatetime")
+                    .HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Doctor>(entity =>
@@ -900,6 +918,8 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
                 entity.Property(e => e.Disabled).HasColumnName("disabled");
+
+                entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.InsBy)
                     .HasColumnName("insBy")

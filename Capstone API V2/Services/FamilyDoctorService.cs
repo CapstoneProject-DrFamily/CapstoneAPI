@@ -44,6 +44,7 @@ namespace Capstone_API_V2.Services
                 entity.ServiceName = dto.ServiceName;
                 entity.ServicePrice = dto.ServicePrice;
                 entity.ServiceDescription = dto.ServiceDescription;
+                entity.Image = dto.Image;
                 entity.UpdBy = Constants.Roles.ROLE_ADMIN;
                 entity.UpdDatetime = ConvertTimeZone();
 
