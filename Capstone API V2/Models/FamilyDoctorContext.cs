@@ -718,8 +718,6 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("insDatetime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.IsTemplate).HasColumnName("isTemplate");
-
                 entity.Property(e => e.UpdBy)
                     .HasColumnName("updBy")
                     .HasMaxLength(50);

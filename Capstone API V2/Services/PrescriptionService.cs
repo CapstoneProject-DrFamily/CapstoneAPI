@@ -25,7 +25,6 @@ namespace Capstone_API_V2.Services
             {
                 PrescriptionId = dto.PrescriptionId,
                 Description = dto.Description,
-                IsTemplate = dto.IsTemplate,
                 DiseaseId = dto.DiseaseId,
                 InsBy = dto.InsBy,
                 InsDatetime = ConvertTimeZone(),
@@ -101,7 +100,6 @@ namespace Capstone_API_V2.Services
 
             if (entity != null)
             {
-                entity.IsTemplate = dto.IsTemplate;
                 entity.DiseaseId = dto.DiseaseId;
                 entity.UpdBy = dto.UpdBy;
                 entity.UpdDatetime = ConvertTimeZone();
