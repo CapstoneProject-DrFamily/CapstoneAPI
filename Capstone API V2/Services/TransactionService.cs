@@ -27,12 +27,12 @@ namespace Capstone_API_V2.Services
             var transaction = new Transaction
             {
                 TransactionId = "TS-" + Guid.NewGuid().ToString(),
-                //DoctorId = dto.DoctorId,
-                DoctorId = dto.DoctorId != 0 ? dto.DoctorId : null,
+                DoctorId = dto.DoctorId,
+                //DoctorId = dto.DoctorId != 0 ? dto.DoctorId : null,
                 PatientId = dto.PatientId != 0 ? dto.PatientId : null,
                 DateStart = ConvertTimeZone(),
-                //ServiceId = dto.ServiceId,
-                ServiceId = dto.ServiceId != 0 ? dto.ServiceId : null,
+                ServiceId = dto.ServiceId,
+                //ServiceId = dto.ServiceId != 0 ? dto.ServiceId : null,
                 Location = dto.Location,
                 Note = dto.Note,
                 Status = TransactionStatus.OPEN,
