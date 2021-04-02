@@ -50,6 +50,8 @@ namespace Capstone_API_V2.UnitOfWork
 
         public IGenericRepository<Disease> DiseaseRepository { get; set; }
 
+        public IGenericRepository<AppConfig> AppConfigRepository { get; set; }
+
         public IUserRepository UserRepository { get; set; }
 
         public IPatientRepository PatientRepositorySep { get; set; }
@@ -82,6 +84,7 @@ namespace Capstone_API_V2.UnitOfWork
             SymptomDetailRepository = new GenericRepository<SymptomDetail>(_context);
             TransactionRepository = new GenericRepository<Transaction>(_context);
             UserGenRepository = new GenericRepository<User>(_context);
+            AppConfigRepository = new GenericRepository<AppConfig>(_context);
             UserRepository = new UserRepository(_context);
             PatientRepositorySep = new PatientRepository(_context);
             DoctorRepositorySep = new DoctorRepository(_context);

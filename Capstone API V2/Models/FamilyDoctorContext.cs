@@ -52,13 +52,11 @@ namespace Capstone_API_V2.Models
         {
             modelBuilder.Entity<AppConfig>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.AppId);
 
                 entity.ToTable("AppConfig");
 
-                entity.Property(e => e.AppId)
-                    .HasColumnName("app_id")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.AppId).HasColumnName("app_id");
 
                 entity.Property(e => e.AppName)
                     .HasColumnName("app_name")

@@ -23,6 +23,7 @@ namespace Capstone_API_V2.UnitOfWork
         IGenericRepository<Transaction> TransactionRepository { get; }
         IGenericRepository<User> UserGenRepository { get; }
         IGenericRepository<Disease> DiseaseRepository { get; }
+        IGenericRepository<AppConfig> AppConfigRepository { get; }
         IUserRepository UserRepository { get; }
         IPatientRepository PatientRepositorySep { get; set; }
         IDoctorRepository DoctorRepositorySep { get; set; }

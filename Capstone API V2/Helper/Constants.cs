@@ -15,6 +15,8 @@ namespace Capstone_API_V2.Helper
             public const string ROLE_ADMIN = "Admin";
             public const string ROLE_PATIENT = "Patient";
             public const string ROLE_DOCTOR = "Doctor";
+            public const int PATIENT_APP_ID = 1;
+            public const int DOCTOR_APP_ID = 2;
         }
 
         public struct TransactionStatus

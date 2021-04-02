@@ -95,6 +95,9 @@ namespace Capstone_API_V2.AutoMapper
 
             CreateMap<Disease, DiseaseModel>();
             CreateMap<DiseaseModel, Disease>();
+
+            CreateMap<AppConfig, AppConfigModel>();
+            CreateMap<AppConfigModel, AppConfig>();
         }
     }
 }

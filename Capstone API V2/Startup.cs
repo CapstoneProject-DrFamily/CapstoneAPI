@@ -52,6 +52,7 @@ namespace Capstone_API_V2
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IDiseaseService, DiseaseService>();
+            services.AddScoped<IAppConfigService, AppConfigService>();
             _ = services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
             services.AddSwaggerGen(gen =>

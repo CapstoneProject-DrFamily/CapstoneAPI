@@ -59,7 +59,7 @@ namespace Capstone_API_V2.Services
         {
             var entity = await _repository.GetById(id);
 
-            if (entity == null || entity.Disabled == true) throw new Exception("Not found entity object with id: " + id);
+            if (entity == null || entity.Disabled == true) throw new Exception("Not found disease with id: " + id);
 
             entity.Disabled = true;
 
