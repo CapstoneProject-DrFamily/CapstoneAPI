@@ -81,10 +81,11 @@ namespace Capstone_API_V2.Services
             if(doctor != null)
             {
                 var ratingPoint = (from feedback in doctor.Feedbacks where doctor.Feedbacks.Count != 0 select feedback.RatingPoint).Average();
-                var totalDoneTransaction = (from transaction in doctor.Transactions where doctor.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count();
+                var bookedCount = (from transaction in doctor.Transactions where doctor.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count();
                 var result = _mapper.Map<DoctorModel>(doctor);
                 result.RatingPoint = ratingPoint;
-                result.TotalDoneTransaction = totalDoneTransaction;
+                result.BookedCount = bookedCount;
+                //result.TotalDoneTransaction = totalDoneTransaction;
 
                 return result;
             }

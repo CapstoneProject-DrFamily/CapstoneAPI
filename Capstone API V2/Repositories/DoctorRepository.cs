@@ -1,4 +1,5 @@
-﻿using Capstone_API_V2.Models;
+﻿using Capstone_API_V2.Helper;
+using Capstone_API_V2.Models;
 using Capstone_API_V2.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,7 +29,7 @@ namespace Capstone_API_V2.Repositories
                                            DoctorSpecialty = x.Specialty.Name,
                                            DoctorServiceId = x.SpecialtyId,
                                            RatingPoint = (from feedback in x.Feedbacks where x.Feedbacks.Count != 0 select feedback.RatingPoint).Average(),
-                                           BookedCount = (from transaction in x.Transactions  where x.Transactions.SingleOrDefault().Status == 3 select transaction).Count(),
+                                           BookedCount = (from transaction in x.Transactions where x.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count(),
                                            FeedbackCount = x.Feedbacks.Count()
                                        }).SingleOrDefaultAsync();
             return doctorInfo;
