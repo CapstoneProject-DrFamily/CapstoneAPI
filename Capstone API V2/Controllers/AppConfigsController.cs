@@ -65,8 +65,10 @@ namespace Capstone_API_V2.Controllers
                 {
                     var jObject = JsonConvert.DeserializeObject<JObject>(appConfigModel.ConfigValue);
                     var relationships = jObject.GetValue("relationships");
+                    var distances = jObject.GetValue("distances");
 
                     result.RelationShips = relationships.ToObject<List<string>>();
+                    result.Distances = distances.ToObject<List<double>>();
                 }
 
                 result.AppId = appConfigModel.AppId;
