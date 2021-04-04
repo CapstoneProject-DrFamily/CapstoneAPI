@@ -25,7 +25,7 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            //var result = await _doctorService.GetAll(includeProperties: "Specialty,Profile").ToListAsync();
+            //var result = await _doctorService.GetAll(filter: f => f.SpecialtyId == 1 && f.Disabled == false && f.DoctorNavigation.Account.Disabled == false && f.Schedules.Count > 0).ToListAsync();
             var result = await _doctorService.GetAllDoctor();
             return Ok(result);
         }
@@ -66,7 +66,7 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("specialties/{specialtyId}")]
         public async Task<IActionResult> GetDoctorBySpecialtyId([FromRoute]int specialtyId, [FromQuery]ResourceParameter model)
         {
-            var doctors = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
+            /*var doctors = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
                 filter: f => f.SpecialtyId == specialtyId && f.Disabled == false && f.DoctorNavigation.Account.Disabled == false && f.Schedules.Count > 0,
                 includeProperties: "Specialty,DoctorNavigation,DoctorNavigation.Account,Schedules", orderBy: o => o.OrderBy(s => s.Schedules.SingleOrDefault().AppointmentTime));
 
@@ -76,7 +76,9 @@ namespace Capstone_API_V2.Controllers
                 var schedules = doctor.Schedules;
                 var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= localTime && schedule.Status == false select schedule;
                 doctor.Schedules = querySchedules.OrderBy(o => o.AppointmentTime).ToList();
-            }
+            }*/
+
+            var doctors = await _doctorService.GetBySpecialtyAsync(specialtyId, model);
 
             var result = new
             {

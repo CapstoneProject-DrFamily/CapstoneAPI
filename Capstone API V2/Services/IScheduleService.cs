@@ -12,5 +12,6 @@ namespace Capstone_API_V2.Services
     {
         Task<List<ScheduleSimpModel>> CreateScheduleAsync(List<ScheduleSimpModel> dto);
         Task<ScheduleSimpModel> UpdateScheduleAsync(ScheduleSimpModel dto);
+        bool checkIsOldPatient(int doctorId, int patientId);
     }
 }

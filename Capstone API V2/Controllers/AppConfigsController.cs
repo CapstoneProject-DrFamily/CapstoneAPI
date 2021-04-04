@@ -48,7 +48,7 @@ namespace Capstone_API_V2.Controllers
                     var prsTemplate = jObject.GetValue("prescriptionTemplates");
 
                     result.Timeout = timeout.ToObject<int>();
-                    result.PrescriptionTemplates = prsTemplate.ToObject<Dictionary<string, PrescriptionSimpModel>>();
+                    result.PrescriptionTemplates = prsTemplate.ToObject<Dictionary<string, List<PrescriptionSimpModel>>>();
                 }
 
                 result.AppId = appConfigModel.AppId;
@@ -147,6 +147,7 @@ namespace Capstone_API_V2.Controllers
         {
             JObject @object = new JObject();
             @object.Add("relationships", JToken.FromObject(model.RelationShips));
+            @object.Add("distances", JToken.FromObject(model.Distances));
 
             var configValue = JsonConvert.SerializeObject(@object);
 

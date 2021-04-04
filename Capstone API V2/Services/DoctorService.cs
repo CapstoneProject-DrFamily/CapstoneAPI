@@ -8,17 +8,45 @@ using Capstone_API_V2.ViewModels.SimpleModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Capstone_API_V2.Services
 {
     public class DoctorService : BaseService<Doctor, DoctorModel>, IDoctorService
     {
+        private double? ratingPoint;
+        private int bookedCount, feedbackCount;
+
         public DoctorService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
         protected override IGenericRepository<Doctor> _repository => _unitOfWork.DoctorRepository;
+
+        public async Task<PaginatedList<DoctorModel>> GetBySpecialtyAsync(int specialtyId, ResourceParameter model)
+        {
+            //var entity = await _repository.Get(pageIndex, pageSize, filter, orderBy, includeProperties);
+
+            var lstDoctor = await _unitOfWork.DoctorRepositorySep.GetBySpecialtyId(specialtyId);
+            var doctors = _mapper.Map<List<DoctorModel>>(lstDoctor);
+            foreach (var doctor in doctors)
+            {
+                var schedules = doctor.Schedules;
+                var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= ConvertTimeZone() && schedule.Status == false select schedule;
+                doctor.Schedules = querySchedules.OrderBy(o => o.AppointmentTime).ToList();
+
+                /*var ratingPoint = (from feedback in doctor.Feedbacks where doctor.Feedbacks.Count != 0 select feedback.RatingPoint).Average();
+                var bookedCount = (from transaction in doctor.Transactions where doctor.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count();*/
+                CalculateRatingDoctor(doctorId: doctor.DoctorId);
+
+                doctor.RatingPoint = ratingPoint;
+                doctor.BookedCount = bookedCount;
+                doctor.FeedbackCount = feedbackCount;
+            }
+            return PaginatedList<DoctorModel>.GetPage(doctors, model.PageIndex, model.PageSize).Result;
+            //return await PaginatedList<DoctorModel>.CreateAsync(doctors, model.PageIndex, model.PageSize); ;
+        }
 
         public async Task<DoctorSimpModel> CreateDoctor(DoctorSimpModel dto)
         {
@@ -102,6 +130,17 @@ namespace Capstone_API_V2.Services
         {
             var doctors = await _unitOfWork.DoctorRepositorySep.GetWaitingDoctor();
             return _mapper.Map<List<DoctorModel>>(doctors);
+        }
+
+        private void CalculateRatingDoctor(int doctorId)
+        {
+            var feedbacks = _unitOfWork.FeedbackRepository.GetAll(filter: f => f.DoctorId == doctorId);
+            var avgRatingPoint = (from feedback in feedbacks where feedbacks.Count() > 0 select feedback.RatingPoint).Average();
+            var transactions = _unitOfWork.TransactionRepository.GetAll(filter: f => f.DoctorId == doctorId && f.Disabled == false && f.Status == Constants.TransactionStatus.DONE);
+            
+            ratingPoint = avgRatingPoint;
+            bookedCount = transactions.Count();
+            feedbackCount = feedbacks.Count();
         }
     }
 }

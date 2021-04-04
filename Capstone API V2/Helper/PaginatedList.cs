@@ -28,5 +28,12 @@ namespace Capstone_API_V2.Helper
             var entities = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PaginatedList<T>(entities, count, pageIndex, pageSize);
         }
+
+        public static Task<PaginatedList<T>> GetPage(IList<T> list, int pageIndex, int pageSize)
+        {
+            var count = list.Count();
+            var entities = list.Skip((pageIndex -1) * pageSize).Take(pageSize).ToList();
+            return Task.FromResult(new PaginatedList<T>(entities, count, pageIndex, pageSize));
+        }
     }
 }

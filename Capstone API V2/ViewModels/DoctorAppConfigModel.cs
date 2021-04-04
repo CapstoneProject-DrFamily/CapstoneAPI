@@ -11,6 +11,6 @@ namespace Capstone_API_V2.ViewModels
         public int AppId { get; set; }
         public string AppName { get; set; }
         public int Timeout { get; set; }
-        public Dictionary<string, PrescriptionSimpModel> PrescriptionTemplates { get; set; }
+        public Dictionary<string, List<PrescriptionSimpModel>> PrescriptionTemplates { get; set; }
     }
 }

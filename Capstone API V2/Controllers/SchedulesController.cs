@@ -28,6 +28,13 @@ namespace Capstone_API_V2.Controllers
                 orderBy: o => o.OrderBy(s => s.AppointmentTime), 
                 includeProperties: "ScheduleNavigation,ScheduleNavigation.Doctor,Doctor.DoctorNavigation,ScheduleNavigation.Patient,ScheduleNavigation.Patient.PatientNavigation,ScheduleNavigation.Service")
                 .ToListAsync();
+            foreach(var schedule in result)
+            {
+                var docId = schedule.DoctorId.GetValueOrDefault();
+                var patientId = schedule.ScheduleNavigation.PatientId.GetValueOrDefault();
+
+                schedule.ScheduleNavigation.isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
+            }
             return Ok(result);
         }
 

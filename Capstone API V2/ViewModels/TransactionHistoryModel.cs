@@ -21,6 +21,7 @@ namespace Capstone_API_V2.ViewModels
         public string Relationship { get; set; }
         public string ServiceName { get; set; }
         public decimal? ServicePrice { get; set; }
+        public bool isOldPatient { get; set; }
         /*public bool Disabled { get; set; }
         public int ExamId { get; set; }
         public int ServiceId { get; set; }*/

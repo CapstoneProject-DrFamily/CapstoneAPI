@@ -66,5 +66,10 @@ namespace Capstone_API_V2.Services
 
             return await _unitOfWork.SaveAsync() > 0;
         }
+
+        public bool checkIsOldPatient(int doctorId, int patientId)
+        {
+            return _unitOfWork.TransactionRepositorySep.CheckOldPatient(patientId, doctorId);
+        }
     }
 }

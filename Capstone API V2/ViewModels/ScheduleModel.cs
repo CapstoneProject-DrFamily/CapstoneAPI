@@ -12,6 +12,7 @@ namespace Capstone_API_V2.ViewModels
         public int? DoctorId { get; set; }
         public DateTime? AppointmentTime { get; set; }
         public bool? Status { get; set; }
+        public bool? Disabled { get; set; }
         public string InsBy { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
