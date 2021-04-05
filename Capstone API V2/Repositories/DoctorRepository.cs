@@ -32,6 +32,10 @@ namespace Capstone_API_V2.Repositories
                                            BookedCount = (from transaction in x.Transactions where x.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count(),
                                            FeedbackCount = x.Feedbacks.Count()
                                        }).SingleOrDefaultAsync();
+            if(doctorInfo.RatingPoint == null)
+            {
+                doctorInfo.RatingPoint = 0;
+            }
             return doctorInfo;
         }
 
