@@ -10,6 +10,6 @@ namespace Capstone_API_V2.ViewModels
         public int AppId { get; set; }
         public string AppName { get; set; }
         public List<string> RelationShips { get; set; }
-        public List<double> Distances { get; set; }
+        public List<int> Distances { get; set; }
     }
 }

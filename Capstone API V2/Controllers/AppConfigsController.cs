@@ -48,7 +48,7 @@ namespace Capstone_API_V2.Controllers
                     var prsTemplate = jObject.GetValue("prescriptionTemplates");
 
                     result.Timeout = timeout.ToObject<int>();
-                    result.PrescriptionTemplates = prsTemplate.ToObject<Dictionary<string, List<PrescriptionSimpModel>>>();
+                    result.PrescriptionTemplates = prsTemplate.ToObject<Dictionary<string, PrescriptionSimpModel>>();
                 }
 
                 result.AppId = appConfigModel.AppId;
@@ -68,7 +68,7 @@ namespace Capstone_API_V2.Controllers
                     var distances = jObject.GetValue("distances");
 
                     result.RelationShips = relationships.ToObject<List<string>>();
-                    result.Distances = distances.ToObject<List<double>>();
+                    result.Distances = distances.ToObject<List<int>>();
                 }
 
                 result.AppId = appConfigModel.AppId;
