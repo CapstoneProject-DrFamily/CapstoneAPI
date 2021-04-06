@@ -138,13 +138,6 @@ namespace Capstone_API_V2.Services
         public async Task SendEmailAsync(string toEmail, string toName, bool waiting, bool disabled)
         {
             var sendGridClient = new SendGridClient(Constants.EmailConfig.API_KEY);
-            /*string toEmail = "nguyenphu036@gmail.com";
-            var from = new EmailAddress("taitpse130083@fpt.edu.vn", "AAA");
-            var subject = "Accept Doctor";
-            var to = new EmailAddress(toEmail, "BBB");
-            var plainContent = "Doctor is accepted";
-            var htmlContent = "<h1>Hello Doctor</h1>";*/
-            //var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
 
             var sendGridMessage = new SendGridMessage();
             sendGridMessage.SetFrom(Constants.EmailConfig.FROM_EMAIL, Constants.EmailConfig.FROM_NAME);

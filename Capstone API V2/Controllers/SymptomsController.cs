@@ -8,9 +8,6 @@ using Capstone_API_V2.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace Capstone_API_V2.Controllers
 {
@@ -28,28 +25,6 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _symptomService.GetAll(filter: f => f.Disabled == false).ToListAsync();
-            
-            var sendGridClient = new SendGridClient("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");
-            /*string toEmail = "nguyenphu036@gmail.com";
-            var from = new EmailAddress("taitpse130083@fpt.edu.vn", "AAA");
-            var subject = "Accept Doctor";
-            var to = new EmailAddress(toEmail, "BBB");
-            var plainContent = "Doctor is accepted";
-            var htmlContent = "<h1>Hello Doctor</h1>";*/
-
-            var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetFrom("taitpse130083@fpt.edu.vn", "FamilyDoctor");
-            sendGridMessage.AddTo("nguyenphu036@gmail.com", "Tai");
-            sendGridMessage.SetTemplateId("d-6fcc2d8f17f54a12927dddfe30c8776b");
-            sendGridMessage.SetTemplateData(new EmailConfig
-            {
-                Name = "Phu Tai"
-            });
-
-            //var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
-
-            var res = await sendGridClient.SendEmailAsync(sendGridMessage);
-
             return Ok(result);
         }
 
@@ -108,12 +83,6 @@ namespace Capstone_API_V2.Controllers
         {
             var result = await _symptomService.UpdateAsync(model);
             return Ok(result);
-        }
-
-        private class EmailConfig
-        {
-            [JsonProperty("name")]
-            public string Name { get; set; }
         }
     }
 }
