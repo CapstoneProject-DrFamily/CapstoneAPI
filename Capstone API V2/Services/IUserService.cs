@@ -13,5 +13,6 @@ namespace Capstone_API_V2.Services
         Task<bool> CheckPassWord(string username, string password);
         Task<User> UpdateUser(UserModel user);
         Task<bool> DeleteUser(int accountId);
+        Task SendEmailAsync(string toEmail, string toName, bool waiting, bool disabled);
     }
 }

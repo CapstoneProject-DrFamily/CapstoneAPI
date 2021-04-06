@@ -43,5 +43,15 @@ namespace Capstone_API_V2.Helper
             public const string DATETIME = "yyyy-MM-ddTHH:mm:ss.fffffff";
             public const string VN_TIMEZONE_ID = "SE Asia Standard Time";
         }
+
+        public struct EmailConfig
+        {
+            public const string API_KEY = "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";
+            public const string FROM_EMAIL = "taitpse130083@fpt.edu.vn";
+            public const string FROM_NAME = "Family Doctor";
+            //public const string SUBJECT = "SE Asia Standard Time";
+            public const string ACCEPTED_TEMPLATE_ID = "d-6fcc2d8f17f54a12927dddfe30c8776b";
+            public const string REJECTED_TEMPLATE_ID = "d-b1ad1985ef234811b16177cb06235c9d";
+        }
     }
 }

@@ -4,6 +4,9 @@ using Capstone_API_V2.Models;
 using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
 using Capstone_API_V2.ViewModels;
+using Newtonsoft.Json;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,5 +135,37 @@ namespace Capstone_API_V2.Services
             return true;
         }
 
+        public async Task SendEmailAsync(string toEmail, string toName, bool waiting, bool disabled)
+        {
+            var sendGridClient = new SendGridClient(Constants.EmailConfig.API_KEY);
+            /*string toEmail = "nguyenphu036@gmail.com";
+            var from = new EmailAddress("taitpse130083@fpt.edu.vn", "AAA");
+            var subject = "Accept Doctor";
+            var to = new EmailAddress(toEmail, "BBB");
+            var plainContent = "Doctor is accepted";
+            var htmlContent = "<h1>Hello Doctor</h1>";*/
+            //var mailMessage = MailHelper.CreateSingleEmail(from, to, subject, plainContent, htmlContent);
+
+            var sendGridMessage = new SendGridMessage();
+            sendGridMessage.SetFrom(Constants.EmailConfig.FROM_EMAIL, Constants.EmailConfig.FROM_NAME);
+            sendGridMessage.AddTo(toEmail, toName);
+            sendGridMessage.SetTemplateId(Constants.EmailConfig.ACCEPTED_TEMPLATE_ID);
+            if (waiting == false && disabled == true)
+            {
+                sendGridMessage.SetTemplateId(Constants.EmailConfig.REJECTED_TEMPLATE_ID);
+            }
+            sendGridMessage.SetTemplateData(new EmailConfig
+                {
+                    Name = toName
+                });
+
+            await sendGridClient.SendEmailAsync(sendGridMessage);
+        }
+
+        private class EmailConfig
+        {
+            [JsonProperty("name")]
+            public string Name { get; set; }
+        }
     }
 }
