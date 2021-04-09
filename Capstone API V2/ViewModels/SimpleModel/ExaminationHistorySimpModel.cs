@@ -11,7 +11,7 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
         public string History { get; set; }
         public double? PulseRate { get; set; }
         public double? Temperature { get; set; }
-        public double? BloodPressure { get; set; }
+        public string BloodPressure { get; set; }
         public double? RespiratoryRate { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }

@@ -232,7 +232,9 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.BloodChemistry).HasColumnName("blood_chemistry");
 
-                entity.Property(e => e.BloodPressure).HasColumnName("blood_pressure");
+                entity.Property(e => e.BloodPressure)
+                    .HasColumnName("blood_pressure")
+                    .HasMaxLength(7);
 
                 entity.Property(e => e.Cardiovascular)
                     .HasColumnName("cardiovascular")
