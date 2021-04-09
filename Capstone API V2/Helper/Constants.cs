@@ -52,5 +52,14 @@ namespace Capstone_API_V2.Helper
             public const string ACCEPTED_TEMPLATE_ID = "d-6fcc2d8f17f54a12927dddfe30c8776b";
             public const string REJECTED_TEMPLATE_ID = "d-b1ad1985ef234811b16177cb06235c9d";
         }
+
+        public struct SMSConfig
+        {
+            public const string USERNAME = "ACc6d43f1fee15a96bfc35652a7bbc237e";
+            public const string PASSWORD = "4774c2b01896df63b4b1812a9bf34ba9";
+            public const string BODY_TEMPLATE = "Hello doctor, you have new booking appointment at";
+            public const string SERVER_NUMER = "+19036907045";
+            public const string VN_REGION_CODE = "+84";
+        }
     }
 }

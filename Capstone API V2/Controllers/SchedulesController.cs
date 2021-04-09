@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Capstone_API_V2.Helper;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
 using Capstone_API_V2.ViewModels.SimpleModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace Capstone_API_V2.Controllers
 {
@@ -123,6 +126,17 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> Update([FromBody] ScheduleSimpModel model)
         {
             var result = await _scheduleService.UpdateScheduleAsync(model);
+            if(result != null && result.Status == true)
+            {
+                TwilioClient.Init(Constants.SMSConfig.USERNAME, Constants.SMSConfig.PASSWORD);
+                var toNumber = Constants.SMSConfig.VN_REGION_CODE + _scheduleService.GetPhoneNumber(result.ScheduleId);
+
+                var message = MessageResource.Create(
+                    body: Constants.SMSConfig.BODY_TEMPLATE + " " + result.AppointmentTime.ToString() + " from" + " " + result.InsBy + "!",
+                    from: new Twilio.Types.PhoneNumber(Constants.SMSConfig.SERVER_NUMER),
+                    to: new Twilio.Types.PhoneNumber(toNumber)
+                );
+            }
             return Ok(result);
         }
     }

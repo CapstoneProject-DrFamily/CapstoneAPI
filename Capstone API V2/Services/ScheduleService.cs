@@ -71,5 +71,12 @@ namespace Capstone_API_V2.Services
         {
             return _unitOfWork.TransactionRepositorySep.CheckOldPatient(patientId, doctorId);
         }
+
+        public string GetPhoneNumber(string scheduleId)
+        {
+            var patientId = _unitOfWork.TransactionRepository.GetById(scheduleId).Result.PatientId;
+            var phoneNumber = _unitOfWork.ProfileRepository.GetById(patientId).Result.Phone;
+            return phoneNumber;
+        }
     }
 }
