@@ -41,6 +41,13 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Checking")]
+        public async Task<IActionResult> CheckingSchedule(int doctorId)
+        {
+            var result = await _scheduleService.isCheckingTransaction(doctorId);
+            return Ok(result);
+        }
+
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
@@ -126,17 +133,19 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> Update([FromBody] ScheduleSimpModel model)
         {
             var result = await _scheduleService.UpdateScheduleAsync(model);
-            if(result != null && result.Status == true)
+            /*if(result != null && result.Status == true)
             {
                 TwilioClient.Init(Constants.SMSConfig.USERNAME, Constants.SMSConfig.PASSWORD);
-                var toNumber = Constants.SMSConfig.VN_REGION_CODE + _scheduleService.GetPhoneNumber(result.ScheduleId);
+                //var toNumber = Constants.SMSConfig.VN_REGION_CODE + _scheduleService.GetPhoneNumber(result.DoctorId);
+                //var toNumber = "+840932958412";
+                var toNumber = "+840866492081";
 
                 var message = MessageResource.Create(
                     body: Constants.SMSConfig.BODY_TEMPLATE + " " + result.AppointmentTime.ToString() + " from" + " " + result.InsBy + "!",
                     from: new Twilio.Types.PhoneNumber(Constants.SMSConfig.SERVER_NUMER),
                     to: new Twilio.Types.PhoneNumber(toNumber)
                 );
-            }
+            }*/
             return Ok(result);
         }
     }

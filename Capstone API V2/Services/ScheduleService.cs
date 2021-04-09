@@ -72,10 +72,25 @@ namespace Capstone_API_V2.Services
             return _unitOfWork.TransactionRepositorySep.CheckOldPatient(patientId, doctorId);
         }
 
-        public string GetPhoneNumber(string scheduleId)
+        public Task<CheckingSchedule> isCheckingTransaction(int doctorId)
         {
-            var patientId = _unitOfWork.TransactionRepository.GetById(scheduleId).Result.PatientId;
-            var phoneNumber = _unitOfWork.ProfileRepository.GetById(patientId).Result.Phone;
+            CheckingSchedule checkingSchedule = new CheckingSchedule();
+            checkingSchedule.isCheckingStatus =  _unitOfWork.TransactionRepository.GetAll(filter: f => f.DoctorId == doctorId && f.Status == 2).Any();
+            var schedule = _unitOfWork.ScheduleRepository.GetAll(filter: f => f.DoctorId == doctorId && ConvertTimeZone() < f.AppointmentTime).OrderBy(o => o.AppointmentTime).FirstOrDefault();
+            if(schedule != null)
+            {
+                TimeSpan ts = schedule.AppointmentTime.GetValueOrDefault(ConvertTimeZone()) - ConvertTimeZone();
+                checkingSchedule.isOvertime = ts.TotalMinutes <= 30;
+            }
+
+            return Task.FromResult(checkingSchedule);
+        }
+
+        public string GetPhoneNumber(int? doctorId)
+        {
+            var accountId = _unitOfWork.ProfileRepository.GetById(doctorId).Result.AccountId;
+            var username = _unitOfWork.UserGenRepository.GetById(accountId).Result.Username;
+            var phoneNumber = "0" + username.Substring(2);
             return phoneNumber;
         }
     }
