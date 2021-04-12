@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Capstone_API_V2.Helper;
 using Capstone_API_V2.Models;
 using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
@@ -75,7 +76,7 @@ namespace Capstone_API_V2.Services
         public Task<CheckingSchedule> isCheckingTransaction(int doctorId)
         {
             CheckingSchedule checkingSchedule = new CheckingSchedule();
-            checkingSchedule.isCheckingStatus =  _unitOfWork.TransactionRepository.GetAll(filter: f => f.DoctorId == doctorId && f.Status == 2).Any();
+            checkingSchedule.isCheckingStatus =  _unitOfWork.TransactionRepository.GetAll(filter: f => (f.DoctorId == doctorId && f.Status == Constants.TransactionStatus.ONGOING) || (f.DoctorId == doctorId && f.Status == Constants.TransactionStatus.CHECKING)).Any();
             var schedule = _unitOfWork.ScheduleRepository.GetAll(filter: f => f.DoctorId == doctorId && f.Status == true && ConvertTimeZone() < f.AppointmentTime).OrderBy(o => o.AppointmentTime).FirstOrDefault();
             if(schedule != null)
             {

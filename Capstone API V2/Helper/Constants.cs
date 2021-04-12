@@ -22,7 +22,8 @@ namespace Capstone_API_V2.Helper
         public struct TransactionStatus
         {
             public const int OPEN = 0;
-            public const int PROCESS = 1;
+            public const int ONGOING = 1;
+            public const int CHECKING = 2;
             public const int DONE = 3;
         }
 
