@@ -5,6 +5,7 @@ using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
 using Capstone_API_V2.ViewModels;
 using Capstone_API_V2.ViewModels.SimpleModel;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,6 +131,18 @@ namespace Capstone_API_V2.Services
         {
             var doctors = await _unitOfWork.DoctorRepositorySep.GetWaitingDoctor();
             return _mapper.Map<List<DoctorModel>>(doctors);
+        }
+
+        public async Task<List<DoctorModel>> GetOldDoctor(int patientId)
+        {
+            var entity = await _unitOfWork.TransactionRepository.GetAll(f => f.PatientId == patientId && f.Status == Constants.TransactionStatus.DONE).Select(d => d.DoctorId).ToListAsync();
+            List<DoctorModel> lstDoctor = new List<DoctorModel>();
+            foreach(var doctor in entity)
+            {
+                var doctorModel = _mapper.Map<DoctorModel>(_unitOfWork.DoctorRepository.GetAll(f => f.DoctorId == doctor && f.Disabled == false, includeProperties: "Schedules").SingleOrDefault());
+                lstDoctor.Add(doctorModel);
+            }
+            return lstDoctor;
         }
 
         private void CalculateRatingDoctor(int doctorId)

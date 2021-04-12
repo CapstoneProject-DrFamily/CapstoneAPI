@@ -30,6 +30,13 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Patients/{patientId}")]
+        public async Task<IActionResult> GetOldDoctor(int patientId)
+        {
+            var result = await _doctorService.GetOldDoctor(patientId);
+            return Ok(result.GroupBy(d => d.DoctorId).Select(d => d.First()));
+        }
+
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
