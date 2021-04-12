@@ -139,7 +139,7 @@ namespace Capstone_API_V2.Services
             List<DoctorModel> lstDoctor = new List<DoctorModel>();
             foreach(var doctor in entity)
             {
-                var doctorModel = _mapper.Map<DoctorModel>(_unitOfWork.DoctorRepository.GetAll(f => f.DoctorId == doctor && f.Disabled == false, includeProperties: "Schedules").SingleOrDefault());
+                var doctorModel = _mapper.Map<DoctorModel>(_unitOfWork.DoctorRepository.GetAll(f => f.DoctorId == doctor && f.Disabled == false, includeProperties: "Specialty,DoctorNavigation,DoctorNavigation.Account,Schedules").SingleOrDefault());
                 lstDoctor.Add(doctorModel);
             }
             return lstDoctor;
