@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Capstone_API_V2.Helper;
 using Capstone_API_V2.Services;
@@ -25,7 +26,18 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _symptomService.GetAll(filter: f => f.Disabled == false).ToListAsync();
-            return Ok(result);
+            //return Ok(result);
+            List<string> _data = new List<string>();
+            _data.Add("aaa");
+            _data.Add("bbb");
+
+            string json = JsonSerializer.Serialize(_data);
+            System.IO.File.WriteAllText(@"D:\path.json", json);
+            var r = System.IO.File.ReadAllText(@"D:\path.json");
+            var rl = JsonSerializer.Deserialize<List<string>>(r);
+
+
+            return Ok(rl);
         }
 
         [HttpGet("paging")]
