@@ -89,7 +89,7 @@ namespace Capstone_API_V2.Controllers
                 var doctor = await _userService.GetAsync(1, 1, filter: f => f.AccountId == model.AccountId, includeProperties: "Profiles");
                 await _userService.SendEmailAsync(doctor.SingleOrDefault().Profiles.SingleOrDefault().Email, doctor.SingleOrDefault().Profiles.SingleOrDefault().FullName, model.Waiting, model.Disabled);
             }
-            return Ok(isAcceptDoctor);
+            return Ok(result);
         }
     }
 }
