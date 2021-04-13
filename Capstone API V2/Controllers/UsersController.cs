@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
+using Capstone_API_V2.ViewModels.SimpleModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -80,14 +81,14 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UserModel model, bool isAcceptDoctor)
+        public async Task<IActionResult> Update([FromBody] EmailModel model)
         {
-            var result = await _userService.UpdateUser(model);
+            var result = await _userService.UpdateUser(model.UserModel);
 
-            if (isAcceptDoctor)
+            if (model.IsAcceptDoctor)
             {
-                var doctor = await _userService.GetAsync(1, 1, filter: f => f.AccountId == model.AccountId, includeProperties: "Profiles");
-                await _userService.SendEmailAsync(doctor.SingleOrDefault().Profiles.SingleOrDefault().Email, doctor.SingleOrDefault().Profiles.SingleOrDefault().FullName, model.Waiting, model.Disabled);
+                var doctor = await _userService.GetAsync(1, 1, filter: f => f.AccountId == model.UserModel.AccountId, includeProperties: "Profiles");
+                await _userService.SendEmailAsync(doctor.SingleOrDefault().Profiles.SingleOrDefault().Email, doctor.SingleOrDefault().Profiles.SingleOrDefault().FullName, model.UserModel.Waiting, model.UserModel.Disabled, model.Reason);
             }
             return Ok(result);
         }

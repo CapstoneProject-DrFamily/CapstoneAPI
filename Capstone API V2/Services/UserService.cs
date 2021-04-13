@@ -135,7 +135,7 @@ namespace Capstone_API_V2.Services
             return true;
         }
 
-        public async Task SendEmailAsync(string toEmail, string toName, bool waiting, bool disabled)
+        public async Task SendEmailAsync(string toEmail, string toName, bool waiting, bool disabled, string reason)
         {
             var sendGridClient = new SendGridClient(Constants.EmailConfig.API_KEY);
 
@@ -149,7 +149,8 @@ namespace Capstone_API_V2.Services
             }
             sendGridMessage.SetTemplateData(new EmailConfig
                 {
-                    Name = toName
+                    Name = toName,
+                    Reason = reason
                 });
 
             await sendGridClient.SendEmailAsync(sendGridMessage);
@@ -159,6 +160,8 @@ namespace Capstone_API_V2.Services
         {
             [JsonProperty("name")]
             public string Name { get; set; }
+            [JsonProperty("reason")]
+            public string Reason { get; set; }
         }
     }
 }
