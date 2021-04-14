@@ -42,7 +42,7 @@ namespace Capstone_API_V2.Services
             dto.DateStart = transaction.DateStart;
 
             _unitOfWork.TransactionRepository.Add(_mapper.Map<Transaction>(transaction));
-            if(dto.SymptomDetails != null)
+            if (dto.SymptomDetails != null)
             {
                 foreach (SymptomDetailModel symptomDetail in dto.SymptomDetails)
                 {

@@ -39,10 +39,8 @@ namespace Capstone_API_V2.ViewModels
         public string Nutrition { get; set; }
         public string Activity { get; set; }
         public string Evaluation { get; set; }
-        public string Hematology { get; set; }
-        public string BloodChemistry { get; set; }
-        public string UrineBiochemistry { get; set; }
-        public string AbdominalUltrasound { get; set; }
+        public string BloodTest { get; set; }
+        public string UrineTest { get; set; }
         public string Conclusion { get; set; }
         public string Advisory { get; set; }
         public string InsBy { get; set; }

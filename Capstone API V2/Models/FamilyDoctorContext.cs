@@ -222,19 +222,17 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("id")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.AbdominalUltrasound).HasColumnName("abdominal_ultrasound");
-
                 entity.Property(e => e.Activity)
                     .HasColumnName("activity")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Advisory).HasColumnName("advisory");
 
-                entity.Property(e => e.BloodChemistry).HasColumnName("blood_chemistry");
-
                 entity.Property(e => e.BloodPressure)
                     .HasColumnName("blood_pressure")
                     .HasMaxLength(7);
+
+                entity.Property(e => e.BloodTest).HasColumnName("blood_test");
 
                 entity.Property(e => e.Cardiovascular)
                     .HasColumnName("cardiovascular")
@@ -259,8 +257,6 @@ namespace Capstone_API_V2.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Height).HasColumnName("height");
-
-                entity.Property(e => e.Hematology).HasColumnName("hematology");
 
                 entity.Property(e => e.History).HasColumnName("history");
 
@@ -344,7 +340,7 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("updDatetime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.UrineBiochemistry).HasColumnName("urine_biochemistry");
+                entity.Property(e => e.UrineTest).HasColumnName("urine_test");
 
                 entity.Property(e => e.WaistCircumference).HasColumnName("waist_circumference");
 

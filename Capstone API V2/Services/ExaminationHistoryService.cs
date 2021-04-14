@@ -36,10 +36,8 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.ExaminationHistoryRepository.GetById(dto.Id);
             if (entity != null)
             {
-                entity.AbdominalUltrasound = dto.AbdominalUltrasound;
                 entity.Activity = dto.Activity;
                 entity.Advisory = dto.Advisory;
-                entity.BloodChemistry = dto.BloodChemistry;
                 entity.BloodPressure = dto.BloodPressure;
                 entity.Cardiovascular = dto.Cardiovascular;
                 entity.Conclusion = dto.Conclusion;
@@ -48,7 +46,6 @@ namespace Capstone_API_V2.Services
                 entity.Evaluation = dto.Evaluation;
                 entity.Gastroenterology = dto.Gastroenterology;
                 entity.Height = dto.Height;
-                entity.Hematology = dto.Hematology;
                 entity.History = dto.History;
                 entity.LeftEye = dto.LeftEye;
                 entity.LeftEyeGlassed = dto.LeftEyeGlassed;
@@ -70,9 +67,10 @@ namespace Capstone_API_V2.Services
                 entity.RightEyeGlassed = dto.RightEyeGlassed;
                 entity.Surgery = dto.Surgery;
                 entity.Temperature = dto.Temperature;
-                entity.UrineBiochemistry = dto.UrineBiochemistry;
                 entity.WaistCircumference = dto.WaistCircumference;
                 entity.Weight = dto.Weight;
+                entity.BloodTest = dto.BloodTest;
+                entity.UrineTest = dto.UrineTest;
                 entity.UpdBy = dto.UpdBy;
                 entity.UpdDatetime = ConvertTimeZone();
 
