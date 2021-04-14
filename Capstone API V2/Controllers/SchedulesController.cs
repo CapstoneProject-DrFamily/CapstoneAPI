@@ -27,16 +27,17 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll(DateTime startDate, DateTime endDate, int doctorId)
         {
-            var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false, 
+            var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false && f.ScheduleId == f.Transactions.SingleOrDefault().ScheduleId, 
                 orderBy: o => o.OrderBy(s => s.AppointmentTime), 
-                includeProperties: "ScheduleNavigation,ScheduleNavigation.Doctor,Doctor.DoctorNavigation,ScheduleNavigation.Patient,ScheduleNavigation.Patient.PatientNavigation,ScheduleNavigation.Service")
+                includeProperties: "Transactions,Transactions.Doctor,Doctor.DoctorNavigation,Transactions.Patient,Transactions.Patient.PatientNavigation,Transactions.Service")
                 .ToListAsync();
             foreach(var schedule in result)
             {
-                var docId = schedule.DoctorId.GetValueOrDefault();
-                var patientId = schedule.ScheduleNavigation.PatientId.GetValueOrDefault();
-
-                schedule.ScheduleNavigation.isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
+                var docId = schedule.DoctorId;
+                //Need test logic
+                var patientId = schedule.Transactions.SingleOrDefault().PatientId.GetValueOrDefault();
+                schedule.Transactions.SingleOrDefault().isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
+                schedule.Transactions = (from s in schedule.Transactions select s).Where(s => s.Status != Constants.TransactionStatus.CANCEL).ToList();
             }
             return Ok(result);
         }
@@ -66,8 +67,8 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetUpcomingSchedule([FromRoute]int patientId, [FromQuery] ResourceParameter model)
         {
             var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: f => _scheduleService.ConvertTimeZone() >= f.AppointmentTime && f.Disabled == false && f.Status == true && f.ScheduleNavigation.Status == 0 && f.ScheduleNavigation.PatientId == patientId,
-                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,ScheduleNavigation,ScheduleNavigation.Service",
+                filter: f => _scheduleService.ConvertTimeZone() >= f.AppointmentTime && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().Status == 0 && f.Transactions.SingleOrDefault().PatientId == patientId,
+                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,Transactions,Transactions.Service",
                 orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new
             {
@@ -83,8 +84,8 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetOvertimeSchedule([FromRoute]int patientId, [FromQuery] ResourceParameter model)
         {
             var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: f => _scheduleService.ConvertTimeZone() < f.AppointmentTime && f.Disabled == false && f.Status == true && f.ScheduleNavigation.Status == 0 && f.ScheduleNavigation.PatientId == patientId,
-                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,ScheduleNavigation,ScheduleNavigation.Service",
+                filter: f => _scheduleService.ConvertTimeZone() < f.AppointmentTime && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().Status == 0 && f.Transactions.SingleOrDefault().PatientId == patientId,
+                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,Transactions,Transactions.Service",
                 orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new
             {
@@ -97,7 +98,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet("{scheduleId}")]
-        public async Task<IActionResult> GetById(string scheduleId)
+        public async Task<IActionResult> GetById(int scheduleId)
         {
             var result = await _scheduleService.GetByIdAsync(scheduleId);
             if (result == null)
@@ -119,7 +120,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpDelete("{scheduleId}")]
-        public async Task<IActionResult> Delete(string scheduleId)
+        public async Task<IActionResult> Delete(int scheduleId)
         {
             var result = await _scheduleService.DeleteAsync(scheduleId);
             if (result)

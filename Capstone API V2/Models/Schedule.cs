@@ -9,8 +9,13 @@ namespace Capstone_API_V2.Models
 {
     public partial class Schedule
     {
-        public string ScheduleId { get; set; }
-        public int? DoctorId { get; set; }
+        public Schedule()
+        {
+            Transactions = new HashSet<Transaction>();
+        }
+
+        public int ScheduleId { get; set; }
+        public int DoctorId { get; set; }
         public DateTime? AppointmentTime { get; set; }
         public bool? Status { get; set; }
         public bool? Disabled { get; set; }
@@ -20,6 +25,6 @@ namespace Capstone_API_V2.Models
         public DateTime? UpdDatetime { get; set; }
 
         public virtual Doctor Doctor { get; set; }
-        public virtual Transaction ScheduleNavigation { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

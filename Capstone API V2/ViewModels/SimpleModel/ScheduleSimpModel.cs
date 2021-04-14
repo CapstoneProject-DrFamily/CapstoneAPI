@@ -7,8 +7,8 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
 {
     public class ScheduleSimpModel
     {
-        public string ScheduleId { get; set; }
-        public int? DoctorId { get; set; }
+        public int ScheduleId { get; set; }
+        public int DoctorId { get; set; }
         public DateTime? AppointmentTime { get; set; }
         public bool? Status { get; set; }
         public bool? Disabled { get; set; }

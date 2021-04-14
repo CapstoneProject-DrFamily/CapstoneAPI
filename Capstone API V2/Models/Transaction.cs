@@ -25,14 +25,16 @@ namespace Capstone_API_V2.Models
         public string Note { get; set; }
         public bool? Disabled { get; set; }
         public int? ServiceId { get; set; }
+        public int? ScheduleId { get; set; }
+        public string ReasonCancel { get; set; }
 
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
+        public virtual Schedule Schedule { get; set; }
         public virtual Service Service { get; set; }
         public virtual ExaminationHistory ExaminationHistory { get; set; }
         public virtual Feedback Feedback { get; set; }
         public virtual Prescription Prescription { get; set; }
-        public virtual Schedule Schedule { get; set; }
         public virtual ICollection<SymptomDetail> SymptomDetails { get; set; }
     }
 }

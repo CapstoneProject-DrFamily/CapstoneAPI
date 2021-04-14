@@ -865,7 +865,7 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.ScheduleId)
                     .HasColumnName("schedule_id")
-                    .HasMaxLength(50);
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.AppointmentTime)
                     .HasColumnName("appointment_time")
@@ -873,7 +873,9 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.Disabled).HasColumnName("disabled");
 
-                entity.Property(e => e.DoctorId).HasColumnName("doctor_id");
+                entity.Property(e => e.DoctorId)
+                    .HasColumnName("doctor_id")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.InsBy)
                     .HasColumnName("insBy")
@@ -896,13 +898,8 @@ namespace Capstone_API_V2.Models
                 entity.HasOne(d => d.Doctor)
                     .WithMany(p => p.Schedules)
                     .HasForeignKey(d => d.DoctorId)
-                    .HasConstraintName("FK_Schedule_Doctors");
-
-                entity.HasOne(d => d.ScheduleNavigation)
-                    .WithOne(p => p.Schedule)
-                    .HasForeignKey<Schedule>(d => d.ScheduleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Schedule_Transaction");
+                    .HasConstraintName("FK_Schedule_Doctors");
             });
 
             modelBuilder.Entity<Service>(entity =>
@@ -1077,6 +1074,12 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.PatientId).HasColumnName("patient_id");
 
+                entity.Property(e => e.ReasonCancel)
+                    .HasColumnName("reason_cancel")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.ScheduleId).HasColumnName("schedule_id");
+
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
                 entity.Property(e => e.Status).HasColumnName("status");
@@ -1090,6 +1093,11 @@ namespace Capstone_API_V2.Models
                     .WithMany(p => p.Transactions)
                     .HasForeignKey(d => d.PatientId)
                     .HasConstraintName("FK_Transactions_Patients");
+
+                entity.HasOne(d => d.Schedule)
+                    .WithMany(p => p.Transactions)
+                    .HasForeignKey(d => d.ScheduleId)
+                    .HasConstraintName("FK_Transaction_Schedule");
 
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.Transactions)

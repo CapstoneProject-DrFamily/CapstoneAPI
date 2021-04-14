@@ -25,6 +25,7 @@ namespace Capstone_API_V2.Helper
             public const int ONGOING = 1;
             public const int CHECKING = 2;
             public const int DONE = 3;
+            public const int CANCEL = 4;
         }
 
         public struct SearchValue

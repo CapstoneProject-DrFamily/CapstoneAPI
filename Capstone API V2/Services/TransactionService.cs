@@ -69,6 +69,7 @@ namespace Capstone_API_V2.Services
                     TransactionId = "TS-" + Guid.NewGuid().ToString(),
                     DoctorId = dto.DoctorId,
                     PatientId = dto.PatientId != 0 ? dto.PatientId : null,
+                    ScheduleId = dto.ScheduleId != 0 ? dto.ScheduleId : null,
                     DateStart = ConvertTimeZone(),
                     ServiceId = dto.ServiceId,
                     Location = dto.Location,
@@ -128,6 +129,8 @@ namespace Capstone_API_V2.Services
                 entity.Note = dto.Note;
                 entity.EstimatedTime = dto.EstimatedTime;
                 entity.Status = dto.Status;
+                entity.ScheduleId = dto.ScheduleId;
+                entity.ReasonCancel = dto.ReasonCancel;
                 //entity.PrescriptionId = dto.PrescriptionId;
                 //entity.ExamId = dto.ExamId;
                 _unitOfWork.TransactionRepository.Update(entity);

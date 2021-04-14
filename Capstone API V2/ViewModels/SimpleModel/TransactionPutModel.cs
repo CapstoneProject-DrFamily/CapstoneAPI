@@ -15,6 +15,8 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
         public byte Status { get; set; }
         public string Location { get; set; }
         public string Note { get; set; }
+        public int? ScheduleId { get; set; }
+        public string ReasonCancel { get; set; }
         //public int? ExamId { get; set; }
     }
 }

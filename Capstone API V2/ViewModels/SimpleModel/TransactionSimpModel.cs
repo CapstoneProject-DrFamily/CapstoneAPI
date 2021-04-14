@@ -15,6 +15,7 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
         public string Location { get; set; }
         public string Note { get; set; }
         public int? ServiceId { get; set; }
+        public int? ScheduleId { get; set; }
         public ICollection<SymptomDetailModel> SymptomDetails { get; set; }
     }
 }
