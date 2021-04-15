@@ -31,8 +31,19 @@ namespace Capstone_API_V2.Controllers
             var webRootPath = _webHostEnvironment.WebRootPath;
             var contentRootPath = _webHostEnvironment.ContentRootPath;
             var result = await _symptomService.GetAll(filter: f => f.Disabled == false).ToListAsync();
-            //return Ok(result);
-            return Content(webRootPath + "\n" + contentRootPath); 
+            List<string> _data = new List<string>();
+            _data.Add("a");
+            _data.Add("b");
+            _data.Add("c");
+
+            string json = JsonSerializer.Serialize(_data);
+            var path = string.Concat(webRootPath, "/path.json");
+            System.IO.File.WriteAllText(path, json);
+
+            var r = System.IO.File.ReadAllText(path);
+
+            return Ok(r);
+            //return Content(webRootPath + "\n" + contentRootPath); 
         }
 
         [HttpGet("paging")]
