@@ -863,9 +863,7 @@ namespace Capstone_API_V2.Models
             {
                 entity.ToTable("Schedule");
 
-                entity.Property(e => e.ScheduleId)
-                    .HasColumnName("schedule_id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.ScheduleId).HasColumnName("schedule_id");
 
                 entity.Property(e => e.AppointmentTime)
                     .HasColumnName("appointment_time")
@@ -873,9 +871,7 @@ namespace Capstone_API_V2.Models
 
                 entity.Property(e => e.Disabled).HasColumnName("disabled");
 
-                entity.Property(e => e.DoctorId)
-                    .HasColumnName("doctor_id")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.DoctorId).HasColumnName("doctor_id");
 
                 entity.Property(e => e.InsBy)
                     .HasColumnName("insBy")
