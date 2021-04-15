@@ -27,17 +27,19 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll(DateTime startDate, DateTime endDate, int doctorId)
         {
-            var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false && f.ScheduleId == f.Transactions.SingleOrDefault().ScheduleId, 
+            var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false, 
                 orderBy: o => o.OrderBy(s => s.AppointmentTime), 
                 includeProperties: "Transactions,Transactions.Doctor,Doctor.DoctorNavigation,Transactions.Patient,Transactions.Patient.PatientNavigation,Transactions.Service")
                 .ToListAsync();
             foreach(var schedule in result)
             {
-                var docId = schedule.DoctorId;
-                //Need test logic
-                var patientId = schedule.Transactions.SingleOrDefault().PatientId.GetValueOrDefault();
-                schedule.Transactions.SingleOrDefault().isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
-                schedule.Transactions = (from s in schedule.Transactions select s).Where(s => s.Status != Constants.TransactionStatus.CANCEL).ToList();
+                if(schedule.Transactions.Count > 0)
+                {
+                    var docId = schedule.DoctorId;
+                    var patientId = schedule.Transactions.SingleOrDefault().PatientId.GetValueOrDefault();
+                    schedule.Transactions.SingleOrDefault().isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
+                    schedule.Transactions = (from t in schedule.Transactions select t).Where(t => t.Status != Constants.TransactionStatus.CANCEL && t.ScheduleId == schedule.ScheduleId).ToList();
+                }
             }
             return Ok(result);
         }

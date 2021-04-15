@@ -16,6 +16,7 @@ namespace Capstone_API_V2.ViewModels
         public byte? Status { get; set; }
         public string Location { get; set; }
         public string Note { get; set; }
+        public int? ScheduleId { get; set; }
         public string DoctorName { get; set; }
         public string PatientName { get; set; }
         public string Relationship { get; set; }
