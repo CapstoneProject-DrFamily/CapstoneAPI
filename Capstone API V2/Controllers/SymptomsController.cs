@@ -9,6 +9,7 @@ using Capstone_API_V2.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Capstone_API_V2.Controllers
 {
@@ -17,16 +18,21 @@ namespace Capstone_API_V2.Controllers
     public class SymptomsController : ControllerBase
     {
         private readonly ISymptomService _symptomService;
-        public SymptomsController(ISymptomService symptomService)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public SymptomsController(ISymptomService symptomService, IWebHostEnvironment webHostEnvironment)
         {
             _symptomService = symptomService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            var webRootPath = _webHostEnvironment.WebRootPath;
+            var contentRootPath = _webHostEnvironment.ContentRootPath;
             var result = await _symptomService.GetAll(filter: f => f.Disabled == false).ToListAsync();
-            return Ok(result);
+            //return Ok(result);
+            return Content(webRootPath + "\n" + contentRootPath); 
         }
 
         [HttpGet("paging")]
