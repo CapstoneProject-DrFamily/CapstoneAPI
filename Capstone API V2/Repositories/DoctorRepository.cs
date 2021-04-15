@@ -53,14 +53,18 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<Doctor> GetDoctorByID(int doctorId)
         {
-            var result = await _context.Doctors.Where(doctor => doctor.DoctorId.Equals(doctorId))
+            var result = await _context.Doctors.Where(doctor => doctor.DoctorId == doctorId)
                 .Include(specialty => specialty.Specialty)
-                .Include(feedback => feedback.Feedbacks)
-                .Include(transaction => transaction.Transactions)
                 .Include(profile => profile.DoctorNavigation)
                 .ThenInclude(user => user.Account)
                 .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false)
                 .SingleOrDefaultAsync();
+
+            var transactions = await _context.Transactions.Where(transaction => transaction.DoctorId == result.DoctorId).ToListAsync();
+            var feedbacks = await _context.Feedbacks.Where(feedback => feedback.DoctorId == result.DoctorId).ToListAsync();
+
+            result.Transactions = transactions;
+            result.Feedbacks = feedbacks;
 
             return result;
         }
