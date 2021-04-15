@@ -37,8 +37,18 @@ namespace Capstone_API_V2.Controllers
             _data.Add("c");
 
             string json = JsonSerializer.Serialize(_data);
-            var path = string.Concat(webRootPath, "/path.json");
-            System.IO.File.WriteAllText(path, json);
+            var path = string.Concat(contentRootPath, "/path.json");
+            try
+            {
+                System.IO.File.WriteAllText(path, json);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Ok(new { 
+                    path,
+                    e.Message
+                });
+            }
 
             var r = System.IO.File.ReadAllText(path);
 
