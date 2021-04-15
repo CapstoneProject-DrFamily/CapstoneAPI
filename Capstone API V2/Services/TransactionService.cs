@@ -30,6 +30,7 @@ namespace Capstone_API_V2.Services
                 DoctorId = dto.DoctorId,
                 //DoctorId = dto.DoctorId != 0 ? dto.DoctorId : null,
                 PatientId = dto.PatientId != 0 ? dto.PatientId : null,
+                ScheduleId = dto.ScheduleId != 0 ? dto.ScheduleId : null,
                 DateStart = ConvertTimeZone(),
                 ServiceId = dto.ServiceId,
                 //ServiceId = dto.ServiceId != 0 ? dto.ServiceId : null,
