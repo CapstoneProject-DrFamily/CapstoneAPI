@@ -46,9 +46,11 @@ namespace Capstone_API_V2.Controllers
                     var jObject = JsonConvert.DeserializeObject<JObject>(appConfigModel.ConfigValue);
                     var timeout = jObject.GetValue("timeout");
                     var prsTemplate = jObject.GetValue("prescriptionTemplates");
+                    var policy = jObject.GetValue("policy");
 
                     result.Timeout = timeout.ToObject<int>();
                     result.PrescriptionTemplates = prsTemplate.ToObject<Dictionary<string, PrescriptionSimpModel>>();
+                    result.Policy = policy.ToObject<string>();
                 }
 
                 result.AppId = appConfigModel.AppId;
@@ -66,9 +68,11 @@ namespace Capstone_API_V2.Controllers
                     var jObject = JsonConvert.DeserializeObject<JObject>(appConfigModel.ConfigValue);
                     var relationships = jObject.GetValue("relationships");
                     var distances = jObject.GetValue("distances");
+                    var policy = jObject.GetValue("policy");
 
                     result.RelationShips = relationships.ToObject<List<string>>();
                     result.Distances = distances.ToObject<List<int>>();
+                    result.Policy = policy.ToObject<string>();
                 }
 
                 result.AppId = appConfigModel.AppId;
@@ -132,6 +136,7 @@ namespace Capstone_API_V2.Controllers
             JObject @object = new JObject();
             @object.Add("timeout", JToken.FromObject(model.Timeout));
             @object.Add("prescriptionTemplates", JToken.FromObject(model.PrescriptionTemplates));
+            @object.Add("policy", JToken.FromObject(model.Policy));
 
             var configValue = JsonConvert.SerializeObject(@object);
 
@@ -150,6 +155,7 @@ namespace Capstone_API_V2.Controllers
             JObject @object = new JObject();
             @object.Add("relationships", JToken.FromObject(model.RelationShips));
             @object.Add("distances", JToken.FromObject(model.Distances));
+            @object.Add("policy", JToken.FromObject(model.Policy));
 
             var configValue = JsonConvert.SerializeObject(@object);
 

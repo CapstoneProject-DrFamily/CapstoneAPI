@@ -11,5 +11,6 @@ namespace Capstone_API_V2.ViewModels
         public string AppName { get; set; }
         public List<string> RelationShips { get; set; }
         public List<int> Distances { get; set; }
+        public string Policy { get; set; }
     }
 }
