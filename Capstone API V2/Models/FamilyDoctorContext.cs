@@ -916,6 +916,8 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("insDatetime")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.IsDefault).HasColumnName("isDefault");
+
                 entity.Property(e => e.ServiceDescription)
                     .HasColumnName("service_description")
                     .HasMaxLength(50);

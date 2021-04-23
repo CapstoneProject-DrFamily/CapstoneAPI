@@ -14,5 +14,6 @@ namespace Capstone_API_V2.ViewModels
         public decimal ServicePrice { get; set; }
         public string Image { get; set; }
         public bool Disabled { get; set; }
+        public bool? IsDefault { get; set; }
     }
 }
