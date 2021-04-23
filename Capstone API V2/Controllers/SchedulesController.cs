@@ -37,8 +37,11 @@ namespace Capstone_API_V2.Controllers
                 {
                     var docId = schedule.DoctorId;
                     schedule.Transactions = (from t in schedule.Transactions select t).Where(t => t.Status != Constants.TransactionStatus.CANCEL && t.ScheduleId == schedule.ScheduleId).ToList();
-                    var patientId = schedule.Transactions.First().PatientId.GetValueOrDefault();
-                    schedule.Transactions.First().isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
+                    if(schedule.Transactions.Count > 0)
+                    {
+                        var patientId = schedule.Transactions.First().PatientId.GetValueOrDefault();
+                        schedule.Transactions.First().isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
+                    }
                 }
             }
             return Ok(result);
