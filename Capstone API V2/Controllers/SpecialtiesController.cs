@@ -23,7 +23,11 @@ namespace Capstone_API_V2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _specialtyService.GetAll(filter: f => f.Disabled == false && f.Services.SingleOrDefault().Disabled == false, includeProperties: "Services").ToListAsync();
+            var result = await _specialtyService.GetAll(filter: f => f.Disabled == false, includeProperties: "Services").ToListAsync();
+            foreach (var specialty in result)
+            {
+                specialty.Services = (from service in specialty.Services select service).Where(service => service.Disabled == false).ToList();
+            }
             return Ok(result);
         }
 
