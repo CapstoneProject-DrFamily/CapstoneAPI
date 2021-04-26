@@ -66,6 +66,8 @@ namespace Capstone_API_V2.UnitOfWork
 
         public IDiseaseRepository DiseaseRepositorySep { get; set; }
 
+        public IScheduleRepository ScheduleRepositorySep { get; set; }
+
         private void InitRepository()
         {
             MedicineRepository = new GenericRepository<Medicine>(_context);
@@ -93,7 +95,7 @@ namespace Capstone_API_V2.UnitOfWork
             PrescriptionRepositorySep = new PrescriptionRepository(_context);
             DiseaseRepository = new GenericRepository<Disease>(_context);
             DiseaseRepositorySep = new DiseaseRepository(_context);
-
+            ScheduleRepositorySep = new ScheduleRepository(_context);
         }
 
     protected virtual void Dispose(bool disposing)

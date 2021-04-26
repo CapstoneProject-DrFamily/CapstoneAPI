@@ -95,6 +95,19 @@ namespace Capstone_API_V2.Repositories
 
         public Task<List<Doctor>> GetBySpecialtyId(int specialtyId)
         {
+            if(specialtyId == -1)
+            {
+                var lstAllDoctor = _context.Doctors
+                .Include(specialty => specialty.Specialty)
+                .Include(schedule => schedule.Schedules)
+                .Include(profile => profile.DoctorNavigation)
+                .ThenInclude(user => user.Account)
+                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false && user.Schedules.Count > 0)
+                .OrderBy(s => s.Schedules.SingleOrDefault().AppointmentTime).ToListAsync();
+
+                return lstAllDoctor;
+            }
+
             var result =  _context.Doctors.Where(doctor => doctor.SpecialtyId.Equals(specialtyId))
                 .Include(specialty => specialty.Specialty)
                 .Include(schedule => schedule.Schedules)

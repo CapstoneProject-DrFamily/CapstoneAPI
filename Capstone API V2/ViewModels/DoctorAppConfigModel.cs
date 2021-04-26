@@ -13,5 +13,7 @@ namespace Capstone_API_V2.ViewModels
         public int Timeout { get; set; }
         public Dictionary<string, PrescriptionSimpModel> PrescriptionTemplates { get; set; }
         public string Policy { get; set; }
+        public int AppointmentNotifyTime { get; set; }
+        public int ImageQuantity { get; set; }
     }
 }

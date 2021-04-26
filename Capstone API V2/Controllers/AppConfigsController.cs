@@ -47,10 +47,14 @@ namespace Capstone_API_V2.Controllers
                     var timeout = jObject.GetValue("timeout");
                     var prsTemplate = jObject.GetValue("prescriptionTemplates");
                     var policy = jObject.GetValue("policy");
+                    var appointmentNotifyTime = jObject.GetValue("appointmentNotifyTime");
+                    var imageQuantity = jObject.GetValue("imageQuantity");
 
                     result.Timeout = timeout.ToObject<int>();
                     result.PrescriptionTemplates = prsTemplate.ToObject<Dictionary<string, PrescriptionSimpModel>>();
                     result.Policy = policy.ToObject<string>();
+                    result.AppointmentNotifyTime = appointmentNotifyTime.ToObject<int>();
+                    result.ImageQuantity = imageQuantity.ToObject<int>();
                 }
 
                 result.AppId = appConfigModel.AppId;
@@ -137,6 +141,8 @@ namespace Capstone_API_V2.Controllers
             @object.Add("timeout", JToken.FromObject(model.Timeout));
             @object.Add("prescriptionTemplates", JToken.FromObject(model.PrescriptionTemplates));
             @object.Add("policy", JToken.FromObject(model.Policy));
+            @object.Add("appointmentNotifyTime", JToken.FromObject(model.AppointmentNotifyTime));
+            @object.Add("imageQuantity", JToken.FromObject(model.ImageQuantity));
 
             var configValue = JsonConvert.SerializeObject(@object);
 

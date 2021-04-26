@@ -31,6 +31,7 @@ namespace Capstone_API_V2.UnitOfWork
         ITransactionRepository TransactionRepositorySep { get; }
         IPrescriptionRepository PrescriptionRepositorySep { get; set; }
         IDiseaseRepository DiseaseRepositorySep { get; set; }
+        IScheduleRepository ScheduleRepositorySep { get; set; }
 
         Task<int> SaveAsync();
     }

@@ -22,26 +22,34 @@ namespace Capstone_API_V2.Services
 
         public async Task<List<ScheduleSimpModel>> CreateScheduleAsync(List<ScheduleSimpModel> dto)
         {
+            List<ScheduleSimpModel> lstInvalidSchedule = new List<ScheduleSimpModel>(); 
             foreach(var schedule in dto)
             {
-                //Auto increment index
-                schedule.ScheduleId = 0;
+                if (!_unitOfWork.ScheduleRepositorySep.checkInvalidSchedule(schedule))
+                {
+                    //Auto increment index
+                    schedule.ScheduleId = 0;
 
-                var entity = _mapper.Map<Schedule>(schedule);
-                entity.Disabled = false;
-                entity.InsBy = schedule.InsBy;
-                entity.InsDatetime = ConvertTimeZone();
-                entity.UpdDatetime = ConvertTimeZone();
+                    var entity = _mapper.Map<Schedule>(schedule);
+                    entity.Disabled = false;
+                    entity.InsBy = schedule.InsBy;
+                    entity.InsDatetime = ConvertTimeZone();
+                    entity.UpdDatetime = ConvertTimeZone();
 
-                schedule.Disabled = false;
-                schedule.InsDatetime = entity.InsDatetime;
-                schedule.UpdDatetime = entity.UpdDatetime;
+                    schedule.Disabled = false;
+                    schedule.InsDatetime = entity.InsDatetime;
+                    schedule.UpdDatetime = entity.UpdDatetime;
 
-                _repository.Add(entity);
+                    _repository.Add(entity);
+                }
+                else
+                {
+                    lstInvalidSchedule.Add(schedule);
+                }
             }
             await _unitOfWork.SaveAsync();
 
-            return dto;
+            return lstInvalidSchedule;
         }
 
         public async Task<ScheduleSimpModel> UpdateScheduleAsync(ScheduleSimpModel dto)

@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Capstone_API_V2.Models;
+using Capstone_API_V2.ViewModels.SimpleModel;
+
+namespace Capstone_API_V2.Repositories
+{
+    public class ScheduleRepository : IScheduleRepository
+    {
+        private readonly FamilyDoctorContext _context;
+
+        public ScheduleRepository(FamilyDoctorContext context)
+        {
+            _context = context;
+        }
+
+        public bool checkInvalidSchedule(ScheduleSimpModel schedule)
+        {
+            bool isInvalidSchedule = false;
+            var lstSchedule = _context.Schedules.Where(s => s.AppointmentTime.Value.Date == schedule.AppointmentTime.Value.Date).ToList();
+            if(lstSchedule.Count > 0)
+            {
+                if(_context.Schedules.Any(s => s.AppointmentTime == schedule.AppointmentTime))
+                {
+                    isInvalidSchedule = true;
+                }
+
+                var lowerSchedule = lstSchedule.Where(s => s.AppointmentTime < schedule.AppointmentTime).OrderByDescending(s => s.AppointmentTime).First();
+                if(lowerSchedule != null)
+                {
+                    var lowerBoundary = (schedule.AppointmentTime - lowerSchedule.AppointmentTime).Value.TotalHours;
+                    if (lowerBoundary < 1.5)
+                    {
+                        isInvalidSchedule = true;
+                    }
+                }
+
+                var higherSchedule = lstSchedule.Where(s => s.AppointmentTime > schedule.AppointmentTime).OrderBy(s => s.AppointmentTime).First();
+                if (higherSchedule != null)
+                {
+                    var higherBoundary = (higherSchedule.AppointmentTime - schedule.AppointmentTime).Value.TotalHours;
+                    if (higherBoundary < 1.5)
+                    {
+                        isInvalidSchedule = true;
+                    }
+                }
+
+            }
+            return isInvalidSchedule;
+        }
+    }
+}
