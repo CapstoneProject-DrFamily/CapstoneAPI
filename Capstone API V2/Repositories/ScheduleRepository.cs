@@ -27,7 +27,7 @@ namespace Capstone_API_V2.Repositories
                     isInvalidSchedule = true;
                 }
 
-                var lowerSchedule = lstSchedule.Where(s => s.AppointmentTime < schedule.AppointmentTime).OrderByDescending(s => s.AppointmentTime).First();
+                var lowerSchedule = lstSchedule.Where(s => s.AppointmentTime < schedule.AppointmentTime).OrderByDescending(s => s.AppointmentTime).FirstOrDefault();
                 if(lowerSchedule != null)
                 {
                     var lowerBoundary = (schedule.AppointmentTime - lowerSchedule.AppointmentTime).Value.TotalHours;
@@ -37,7 +37,7 @@ namespace Capstone_API_V2.Repositories
                     }
                 }
 
-                var higherSchedule = lstSchedule.Where(s => s.AppointmentTime > schedule.AppointmentTime).OrderBy(s => s.AppointmentTime).First();
+                var higherSchedule = lstSchedule.Where(s => s.AppointmentTime > schedule.AppointmentTime).OrderBy(s => s.AppointmentTime).FirstOrDefault();
                 if (higherSchedule != null)
                 {
                     var higherBoundary = (higherSchedule.AppointmentTime - schedule.AppointmentTime).Value.TotalHours;
