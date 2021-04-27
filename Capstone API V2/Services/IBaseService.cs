@@ -16,6 +16,9 @@ namespace Capstone_API_V2.Services
         IQueryable<TDto> GetAll(Expression<Func<TEntity, bool>> filter = null,
                           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                           string includeProperties = "");
+        IQueryable<TEntity> GetAllEntity(Expression<Func<TEntity, bool>> filter = null,
+                          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                          string includeProperties = "");
         Task<TDto> CreateAsync(TDto dto);
         Task<TDto> UpdateAsync(TDto dto);
         Task<bool> DeleteAsync(object id);

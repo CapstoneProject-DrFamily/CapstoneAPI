@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Capstone_API_V2.Helper;
+using Capstone_API_V2.Models;
 using Capstone_API_V2.Services;
 using Capstone_API_V2.ViewModels;
 using Capstone_API_V2.ViewModels.SimpleModel;
@@ -88,17 +89,29 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("Patients/{patientId}/Upcoming")]
         public async Task<IActionResult> GetUpcomingSchedule([FromRoute]int patientId)
         {
-            var lstSchedule = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().PatientId == patientId).ToListAsync();
-            List<ScheduleModel> result = new List<ScheduleModel>();
-            foreach(var schedule in lstSchedule)
+            var entity = await _scheduleService.GetAllEntity(filter: f => f.AppointmentTime >= _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().PatientId == patientId,
+                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,Transactions,Transactions.Service").ToListAsync();
+            List<Schedule> lstSchedule = new List<Schedule>();
+            foreach(var schedule in entity)
             {
                 if(schedule.Transactions.Any(t => t.Status == Constants.TransactionStatus.OPEN))
                 {
-                    var transactions = schedule.Transactions.Where(t => t.Status == Constants.TransactionStatus.OPEN).ToList();
+
+                    var transactions = (from t in schedule.Transactions select t).Where(t => t.Status == Constants.TransactionStatus.OPEN).ToList();
+                    transactions.SingleOrDefault().Doctor = null;
                     schedule.Transactions = transactions;
-                    result.Add(schedule);
+                    schedule.Doctor.Transactions = null;
+                    schedule.Doctor.Specialty.Services = null;
+                    schedule.Transactions.SingleOrDefault().Service.Specialty = null;
+                    schedule.Transactions.SingleOrDefault().Service.Transactions = null;
+                    lstSchedule.Add(schedule);
                 }
             }
+            var schedules = lstSchedule.OrderBy(s => s.AppointmentTime);
+            var result = new
+            {
+                schedules
+            };
             return Ok(result);
         }
 
@@ -106,7 +119,7 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetOvertimeSchedule([FromRoute]int patientId, [FromQuery] ResourceParameter model)
         {
             var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: f => f.AppointmentTime < _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().Status == 0 && f.Transactions.SingleOrDefault().PatientId == patientId,
+                filter: f => f.AppointmentTime < _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().Status == Constants.TransactionStatus.OPEN && f.Transactions.SingleOrDefault().PatientId == patientId,
                 includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,Transactions,Transactions.Service",
                 orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new

@@ -72,6 +72,11 @@ namespace Capstone_API_V2.Services
             return _mapper.ProjectTo<TDto>(_repository.GetAll(filter, orderBy, includeProperties));
         }
 
+        public IQueryable<TEntity> GetAllEntity(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        {
+            return _mapper.ProjectTo<TEntity>(_repository.GetAll(filter, orderBy, includeProperties));
+        }
+
         public DateTime ConvertTimeZone()
         {
             DateTime serverTime = DateTime.Now; // gives you current Time in server timeZone

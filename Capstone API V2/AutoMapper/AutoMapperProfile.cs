@@ -89,6 +89,7 @@ namespace Capstone_API_V2.AutoMapper
 
             CreateMap<Schedule, ScheduleModel>();
             CreateMap<ScheduleModel, Schedule>();
+            CreateMap<Schedule, Schedule>();
 
             CreateMap<Schedule, ScheduleSimpModel>();
             CreateMap<ScheduleSimpModel, Schedule>();
