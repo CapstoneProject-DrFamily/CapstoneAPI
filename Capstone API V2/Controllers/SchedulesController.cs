@@ -97,14 +97,17 @@ namespace Capstone_API_V2.Controllers
                 if(schedule.Transactions.Any(t => t.Status == Constants.TransactionStatus.OPEN))
                 {
 
-                    var transactions = (from t in schedule.Transactions select t).Where(t => t.Status == Constants.TransactionStatus.OPEN).ToList();
-                    transactions.SingleOrDefault().Doctor = null;
-                    schedule.Transactions = transactions;
-                    schedule.Doctor.Transactions = null;
-                    schedule.Doctor.Specialty.Services = null;
-                    schedule.Transactions.SingleOrDefault().Service.Specialty = null;
-                    schedule.Transactions.SingleOrDefault().Service.Transactions = null;
-                    lstSchedule.Add(schedule);
+                    var transactions = (from t in schedule.Transactions select t).Where(t => t.Status == Constants.TransactionStatus.OPEN && t.PatientId == patientId).ToList();
+                    if (transactions.Count > 0)
+                    {
+                        transactions.SingleOrDefault().Doctor = null;
+                        schedule.Transactions = transactions;
+                        schedule.Doctor.Transactions = null;
+                        schedule.Doctor.Specialty.Services = null;
+                        schedule.Transactions.SingleOrDefault().Service.Specialty = null;
+                        schedule.Transactions.SingleOrDefault().Service.Transactions = null;
+                        lstSchedule.Add(schedule);
+                    }
                 }
             }
             var schedules = lstSchedule.OrderBy(s => s.AppointmentTime);
