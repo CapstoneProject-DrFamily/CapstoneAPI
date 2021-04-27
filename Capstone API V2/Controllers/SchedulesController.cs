@@ -68,11 +68,11 @@ namespace Capstone_API_V2.Controllers
             return Ok(result);
         }
 
-        [HttpGet("Patients/{patientId}/Upcoming")]
+        /*[HttpGet("Patients/{patientId}/Upcoming")]
         public async Task<IActionResult> GetUpcomingSchedule([FromRoute]int patientId, [FromQuery] ResourceParameter model)
         {
             var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: f => f.AppointmentTime >= _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().Status == 0 && f.Transactions.SingleOrDefault().PatientId == patientId,
+                filter: f => f.AppointmentTime >= _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().PatientId == patientId,
                 includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,Transactions,Transactions.Service",
                 orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new
@@ -82,6 +82,23 @@ namespace Capstone_API_V2.Controllers
                 schedules.HasPreviousPage,
                 schedules.HasNextPage
             };
+            return Ok(result);
+        }*/
+
+        [HttpGet("Patients/{patientId}/Upcoming")]
+        public async Task<IActionResult> GetUpcomingSchedule([FromRoute]int patientId)
+        {
+            var lstSchedule = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().PatientId == patientId).ToListAsync();
+            List<ScheduleModel> result = new List<ScheduleModel>();
+            foreach(var schedule in lstSchedule)
+            {
+                if(schedule.Transactions.Any(t => t.Status == Constants.TransactionStatus.OPEN))
+                {
+                    var transactions = schedule.Transactions.Where(t => t.Status == Constants.TransactionStatus.OPEN).ToList();
+                    schedule.Transactions = transactions;
+                    result.Add(schedule);
+                }
+            }
             return Ok(result);
         }
 
