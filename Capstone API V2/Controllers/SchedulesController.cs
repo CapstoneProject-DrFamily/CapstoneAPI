@@ -187,5 +187,18 @@ namespace Capstone_API_V2.Controllers
             }*/
             return Ok(result);
         }
+
+        [HttpPut("BookingSchedule")]
+        public IActionResult BookSchedule([FromBody] ScheduleSimpModel model)
+        {
+            //Handle multiple request
+            var schedules = _scheduleService.GetAll(filter: f => f.ScheduleId == model.ScheduleId && f.Status == true).ToList();
+            if (schedules.Count > 0)
+            {
+                return BadRequest("This schedule is already booked!");
+            }
+            var result = _scheduleService.UpdateScheduleAsync(model);
+            return Ok(result);
+        }
     }
 }
