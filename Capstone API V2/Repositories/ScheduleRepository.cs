@@ -19,15 +19,15 @@ namespace Capstone_API_V2.Repositories
         public bool checkInvalidSchedule(ScheduleSimpModel schedule)
         {
             bool isInvalidSchedule = false;
-            var lstSchedule = _context.Schedules.Where(s => s.AppointmentTime.Value.Date == schedule.AppointmentTime.Value.Date).ToList();
+            var lstSchedule = _context.Schedules.Where(s => s.Disabled == false && s.AppointmentTime.Value.Date == schedule.AppointmentTime.Value.Date ).ToList();
             if(lstSchedule.Count > 0)
             {
-                if(_context.Schedules.Any(s => s.AppointmentTime == schedule.AppointmentTime))
+                if(_context.Schedules.Any(s => s.Disabled == false && s.AppointmentTime == schedule.AppointmentTime))
                 {
                     isInvalidSchedule = true;
                 }
 
-                var lowerSchedule = lstSchedule.Where(s => s.AppointmentTime < schedule.AppointmentTime).OrderByDescending(s => s.AppointmentTime).FirstOrDefault();
+                var lowerSchedule = lstSchedule.Where(s => s.Disabled == false && s.AppointmentTime < schedule.AppointmentTime).OrderByDescending(s => s.AppointmentTime).FirstOrDefault();
                 if(lowerSchedule != null)
                 {
                     var lowerBoundary = (schedule.AppointmentTime - lowerSchedule.AppointmentTime).Value.TotalHours;
@@ -37,7 +37,7 @@ namespace Capstone_API_V2.Repositories
                     }
                 }
 
-                var higherSchedule = lstSchedule.Where(s => s.AppointmentTime > schedule.AppointmentTime).OrderBy(s => s.AppointmentTime).FirstOrDefault();
+                var higherSchedule = lstSchedule.Where(s => s.Disabled == false && s.AppointmentTime > schedule.AppointmentTime).OrderBy(s => s.AppointmentTime).FirstOrDefault();
                 if (higherSchedule != null)
                 {
                     var higherBoundary = (higherSchedule.AppointmentTime - schedule.AppointmentTime).Value.TotalHours;
