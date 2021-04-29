@@ -9,9 +9,9 @@ namespace Capstone_API_V2.Helper
     {
         public struct Roles
         {
-            public const int ROLE_ADMIN_ID = 0;
-            public const int ROLE_PATIENT_ID = 1;
-            public const int ROLE_DOCTOR_ID = 2;
+            public const int ROLE_ADMIN_ID = 1;
+            public const int ROLE_PATIENT_ID = 2;
+            public const int ROLE_DOCTOR_ID = 3;
             public const string ROLE_ADMIN = "Admin";
             public const string ROLE_PATIENT = "Patient";
             public const string ROLE_DOCTOR = "Doctor";
