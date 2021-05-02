@@ -5,6 +5,9 @@ using Capstone_API_V2.Repositories;
 using Capstone_API_V2.UnitOfWork;
 using Capstone_API_V2.ViewModels;
 using Capstone_API_V2.ViewModels.SimpleModel;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +25,14 @@ namespace Capstone_API_V2.Services
 
         public async Task<List<ScheduleSimpModel>> CreateScheduleAsync(List<ScheduleSimpModel> dto)
         {
+            var appConfigModel = await _unitOfWork.AppConfigRepository.GetAll(filter: f => f.AppId == Constants.Roles.DOCTOR_APP_ID).SingleOrDefaultAsync();
+            var jObject = JsonConvert.DeserializeObject<JObject>(appConfigModel.ConfigValue);
+            var examinationHour = jObject.GetValue("examinationHour").ToObject<double>();
+
             List<ScheduleSimpModel> lstInvalidSchedule = new List<ScheduleSimpModel>(); 
             foreach(var schedule in dto)
             {
-                if (!_unitOfWork.ScheduleRepositorySep.checkInvalidSchedule(schedule))
+                if (!_unitOfWork.ScheduleRepositorySep.checkInvalidSchedule(schedule, examinationHour))
                 {
                     //Auto increment index
                     schedule.ScheduleId = 0;

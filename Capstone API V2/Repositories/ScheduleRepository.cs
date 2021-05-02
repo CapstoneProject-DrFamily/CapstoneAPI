@@ -16,7 +16,7 @@ namespace Capstone_API_V2.Repositories
             _context = context;
         }
 
-        public bool checkInvalidSchedule(ScheduleSimpModel schedule)
+        public bool checkInvalidSchedule(ScheduleSimpModel schedule, double examinationHour)
         {
             bool isInvalidSchedule = false;
             var lstSchedule = _context.Schedules.Where(s => s.Disabled == false && s.DoctorId == schedule.DoctorId && s.AppointmentTime.Value.Date == schedule.AppointmentTime.Value.Date ).ToList();
@@ -31,7 +31,7 @@ namespace Capstone_API_V2.Repositories
                 if(lowerSchedule != null)
                 {
                     var lowerBoundary = (schedule.AppointmentTime - lowerSchedule.AppointmentTime).Value.TotalHours;
-                    if (lowerBoundary < 1.5)
+                    if (lowerBoundary < examinationHour)
                     {
                         isInvalidSchedule = true;
                     }
@@ -41,7 +41,7 @@ namespace Capstone_API_V2.Repositories
                 if (higherSchedule != null)
                 {
                     var higherBoundary = (higherSchedule.AppointmentTime - schedule.AppointmentTime).Value.TotalHours;
-                    if (higherBoundary < 1.5)
+                    if (higherBoundary < examinationHour)
                     {
                         isInvalidSchedule = true;
                     }

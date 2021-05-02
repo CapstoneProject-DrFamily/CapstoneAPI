@@ -8,6 +8,6 @@ namespace Capstone_API_V2.Repositories
 {
     public interface IScheduleRepository
     {
-        bool checkInvalidSchedule(ScheduleSimpModel schedule);
+        bool checkInvalidSchedule(ScheduleSimpModel schedule, double examinationHour);
     }
 }

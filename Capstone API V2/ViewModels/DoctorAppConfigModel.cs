@@ -15,5 +15,7 @@ namespace Capstone_API_V2.ViewModels
         public string Policy { get; set; }
         public int AppointmentNotifyTime { get; set; }
         public int ImageQuantity { get; set; }
+        public int MinusTimeInMinute { get; set; }
+        public double ExaminationHour { get; set; }
     }
 }
