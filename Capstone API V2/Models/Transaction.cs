@@ -9,11 +9,6 @@ namespace Capstone_API_V2.Models
 {
     public partial class Transaction
     {
-        public Transaction()
-        {
-            SymptomDetails = new HashSet<SymptomDetail>();
-        }
-
         public string TransactionId { get; set; }
         public int? DoctorId { get; set; }
         public int? PatientId { get; set; }
@@ -35,6 +30,5 @@ namespace Capstone_API_V2.Models
         public virtual ExaminationHistory ExaminationHistory { get; set; }
         public virtual Feedback Feedback { get; set; }
         public virtual Prescription Prescription { get; set; }
-        public virtual ICollection<SymptomDetail> SymptomDetails { get; set; }
     }
 }

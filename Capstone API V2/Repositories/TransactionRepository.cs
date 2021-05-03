@@ -29,8 +29,7 @@ namespace Capstone_API_V2.Repositories
                 .Include(transaction => transaction.Patient.PatientNavigation)
                 .Include(transaction => transaction.Prescription)
                 .Include(transaction => transaction.Service)
-                .Include(transaction => transaction.SymptomDetails)
-                .ThenInclude(symptomDetail => symptomDetail.Symptom).ToListAsync();
+                .ToListAsync();
 
             return result;
         }
@@ -90,8 +89,7 @@ namespace Capstone_API_V2.Repositories
                 .Include(transaction => transaction.Patient.PatientNavigation)
                 .Include(transaction => transaction.Prescription)
                 .Include(transaction => transaction.Service)
-                .Include(transaction => transaction.SymptomDetails)
-                .ThenInclude(symptomDetail => symptomDetail.Symptom).SingleOrDefaultAsync();
+                .SingleOrDefaultAsync();
 
             return result;
         }

@@ -26,7 +26,6 @@ namespace Capstone_API_V2.Models
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<HealthRecord> HealthRecords { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
-        public virtual DbSet<MedicineOld> MedicineOlds { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Prescription> Prescriptions { get; set; }
         public virtual DbSet<PrescriptionDetail> PrescriptionDetails { get; set; }
@@ -35,8 +34,6 @@ namespace Capstone_API_V2.Models
         public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<Specialty> Specialties { get; set; }
-        public virtual DbSet<Symptom> Symptoms { get; set; }
-        public virtual DbSet<SymptomDetail> SymptomDetails { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -122,36 +119,12 @@ namespace Capstone_API_V2.Models
                     .HasColumnName("main_group_name")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.MãNhómBáoCáoBộYTế)
-                    .HasColumnName("MÃ NHÓM BÁO CÁO BỘ Y TẾ")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.MãNhómCầnChiTiếtHơn)
-                    .HasColumnName("MÃ NHÓM CẦN CHI TIẾT HƠN")
-                    .HasMaxLength(255);
-
                 entity.Property(e => e.TypeCode)
                     .HasColumnName("type_code")
                     .HasMaxLength(255);
 
                 entity.Property(e => e.TypeName)
                     .HasColumnName("type_name")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.TênBệnh)
-                    .HasColumnName("TÊN BỆNH")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.TênChương)
-                    .HasColumnName("TÊN CHƯƠNG")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.TênLoại)
-                    .HasColumnName("TÊN LOẠI")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.TênNhómChính)
-                    .HasColumnName("TÊN NHÓM CHÍNH")
                     .HasMaxLength(255);
 
                 entity.Property(e => e.UpdBy)
@@ -625,28 +598,6 @@ namespace Capstone_API_V2.Models
                     .HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<MedicineOld>(entity =>
-            {
-                entity.HasKey(e => e.DrugId)
-                    .HasName("PK_Drug_1");
-
-                entity.ToTable("Medicine_Old");
-
-                entity.HasIndex(e => e.Name)
-                    .HasName("UC_Drugs")
-                    .IsUnique();
-
-                entity.Property(e => e.DrugId).HasColumnName("drug_id");
-
-                entity.Property(e => e.Disabled)
-                    .HasColumnName("disabled")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<Patient>(entity =>
             {
                 entity.ToTable("Patient");
@@ -978,68 +929,6 @@ namespace Capstone_API_V2.Models
                 entity.Property(e => e.UpdDatetime)
                     .HasColumnName("updDatetime")
                     .HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<Symptom>(entity =>
-            {
-                entity.ToTable("Symptom");
-
-                entity.Property(e => e.SymptomId).HasColumnName("symptom_id");
-
-                entity.Property(e => e.Description).HasColumnName("description");
-
-                entity.Property(e => e.Disabled).HasColumnName("disabled");
-
-                entity.Property(e => e.InsBy)
-                    .HasColumnName("insBy")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.InsDatetime)
-                    .HasColumnName("insDatetime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Type)
-                    .HasColumnName("type")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UpdBy)
-                    .HasColumnName("updBy")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UpdDatetime)
-                    .HasColumnName("updDatetime")
-                    .HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<SymptomDetail>(entity =>
-            {
-                entity.ToTable("SymptomDetail");
-
-                entity.Property(e => e.SymptomDetailId).HasColumnName("symptom_detail_id");
-
-                entity.Property(e => e.SymptomId).HasColumnName("symptom_id");
-
-                entity.Property(e => e.TransactionId)
-                    .IsRequired()
-                    .HasColumnName("transaction_id")
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.Symptom)
-                    .WithMany(p => p.SymptomDetails)
-                    .HasForeignKey(d => d.SymptomId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_movie");
-
-                entity.HasOne(d => d.Transaction)
-                    .WithMany(p => p.SymptomDetails)
-                    .HasForeignKey(d => d.TransactionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_category");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
