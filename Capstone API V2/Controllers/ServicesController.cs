@@ -33,8 +33,8 @@ namespace Capstone_API_V2.Controllers
         {
             var services = await _familyDoctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
                 filter: service => !string.IsNullOrWhiteSpace(model.SearchValue) ? service.Disabled == false
-                && service.ServiceName.StartsWith(model.SearchValue) : service.Disabled == false,
-                orderBy: o => o.OrderBy(s => s.ServiceName));
+                && service.Name.StartsWith(model.SearchValue) : service.Disabled == false,
+                orderBy: o => o.OrderBy(s => s.Name));
             var result = new
             {
                 services,

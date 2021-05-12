@@ -22,7 +22,7 @@ namespace Capstone_API_V2.Services
         public override async Task<ServiceModel> CreateAsync(ServiceModel dto)
         {
             //Increment index when inserted
-            dto.ServiceId = 0;
+            dto.Id = 0;
             var entity = _mapper.Map<Service>(dto);
             entity.Disabled = false;
             entity.InsBy = Constants.Roles.ROLE_ADMIN;
@@ -38,12 +38,12 @@ namespace Capstone_API_V2.Services
 
         public override async Task<ServiceModel> UpdateAsync(ServiceModel dto)
         {
-            var entity = await _unitOfWork.ServiceRepository.GetById(dto.ServiceId);
+            var entity = await _unitOfWork.ServiceRepository.GetById(dto.Id);
             if(entity != null)
             {
-                entity.ServiceName = dto.ServiceName;
-                entity.ServicePrice = dto.ServicePrice;
-                entity.ServiceDescription = dto.ServiceDescription;
+                entity.Name = dto.ServiceName;
+                entity.Price = dto.ServicePrice;
+                entity.Description = dto.ServiceDescription;
                 entity.Image = dto.Image;
                 entity.UpdBy = Constants.Roles.ROLE_ADMIN;
                 entity.UpdDatetime = ConvertTimeZone();

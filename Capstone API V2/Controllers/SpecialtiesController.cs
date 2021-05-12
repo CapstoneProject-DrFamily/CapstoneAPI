@@ -51,8 +51,7 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("{specialtyId}")]
         public async Task<IActionResult> GetById(int specialtyId)
         {
-            //var result = await _specialtyService.GetByIdAsync(specialtyId);
-            var result = await _specialtyService.GetAll(filter: f => f.SpecialtyId == specialtyId && f.Disabled == false, includeProperties: "Services").SingleOrDefaultAsync();
+            var result = await _specialtyService.GetAll(filter: f => f.Id == specialtyId && f.Disabled == false, includeProperties: "Services").SingleOrDefaultAsync();
             if (string.IsNullOrEmpty(result.Name))
             {
                 return NotFound();

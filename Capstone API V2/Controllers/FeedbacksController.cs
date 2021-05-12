@@ -31,7 +31,7 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
             var feedbacks = await _feedbackService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,  
-                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.FeedbackId.Equals(model.SearchValue) : !f.FeedbackId.Equals(""), 
+                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.Id.Equals(model.SearchValue) : !f.Id.Equals(""), 
                 orderBy: o => o.OrderByDescending(feedback => feedback.InsDatetime));
             var result = new
             {
@@ -47,7 +47,7 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetByDoctor([FromQuery] ResourceParameter model)
         {
             var feedbacks = await _feedbackService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
-                filter: f => f.DoctorId == int.Parse(model.SearchValue), 
+                filter: f => f.IdNavigation.DoctorId == int.Parse(model.SearchValue), 
                 orderBy: o => o.OrderByDescending(feedback => feedback.InsDatetime));
             var result = new
             {

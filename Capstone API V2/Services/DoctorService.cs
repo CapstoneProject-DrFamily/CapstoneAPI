@@ -39,7 +39,7 @@ namespace Capstone_API_V2.Services
 
                 /*var ratingPoint = (from feedback in doctor.Feedbacks where doctor.Feedbacks.Count != 0 select feedback.RatingPoint).Average();
                 var bookedCount = (from transaction in doctor.Transactions where doctor.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count();*/
-                CalculateRatingDoctor(doctorId: doctor.DoctorId);
+                CalculateRatingDoctor(doctorId: doctor.Id);
 
                 doctor.RatingPoint = ratingPoint;
                 doctor.BookedCount = bookedCount;
@@ -65,9 +65,15 @@ namespace Capstone_API_V2.Services
 
         public async Task<DoctorSimpModel> UpdateDoctor(DoctorSimpModel dto)
         {
-            var entity = await _unitOfWork.DoctorRepository.GetById(dto.DoctorId);
+            var entity = await _unitOfWork.DoctorRepository.GetById(dto.Id);
             if (entity != null)
             {
+                entity.Birthday = dto.Birthday;
+                entity.Email = dto.Email;
+                entity.Fullname = dto.Email;
+                entity.Gender = dto.Gender;
+                entity.IdCard = dto.IdCard;
+                entity.Image = dto.Image;
                 entity.Description = dto.Description;
                 entity.Degree = dto.Degree;
                 entity.Experience = dto.Experience;
@@ -86,8 +92,8 @@ namespace Capstone_API_V2.Services
         public override async Task<bool> DeleteAsync(object id)
         {
             var doctor = await _unitOfWork.DoctorRepositorySep.GetDoctorByID((int) id);
-            if (doctor == null || doctor.DoctorNavigation.Account.Disabled == true) throw new Exception("Not found doctor with id: " + id);
-            doctor.DoctorNavigation.Account.Disabled = true;
+            if (doctor == null || doctor.IdNavigation.Disabled == true) throw new Exception("Not found doctor with id: " + id);
+            doctor.IdNavigation.Disabled = true;
             doctor.Disabled = true;
             return await _unitOfWork.SaveAsync() > 0;
         }
@@ -109,12 +115,11 @@ namespace Capstone_API_V2.Services
             var doctor = await _unitOfWork.DoctorRepositorySep.GetDoctorByID(doctorId);
             if(doctor != null)
             {
-                var ratingPoint = (from feedback in doctor.Feedbacks where doctor.Feedbacks.Count != 0 select feedback.RatingPoint).Average();
-                var bookedCount = (from transaction in doctor.Transactions where doctor.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count();
+                var ratingPoint = (from treatment in doctor.Treatments where doctor.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback.RatingPoint).Average();
+                var bookedCount = (from transaction in doctor.Treatments where doctor.Treatments.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count();
                 var result = _mapper.Map<DoctorModel>(doctor);
                 result.RatingPoint = ratingPoint;
                 result.BookedCount = bookedCount;
-                //result.TotalDoneTransaction = totalDoneTransaction;
 
                 return result;
             }
@@ -137,9 +142,9 @@ namespace Capstone_API_V2.Services
         {
             var entity = await _unitOfWork.TransactionRepository.GetAll(f => f.PatientId == patientId && f.Status == Constants.TransactionStatus.DONE).Select(d => d.DoctorId).ToListAsync();
             List<DoctorModel> lstDoctor = new List<DoctorModel>();
-            foreach(var doctor in entity)
+            foreach(var doctorId in entity)
             {
-                var doctorModel = _mapper.Map<DoctorModel>(_unitOfWork.DoctorRepository.GetAll(f => f.DoctorId == doctor && f.Disabled == false, includeProperties: "Specialty,DoctorNavigation,DoctorNavigation.Account,Schedules").SingleOrDefault());
+                var doctorModel = _mapper.Map<DoctorModel>(_unitOfWork.DoctorRepository.GetAll(f => f.Id == doctorId && f.Disabled == false, includeProperties: "Specialty,IdNavigation,Schedules").SingleOrDefault());
                 lstDoctor.Add(doctorModel);
             }
             return lstDoctor;
@@ -147,7 +152,7 @@ namespace Capstone_API_V2.Services
 
         private void CalculateRatingDoctor(int doctorId)
         {
-            var feedbacks = _unitOfWork.FeedbackRepository.GetAll(filter: f => f.DoctorId == doctorId);
+            var feedbacks = _unitOfWork.FeedbackRepository.GetAll(filter: f => f.IdNavigation.DoctorId == doctorId);
             var avgRatingPoint = (from feedback in feedbacks where feedbacks.Count() > 0 select feedback.RatingPoint).Average();
             var transactions = _unitOfWork.TransactionRepository.GetAll(filter: f => f.DoctorId == doctorId && f.Disabled == false && f.Status == Constants.TransactionStatus.DONE);
             

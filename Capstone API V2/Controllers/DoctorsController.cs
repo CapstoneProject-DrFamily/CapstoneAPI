@@ -34,18 +34,18 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetOldDoctor(int patientId)
         {
             var result = await _doctorService.GetOldDoctor(patientId);
-            return Ok(result.GroupBy(d => d.DoctorId).Select(d => d.First()));
+            return Ok(result.GroupBy(d => d.Id).Select(d => d.First()));
         }
 
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
             var doctors = await _doctorService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
-                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.DoctorNavigation.FullName.Contains(model.SearchValue) 
+                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.Fullname.Contains(model.SearchValue) 
                 && f.Disabled == false
-                && f.DoctorNavigation.Account.Disabled == false : f.Disabled == false 
-                && f.DoctorNavigation.Account.Disabled == false,
-                includeProperties: "Specialty,DoctorNavigation,DoctorNavigation.Account");
+                && f.IdNavigation.Disabled == false : f.Disabled == false 
+                && f.IdNavigation.Disabled == false,
+                includeProperties: "Specialty,IdNavigation");
             var result = new
             {
                 doctors,

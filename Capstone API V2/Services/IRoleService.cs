@@ -9,6 +9,6 @@ namespace Capstone_API_V2.Services
 {
     public interface IRoleService : IBaseService<Role, RoleModel>
     {
-        string GetRole(User user);
+        string GetRole(Account user);
     }
 }

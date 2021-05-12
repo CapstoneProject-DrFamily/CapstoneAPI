@@ -34,7 +34,7 @@ namespace Capstone_API_V2.Services
 
         public async override Task<FeedbackModel> UpdateAsync(FeedbackModel dto)
         {
-            var entity = await _unitOfWork.FeedbackRepository.GetById(dto.FeedbackId);
+            var entity = await _unitOfWork.FeedbackRepository.GetById(dto.Id);
             if (entity != null)
             {
                 entity.Note = dto.Note;

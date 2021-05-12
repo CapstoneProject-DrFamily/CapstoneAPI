@@ -34,9 +34,9 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
             var transactions = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
-                filter: transaction => !string.IsNullOrWhiteSpace(model.SearchValue) ? transaction.TransactionId.Equals(model.SearchValue)
+                filter: transaction => !string.IsNullOrWhiteSpace(model.SearchValue) ? transaction.Id.Equals(model.SearchValue)
                 && transaction.Disabled == false : transaction.Disabled == false && transaction.Status != 0, 
-                includeProperties: "Doctor,Doctor.Specialty,Doctor.DoctorNavigation,ExaminationHistory,Patient,Patient.PatientNavigation,Prescription,Service,SymptomDetails,SymptomDetails.Symptom");
+                includeProperties: "Doctor,Doctor.Specialty,ExaminationHistory,Patient,Prescription,Service");
 
             var result = new
             {
@@ -82,7 +82,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TransactionSimpModel model)
+        public async Task<IActionResult> Create([FromBody] TreatmentSimpModel model)
         {
             var result = await _transactionService.CreateTransaction(model);
             if (result != null)
@@ -93,7 +93,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPost("GeneratedSchedule")]
-        public async Task<IActionResult> CreateTransactions([FromBody] List<TransactionSimpModel> model)
+        public async Task<IActionResult> CreateTransactions([FromBody] List<TreatmentSimpModel> model)
         {
             var result = await _transactionService.CreateTransactions(model);
             if (result != null)
@@ -115,7 +115,7 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] TransactionPutModel model)
+        public async Task<IActionResult> Update([FromBody] TreatmentPutModel model)
         {
             var result = await _transactionService.UpdateTransaction(model);
             return Ok(result);

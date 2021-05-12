@@ -30,18 +30,18 @@ namespace Capstone_API_V2.Controllers
         {
             var result = await _scheduleService.GetAll(filter: f => f.AppointmentTime >= startDate && f.AppointmentTime <= endDate && f.DoctorId ==  doctorId && f.Disabled == false, 
                 orderBy: o => o.OrderBy(s => s.AppointmentTime), 
-                includeProperties: "Transactions,Transactions.Doctor,Doctor.DoctorNavigation,Transactions.Patient,Transactions.Patient.PatientNavigation,Transactions.Service")
+                includeProperties: "Treatments,Treatments.Doctor,Treatments.Patient,Treatments.Service")
                 .ToListAsync();
             foreach(var schedule in result)
             {
-                if(schedule.Transactions.Count > 0)
+                if(schedule.Treatments.Count > 0)
                 {
                     var docId = schedule.DoctorId;
-                    schedule.Transactions = (from t in schedule.Transactions select t).Where(t => t.Status != Constants.TransactionStatus.CANCEL && t.ScheduleId == schedule.ScheduleId).ToList();
-                    if(schedule.Transactions.Count > 0)
+                    schedule.Treatments = (from t in schedule.Treatments select t).Where(t => t.Status != Constants.TransactionStatus.CANCEL && t.ScheduleId == schedule.Id).ToList();
+                    if(schedule.Treatments.Count > 0)
                     {
-                        var patientId = schedule.Transactions.First().PatientId.GetValueOrDefault();
-                        schedule.Transactions.First().isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
+                        var patientId = schedule.Treatments.First().PatientId.GetValueOrDefault();
+                        schedule.Treatments.First().isOldPatient = _scheduleService.checkIsOldPatient(docId, patientId);
                     }
                 }
             }
@@ -89,23 +89,23 @@ namespace Capstone_API_V2.Controllers
         [HttpGet("Patients/{patientId}/Upcoming")]
         public async Task<IActionResult> GetUpcomingSchedule([FromRoute]int patientId)
         {
-            var entity = await _scheduleService.GetAllEntity(filter: f => f.AppointmentTime >= _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().PatientId == patientId,
-                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,Transactions,Transactions.Service").ToListAsync();
+            var entity = await _scheduleService.GetAllEntity(filter: f => f.AppointmentTime >= _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Treatments.SingleOrDefault().PatientId == patientId,
+                includeProperties: "Doctor,Doctor.Specialty,Treatments,Treatments.Service").ToListAsync();
             List<Schedule> lstSchedule = new List<Schedule>();
             foreach(var schedule in entity)
             {
-                if(schedule.Transactions.Any(t => t.Status == Constants.TransactionStatus.OPEN))
+                if(schedule.Treatments.Any(t => t.Status == Constants.TransactionStatus.OPEN))
                 {
 
-                    var transactions = (from t in schedule.Transactions select t).Where(t => t.Status == Constants.TransactionStatus.OPEN && t.PatientId == patientId).ToList();
+                    var transactions = (from t in schedule.Treatments select t).Where(t => t.Status == Constants.TransactionStatus.OPEN && t.PatientId == patientId).ToList();
                     if (transactions.Count > 0)
                     {
                         transactions.SingleOrDefault().Doctor = null;
-                        schedule.Transactions = transactions;
-                        schedule.Doctor.Transactions = null;
+                        schedule.Treatments = transactions;
+                        schedule.Doctor.Treatments = null;
                         schedule.Doctor.Specialty.Services = null;
-                        schedule.Transactions.SingleOrDefault().Service.Specialty = null;
-                        schedule.Transactions.SingleOrDefault().Service.Transactions = null;
+                        schedule.Treatments.SingleOrDefault().Service.Specialty = null;
+                        schedule.Treatments.SingleOrDefault().Service.Treatments = null;
                         lstSchedule.Add(schedule);
                     }
                 }
@@ -122,8 +122,8 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> GetOvertimeSchedule([FromRoute]int patientId, [FromQuery] ResourceParameter model)
         {
             var schedules = await _scheduleService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize,
-                filter: f => f.AppointmentTime < _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Transactions.SingleOrDefault().Status == Constants.TransactionStatus.OPEN && f.Transactions.SingleOrDefault().PatientId == patientId,
-                includeProperties: "Doctor,Doctor.DoctorNavigation,Doctor.Specialty,Transactions,Transactions.Service",
+                filter: f => f.AppointmentTime < _scheduleService.ConvertTimeZone() && f.Disabled == false && f.Status == true && f.Treatments.SingleOrDefault().Status == Constants.TransactionStatus.OPEN && f.Treatments.SingleOrDefault().PatientId == patientId,
+                includeProperties: "Doctor,Doctor.Specialty,Treatments,Treatments.Service",
                 orderBy: o => o.OrderBy(d => d.AppointmentTime));
             var result = new
             {
@@ -192,7 +192,7 @@ namespace Capstone_API_V2.Controllers
         public IActionResult BookSchedule([FromBody] ScheduleSimpModel model)
         {
             //Handle multiple request
-            var schedules = _scheduleService.GetAll(filter: f => f.ScheduleId == model.ScheduleId && f.Status == true).ToList();
+            var schedules = _scheduleService.GetAll(filter: f => f.Id == model.ScheduleId && f.Status == true).ToList();
             if (schedules.Count > 0)
             {
                 return BadRequest("This schedule is already booked!");

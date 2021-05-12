@@ -7,7 +7,7 @@ namespace Capstone_API_V2.ViewModels
 {
     public class ServiceModel
     {
-        public int ServiceId { get; set; }
+        public int Id { get; set; }
         public string ServiceName { get; set; }
         public string ServiceDescription { get; set; }    
         public int? SpecialtyId { get; set; }

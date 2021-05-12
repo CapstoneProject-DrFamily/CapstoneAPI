@@ -12,8 +12,8 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<Role, RoleModel>();
             CreateMap<RoleModel, Role>();
 
-            CreateMap<User, UserModel>();
-            CreateMap<UserModel, User>();
+            CreateMap<Account, UserModel>();
+            CreateMap<UserModel, Account>();
 
             CreateMap<Medicine, MedicineModel>();
             CreateMap<MedicineModel, Medicine>();
@@ -45,8 +45,8 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<ExaminationHistory, ExaminationHistoryModel>();
             CreateMap<ExaminationHistoryModel, ExaminationHistory>();
 
-            CreateMap<Transaction, TransactionModel>();
-            CreateMap<TransactionModel, Transaction>();
+            CreateMap<Treatment, TreatmentModel>();
+            CreateMap<TreatmentModel, Treatment>();
 
             CreateMap<SymptomDetail, SymptomDetailModel>();
             CreateMap<SymptomDetailModel, SymptomDetail>();
@@ -66,22 +66,22 @@ namespace Capstone_API_V2.AutoMapper
             CreateMap<PrescriptionDetail, PrescriptionDetailModel>();
             CreateMap<PrescriptionDetailModel, PrescriptionDetail>();
 
-            CreateMap<Transaction, TransactionSimpModel>();
-            CreateMap<TransactionSimpModel, Transaction>(); 
+            CreateMap<Treatment, TreatmentSimpModel>();
+            CreateMap<TreatmentSimpModel, Treatment>(); 
             
-            CreateMap<Transaction, TransactionPutModel>();
-            CreateMap<TransactionPutModel, Transaction>();
+            CreateMap<Treatment, TreatmentPutModel>();
+            CreateMap<TreatmentPutModel, Treatment>();
 
-            CreateMap<Transaction, TransactionSimpModel>();
-            CreateMap<TransactionSimpModel, Transaction>();
+            CreateMap<Treatment, TreatmentSimpModel>();
+            CreateMap<TreatmentSimpModel, Treatment>();
 
-            CreateMap<Transaction, TransactionHistoryModel>()
-                .ForMember(des => des.DoctorName, act => act.MapFrom(src => src.Doctor.DoctorNavigation.FullName))
+            CreateMap<Treatment, TreatmentHistoryModel>()
+                .ForMember(des => des.DoctorName, act => act.MapFrom(src => src.Doctor.Fullname))
                 .ForMember(des => des.PatientId, act => act.MapFrom(src => src.PatientId))
-                .ForMember(des => des.PatientName, act => act.MapFrom(src => src.Patient.PatientNavigation.FullName))
+                .ForMember(des => des.PatientName, act => act.MapFrom(src => src.Patient.Fullname))
                 .ForMember(des => des.Relationship, act => act.MapFrom(src => src.Patient.Relationship))
-                .ForMember(des => des.ServiceName, act => act.MapFrom(src =>src.Service.ServiceName))
-                .ForMember(des => des.ServicePrice, act => act.MapFrom(src => src.Service.ServicePrice));
+                .ForMember(des => des.ServiceName, act => act.MapFrom(src =>src.Service.Name))
+                .ForMember(des => des.ServicePrice, act => act.MapFrom(src => src.Service.Price));
 
 
             CreateMap<Feedback, FeedbackModel>();

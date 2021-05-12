@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.ViewModels
 {
-    public class TransactionHistoryModel
+    public class TreatmentHistoryModel
     {
         public string TransactionId { get; set; }
         //public int DoctorId { get; set; }

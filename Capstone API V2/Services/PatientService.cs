@@ -22,7 +22,7 @@ namespace Capstone_API_V2.Services
 
         public async Task<PatientSimpModel> CreatePatient(PatientSimpModel dto)
         {
-            var profile = await _unitOfWork.ProfileRepository.GetById(dto.PatientId);
+            var profile = await _unitOfWork.ProfileRepository.GetById(dto.Id);
             string fullname = profile.FullName;
 
             var entity = _mapper.Map<Patient>(dto);
@@ -39,12 +39,18 @@ namespace Capstone_API_V2.Services
 
         public async Task<PatientSimpModel> UpdatePatient(PatientSimpModel dto)
         {
-            var entity = await _unitOfWork.PatientRepository.GetById(dto.PatientId);
-            var profile = await _unitOfWork.ProfileRepository.GetById(dto.PatientId);
+            var entity = await _unitOfWork.PatientRepository.GetById(dto.Id);
+            var profile = await _unitOfWork.ProfileRepository.GetById(dto.Id);
             string fullname = profile.FullName;
 
             if (entity != null)
             {
+                entity.Birthday = dto.Birthday;
+                entity.Email = dto.Email;
+                entity.Fullname = dto.Email;
+                entity.Gender = dto.Gender;
+                entity.IdCard = dto.IdCard;
+                entity.Image = dto.Image;
                 entity.Height = dto.Height;
                 entity.Weight = dto.Weight;
                 entity.BloodType = dto.BloodType;
@@ -74,7 +80,7 @@ namespace Capstone_API_V2.Services
 
             if (Constants.Relationship.OWNER.Equals(patient.Relationship))
             {
-                patient.PatientNavigation.Account.Disabled = true;
+                patient.Account.Disabled = true;
             }
 
             return await _unitOfWork.SaveAsync() > 0;

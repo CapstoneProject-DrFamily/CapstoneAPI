@@ -14,6 +14,6 @@ namespace Capstone_API_V2.Models
         public int SymptomDetailId { get; set; }
 
         public virtual Symptom Symptom { get; set; }
-        public virtual Transaction Transaction { get; set; }
+        public virtual Treatment Transaction { get; set; }
     }
 }

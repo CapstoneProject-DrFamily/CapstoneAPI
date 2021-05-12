@@ -50,6 +50,6 @@ namespace Capstone_API_V2.Models
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
 
-        public virtual Transaction IdNavigation { get; set; }
+        public virtual Treatment IdNavigation { get; set; }
     }
 }

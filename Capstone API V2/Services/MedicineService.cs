@@ -22,7 +22,7 @@ namespace Capstone_API_V2.Services
         public override async Task<MedicineModel> CreateAsync(MedicineModel dto)
         {
             //Increment index when inserted
-            dto.MedicineId = 0;
+            dto.Id = 0;
 
             var entity = _mapper.Map<Medicine>(dto);
             entity.Disabled = false;
@@ -39,7 +39,7 @@ namespace Capstone_API_V2.Services
 
         public override async Task<MedicineModel> UpdateAsync(MedicineModel dto)
         {
-            var entity = await _unitOfWork.MedicineRepository.GetById(dto.MedicineId);
+            var entity = await _unitOfWork.MedicineRepository.GetById(dto.Id);
             if (entity != null)
             {
                 entity.Name = dto.Name;

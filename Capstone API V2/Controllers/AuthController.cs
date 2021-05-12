@@ -71,20 +71,20 @@ namespace Capstone_API_V2.Controllers
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
                     );
 
-                List<Profile> lstProfiles = new List<Profile>(user.Profiles);
+                /*List<Profile> lstProfiles = new List<Profile>(user.Patients);
                 int profileId = 0;
                 if(lstProfiles.Count != 0)
                 {
                     profileId = lstProfiles.First().ProfileId;
-                }
+                }*/
 
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    userId = user.AccountId,
+                    userId = user.Id,
                     phone = model.PhoneNumber,
                     role = role,
-                    profileId = profileId,
+                    //profileId = profileId,
                     /*email = user.Email,
                     fullName = user.FullName,
                     username = user.Username,

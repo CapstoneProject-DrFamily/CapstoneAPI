@@ -11,23 +11,23 @@ namespace Capstone_API_V2.Models
     {
         public Service()
         {
-            Transactions = new HashSet<Transaction>();
+            Treatments = new HashSet<Treatment>();
         }
 
-        public int ServiceId { get; set; }
-        public string ServiceName { get; set; }
-        public string ServiceDescription { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal? Price { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
         public bool? Disabled { get; set; }
+        public int? SpecialtyId { get; set; }
+        public bool? IsDefault { get; set; }
         public string InsBy { get; set; }
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
-        public decimal? ServicePrice { get; set; }
-        public int? SpecialtyId { get; set; }
-        public string Image { get; set; }
-        public bool? IsDefault { get; set; }
 
         public virtual Specialty Specialty { get; set; }
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Treatment> Treatments { get; set; }
     }
 }

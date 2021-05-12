@@ -27,7 +27,7 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<Prescription> GetPrescriptionByID(string prescriptionID)
         {
-            var result = await _context.Prescriptions.Where(prescription => prescription.PrescriptionId.Equals(prescriptionID))
+            var result = await _context.Prescriptions.Where(prescription => prescription.Id.Equals(prescriptionID))
                 .Include(prescription => prescription.PrescriptionDetails)
                 .ThenInclude(prescriptionDetail => prescriptionDetail.Medicine).SingleOrDefaultAsync();
 

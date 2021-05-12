@@ -7,7 +7,13 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
 {
     public class DoctorSimpModel
     {
-        public int DoctorId { get; set; }
+        public int Id { get; set; }
+        public string Fullname { get; set; }
+        public DateTime? Birthday { get; set; }
+        public string Image { get; set; }
+        public string Email { get; set; }
+        public string IdCard { get; set; }
+        public string Gender { get; set; }
         public string Degree { get; set; }
         public string Experience { get; set; }
         public string Description { get; set; }

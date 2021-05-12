@@ -8,6 +8,12 @@ namespace Capstone_API_V2.ViewModels
     public class PatientModel
     {
         public int PatientId { get; set; }
+        public string Fullname { get; set; }
+        public DateTime? Birthday { get; set; }
+        public string Image { get; set; }
+        public string IdCard { get; set; }
+        public string Email { get; set; }
+        public string Gender { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
         public string BloodType { get; set; }

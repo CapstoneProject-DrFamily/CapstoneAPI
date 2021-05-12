@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.ViewModels
 {
-    public class TransactionModel
+    public class TreatmentModel
     {
-        public string TransactionId { get; set; }
+        public string Id { get; set; }
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
-        public int PrescriptionId { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public string EstimatedTime { get; set; }
@@ -19,7 +18,6 @@ namespace Capstone_API_V2.ViewModels
         public string Location { get; set; }
         public string Note { get; set; }
         public bool Disabled { get; set; }
-        public int ExamId { get; set; }
         public int ServiceId { get; set; }
         public int? ScheduleId { get; set; }
         public string ReasonCancel { get; set; }

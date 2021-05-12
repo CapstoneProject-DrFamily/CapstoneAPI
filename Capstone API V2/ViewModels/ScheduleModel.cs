@@ -8,7 +8,7 @@ namespace Capstone_API_V2.ViewModels
 {
     public class ScheduleModel
     {
-        public int ScheduleId { get; set; }
+        public int Id { get; set; }
         public int DoctorId { get; set; }
         public DateTime? AppointmentTime { get; set; }
         public bool? Status { get; set; }
@@ -17,6 +17,6 @@ namespace Capstone_API_V2.ViewModels
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
 
-        public ICollection<TransactionHistoryModel> Transactions { get; set; }
+        public ICollection<TreatmentHistoryModel> Treatments { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Capstone_API_V2.Services;
@@ -21,9 +22,9 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllOldRecords([Required]int patientId)
         {
-            var result = await _healthRecordService.GetAll().ToListAsync();
+            var result = await _healthRecordService.GetAll(filter: f => f.PatientId == patientId && f.Disable == true).ToListAsync();
             return Ok(result);
         }
 

@@ -18,23 +18,24 @@ namespace Capstone_API_V2.Repositories
             _context = context;
         }
 
-        public async Task<DoctorRequestModel> GetRequestDoctorInfo(int profileID)
+        public async Task<DoctorRequestModel> GetRequestDoctorInfo(int doctorId)
         {
-            var doctorInfo = await _context.Doctors.Where(x => x.DoctorNavigation.ProfileId == profileID && x.Disabled == false).Include(x => x.Transactions).Include(x => x.Feedbacks)
+            var doctorInfo = await _context.Doctors.Where(x => x.Id == doctorId && x.Disabled == false).Include(x => x.Treatments).Include(x => x.Treatments.SingleOrDefault().Feedback)
                                        .Select(x => new DoctorRequestModel
                                        {
-                                           DoctorId = x.DoctorId,
-                                           DoctorImage = x.DoctorNavigation.Image,
-                                           DoctorName = x.DoctorNavigation.FullName,
+                                           DoctorId = x.Id,
+                                           DoctorImage = x.Image,
+                                           DoctorName = x.Fullname,
                                            DoctorSpecialty = x.Specialty.Name,
                                            DoctorServiceId = x.SpecialtyId,
-                                           RatingPoint = (from feedback in x.Feedbacks where x.Feedbacks.Count != 0 select feedback.RatingPoint).Average(),
-                                           BookedCount = (from transaction in x.Transactions where x.Transactions.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count(),
-                                           FeedbackCount = x.Feedbacks.Count()
+                                           RatingPoint = (from treatment in x.Treatments where x.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback.RatingPoint).Average(),
+                                           BookedCount = (from transaction in x.Treatments where x.Treatments.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count(),
+                                           FeedbackCount = (from treatment in x.Treatments where x.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback).Count()
                                        }).SingleOrDefaultAsync();
             if(doctorInfo.RatingPoint == null)
             {
-                doctorInfo.RatingPoint = 0;
+                //doctorInfo.RatingPoint = 0;
+                doctorInfo.RatingPoint = 5;
             }
             return doctorInfo;
         }
@@ -43,9 +44,8 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Doctors
                 .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.DoctorNavigation)
-                .ThenInclude(user => user.Account)
-                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false)
+                .Include(s => s.IdNavigation)
+                .Where(user => user.IdNavigation.Disabled == false && user.Disabled == false)
                 .ToListAsync();
 
             return result;
@@ -53,18 +53,16 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<Doctor> GetDoctorByID(int doctorId)
         {
-            var result = await _context.Doctors.Where(doctor => doctor.DoctorId == doctorId)
+            var result = await _context.Doctors.Where(doctor => doctor.Id == doctorId)
                 .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.DoctorNavigation)
-                .ThenInclude(user => user.Account)
-                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false)
+                .Include(s => s.IdNavigation)
+                .Where(user => user.IdNavigation.Disabled == false && user.Disabled == false)
                 .SingleOrDefaultAsync();
 
-            var transactions = await _context.Transactions.Where(transaction => transaction.DoctorId == result.DoctorId).ToListAsync();
-            var feedbacks = await _context.Feedbacks.Where(feedback => feedback.DoctorId == result.DoctorId).ToListAsync();
+            var transactions = await _context.Treatments.Where(transaction => transaction.DoctorId == result.Id).Include(x => x.Feedback).ToListAsync();
+            //var feedbacks = await _context.Feedbacks.Where(feedback => feedback.IdNavigation.DoctorId == result.Id).ToListAsync();
 
-            result.Transactions = transactions;
-            result.Feedbacks = feedbacks;
+            result.Treatments = transactions;
 
             return result;
         }
@@ -73,9 +71,8 @@ namespace Capstone_API_V2.Repositories
         {
             var result =  await _context.Doctors
                 .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.DoctorNavigation)
-                .ThenInclude(user => user.Account)
-                .Where(t => t.DoctorNavigation.FullName.Contains(fullname) && t.DoctorNavigation.Account.Disabled == false && t.Disabled == false)
+                .Include(s => s.IdNavigation)
+                .Where(t => t.Fullname.Contains(fullname) && t.IdNavigation.Disabled == false && t.Disabled == false)
                 .ToListAsync();
 
             return result;
@@ -85,9 +82,8 @@ namespace Capstone_API_V2.Repositories
         {
             var result = await _context.Doctors
                 .Include(specialty => specialty.Specialty)
-                .Include(profile => profile.DoctorNavigation)
-                .ThenInclude(user => user.Account)
-                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false && user.DoctorNavigation.Account.Waiting == true)
+                .Include(s => s.IdNavigation)
+                .Where(user => user.IdNavigation.Disabled == false && user.Disabled == false && user.IdNavigation.Waiting == true)
                 .ToListAsync();
 
             return result;
@@ -100,9 +96,8 @@ namespace Capstone_API_V2.Repositories
                 var lstAllDoctor = _context.Doctors
                 .Include(specialty => specialty.Specialty)
                 .Include(schedule => schedule.Schedules)
-                .Include(profile => profile.DoctorNavigation)
-                .ThenInclude(user => user.Account)
-                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false && user.Schedules.Count > 0)
+                .Include(s => s.IdNavigation)
+                .Where(user => user.IdNavigation.Disabled == false && user.Disabled == false && user.Schedules.Count > 0)
                 .OrderBy(s => s.Schedules.SingleOrDefault().AppointmentTime).ToListAsync();
 
                 return lstAllDoctor;
@@ -111,9 +106,8 @@ namespace Capstone_API_V2.Repositories
             var result =  _context.Doctors.Where(doctor => doctor.SpecialtyId.Equals(specialtyId))
                 .Include(specialty => specialty.Specialty)
                 .Include(schedule => schedule.Schedules)
-                .Include(profile => profile.DoctorNavigation)
-                .ThenInclude(user => user.Account)
-                .Where(user => user.DoctorNavigation.Account.Disabled == false && user.Disabled == false && user.Schedules.Count > 0)
+                .Include(s => s.IdNavigation)
+                .Where(user => user.IdNavigation.Disabled == false && user.Disabled == false && user.Schedules.Count > 0)
                 .OrderBy(s => s.Schedules.SingleOrDefault().AppointmentTime).ToListAsync();
 
             return result;

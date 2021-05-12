@@ -6,6 +6,6 @@ namespace Capstone_API_V2.Services
 {
     public interface IAuthenticatedService
     {
-        Task<User> LoginOTP(LoginModel user);
+        Task<Account> LoginOTP(LoginModel user);
     }
 }

@@ -13,20 +13,20 @@ using static Capstone_API_V2.Helper.Constants;
 
 namespace Capstone_API_V2.Services
 {
-    public class TransactionService : BaseService<Transaction, TransactionModel>, ITransactionService
+    public class TransactionService : BaseService<Treatment, TreatmentModel>, ITransactionService
     {
         public TransactionService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        protected override IGenericRepository<Transaction> _repository => _unitOfWork.TransactionRepository;
+        protected override IGenericRepository<Treatment> _repository => _unitOfWork.TransactionRepository;
 
 
-        public async Task<TransactionSimpModel> CreateTransaction(TransactionSimpModel dto)
+        public async Task<TreatmentSimpModel> CreateTransaction(TreatmentSimpModel dto)
         {
-            var transaction = new Transaction
+            var transaction = new Treatment
             {
-                TransactionId = "TS-" + Guid.NewGuid().ToString(),
+                Id = "TS-" + Guid.NewGuid().ToString(),
                 DoctorId = dto.DoctorId,
                 //DoctorId = dto.DoctorId != 0 ? dto.DoctorId : null,
                 PatientId = dto.PatientId != 0 ? dto.PatientId : null,
@@ -39,10 +39,10 @@ namespace Capstone_API_V2.Services
                 Status = TransactionStatus.OPEN,
                 Disabled = false
             };
-            dto.TransactionId = transaction.TransactionId;
+            dto.Id = transaction.Id;
             dto.DateStart = transaction.DateStart;
 
-            _unitOfWork.TransactionRepository.Add(_mapper.Map<Transaction>(transaction));
+            _unitOfWork.TransactionRepository.Add(_mapper.Map<Treatment>(transaction));
             if (dto.SymptomDetails != null)
             {
                 foreach (SymptomDetailModel symptomDetail in dto.SymptomDetails)
@@ -51,23 +51,23 @@ namespace Capstone_API_V2.Services
                     {
                         SymptomDetailId = 0,
                         SymptomId = symptomDetail.SymptomId,
-                        TransactionId = dto.TransactionId
+                        TransactionId = dto.Id
                     };
                     _unitOfWork.SymptomDetailRepository.Add(_mapper.Map<SymptomDetail>(symptomDetailModel));
                 }
             }
             await _unitOfWork.SaveAsync();
 
-            return _mapper.Map<TransactionSimpModel>(dto);
+            return _mapper.Map<TreatmentSimpModel>(dto);
         }
 
-        public async Task<List<TransactionSimpModel>> CreateTransactions(List<TransactionSimpModel> dtos)
+        public async Task<List<TreatmentSimpModel>> CreateTransactions(List<TreatmentSimpModel> dtos)
         {
             foreach(var dto in dtos)
             {
-                var transaction = new Transaction
+                var transaction = new Treatment
                 {
-                    TransactionId = "TS-" + Guid.NewGuid().ToString(),
+                    Id = "TS-" + Guid.NewGuid().ToString(),
                     DoctorId = dto.DoctorId,
                     PatientId = dto.PatientId != 0 ? dto.PatientId : null,
                     ScheduleId = dto.ScheduleId != 0 ? dto.ScheduleId : null,
@@ -78,31 +78,31 @@ namespace Capstone_API_V2.Services
                     Status = TransactionStatus.OPEN,
                     Disabled = false
                 };
-                dto.TransactionId = transaction.TransactionId;
+                dto.Id = transaction.Id;
                 dto.DateStart = transaction.DateStart;
 
-                _unitOfWork.TransactionRepository.Add(_mapper.Map<Transaction>(transaction));
+                _unitOfWork.TransactionRepository.Add(_mapper.Map<Treatment>(transaction));
             }
             await _unitOfWork.SaveAsync();
             return dtos;
         }
 
-        public async Task<List<TransactionModel>> GetAllTransaction()
+        public async Task<List<TreatmentModel>> GetAllTransaction()
         {
-            List<TransactionModel> transactions = new List<TransactionModel>();
+            List<TreatmentModel> transactions = new List<TreatmentModel>();
             var entity = await _unitOfWork.TransactionRepositorySep.GetAllTransaction();
-            foreach (Transaction transaction in entity)
+            foreach (Treatment transaction in entity)
             {
-                TransactionModel transactionModel = _mapper.Map<TransactionModel>(transaction);
+                TreatmentModel transactionModel = _mapper.Map<TreatmentModel>(transaction);
                 transactions.Add(transactionModel);
             }
             return transactions;
         }
 
-        public async Task<TransactionModel> GetTransactionByID(string transactionID)
+        public async Task<TreatmentModel> GetTransactionByID(string transactionID)
         {
             var entity = await _unitOfWork.TransactionRepositorySep.GetTransactionByID(transactionID);
-            var result = _mapper.Map<TransactionModel>(entity);
+            var result = _mapper.Map<TreatmentModel>(entity);
             result.isOldPatient = _unitOfWork.TransactionRepositorySep.CheckOldPatient(result.PatientId, result.DoctorId);
             return result;
         }
@@ -118,9 +118,9 @@ namespace Capstone_API_V2.Services
             return await _unitOfWork.SaveAsync() > 0;
         }
 
-        public async Task<TransactionPutModel> UpdateTransaction(TransactionPutModel dto)
+        public async Task<TreatmentPutModel> UpdateTransaction(TreatmentPutModel dto)
         {
-            var entity = await _unitOfWork.TransactionRepositorySep.GetTransactionByID(dto.TransactionId);
+            var entity = await _unitOfWork.TransactionRepositorySep.GetTransactionByID(dto.Id);
             if(entity != null)
             {
                 entity.DoctorId = dto.DoctorId;
@@ -142,12 +142,12 @@ namespace Capstone_API_V2.Services
             
         }
 
-        public IQueryable<TransactionHistoryModel> GetTransactionByDoctorIDAsync(int doctorID, int status, DateTime dateStart)
+        public IQueryable<TreatmentHistoryModel> GetTransactionByDoctorIDAsync(int doctorID, int status, DateTime dateStart)
         {
             return _unitOfWork.TransactionRepositorySep.GetTransactionByDoctorID(doctorID, status, dateStart);
         }
 
-        public IQueryable<TransactionHistoryModel> GetTransactionByPatientIDAsync(int patientID, int status)
+        public IQueryable<TreatmentHistoryModel> GetTransactionByPatientIDAsync(int patientID, int status)
         {
             return _unitOfWork.TransactionRepositorySep.GetTransactionByPatientID(patientID, status);
         }

@@ -87,8 +87,8 @@ namespace Capstone_API_V2.Controllers
 
             if (model.IsAcceptDoctor)
             {
-                var doctor = await _userService.GetAsync(1, 1, filter: f => f.AccountId == model.UserModel.AccountId, includeProperties: "Profiles");
-                await _userService.SendEmailAsync(doctor.SingleOrDefault().Profiles.SingleOrDefault().Email, doctor.SingleOrDefault().Profiles.SingleOrDefault().FullName, model.UserModel.Waiting, model.UserModel.Disabled, model.Reason);
+                var doctor = await _userService.GetAsync(1, 1, filter: f => f.Id == model.UserModel.AccountId, includeProperties: "Doctor");
+                await _userService.SendEmailAsync(doctor.SingleOrDefault().Doctor.Email, doctor.SingleOrDefault().Doctor.Fullname, model.UserModel.Waiting, model.UserModel.Disabled, model.Reason);
             }
             return Ok(result);
         }

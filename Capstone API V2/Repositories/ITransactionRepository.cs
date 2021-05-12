@@ -9,10 +9,10 @@ namespace Capstone_API_V2.Repositories
 {
     public interface ITransactionRepository
     {
-        Task<List<Transaction>> GetAllTransaction();
-        Task<Transaction> GetTransactionByID(string transactionID);
-        IQueryable<TransactionHistoryModel> GetTransactionByDoctorID(int doctorID, int status, DateTime dateStart);
-        IQueryable<TransactionHistoryModel> GetTransactionByPatientID(int patientID, int status);
+        Task<List<Treatment>> GetAllTransaction();
+        Task<Treatment> GetTransactionByID(string transactionID);
+        IQueryable<TreatmentHistoryModel> GetTransactionByDoctorID(int doctorID, int status, DateTime dateStart);
+        IQueryable<TreatmentHistoryModel> GetTransactionByPatientID(int patientID, int status);
         bool CheckOldPatient(int patientId, int doctorId);
     }
 }

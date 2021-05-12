@@ -19,7 +19,7 @@ namespace Capstone_API_V2.Models
         public string IdCard { get; set; }
         public int AccountId { get; set; }
 
-        public virtual User Account { get; set; }
+        public virtual Account Account { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
     }

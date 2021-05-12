@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.Services
 {
-    public class UserService : BaseService<User, UserModel>, IUserService
+    public class UserService : BaseService<Account, UserModel>, IUserService
     {
 
         public UserService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        protected override IGenericRepository<User> _repository => _unitOfWork.UserGenRepository;
+        protected override IGenericRepository<Account> _repository => _unitOfWork.UserGenRepository;
 
         public async Task<bool> CheckPassWord(string username, string password)
         {
@@ -46,12 +46,12 @@ namespace Capstone_API_V2.Services
             return false;
         }
 
-        public async Task<User> CreateUser(UserModel model)
+        public async Task<Account> CreateUser(UserModel model)
         {
             //Increment index when inserted
             model.AccountId = 0; 
 
-            var user = _mapper.Map<User>(model);
+            var user = _mapper.Map<Account>(model);
             user.InsBy = model.Username;
             user.InsDatetime = ConvertTimeZone();
             user.UpdBy = model.Username;
@@ -61,7 +61,7 @@ namespace Capstone_API_V2.Services
             return user;
         }
 
-        public async Task<User> UpdateUser(UserModel model)
+        public async Task<Account> UpdateUser(UserModel model)
         {
             var entity = await _unitOfWork.UserGenRepository.GetById(model.AccountId);
             if (entity != null)
@@ -96,13 +96,13 @@ namespace Capstone_API_V2.Services
             return false;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<Account>> GetAllUsers()
         {
             var users = await _unitOfWork.UserRepository.GetAll();
             return users;
         }
 
-        public async Task<User> GetByUserName(string username, string action)
+        public async Task<Account> GetByUserName(string username, string action)
         {
             var entity = await _unitOfWork.UserRepository.GetByUsername(username);
             if (entity == null || entity.Disabled == true)

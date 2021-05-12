@@ -17,7 +17,7 @@ namespace Capstone_API_V2.Repositories
             _context = context;
         }
 
-        public async Task<User> Create(User user)
+        public async Task<Account> Create(Account user)
         {
             /*if (string.IsNullOrWhiteSpace(password))
             {
@@ -25,7 +25,7 @@ namespace Capstone_API_V2.Repositories
             }*/
 
 
-            if (_context.Users.Any(x => x.Username == user.Username))
+            if (_context.Accounts.Any(x => x.Username == user.Username))
             {
                 throw new AppException("Username \"" + user.Username + "\" is duplicate");
             }
@@ -41,31 +41,36 @@ namespace Capstone_API_V2.Repositories
             user.UpdBy = Constants.Roles.ROLE_ADMIN;
             user.UpdDatetime = DateTime.Now;*/
 
-            await _context.Users.AddAsync(user);
+            await _context.Accounts.AddAsync(user);
             return user;
 
         }
 
-        public void Update(User user)
+        public void Update(Account user)
         {
-            _context.Users.Attach(user);
-            _context.Users.Update(user);
+            _context.Accounts.Attach(user);
+            _context.Accounts.Update(user);
         }
 
-        public void Delete(User user)
+        public void Delete(Account user)
         {
             user.Disabled = true;
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<Account>> GetAll()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Accounts.ToListAsync();
         }
 
-        public async Task<User> GetByUsername(string username)
+        public async Task<Account> GetByUsername(string username)
         {
-            var user = await _context.Users.Where(x => x.Username == username).Include(x => x.Profiles)
+            var user = await _context.Accounts.Where(x => x.Username == username).Include(x => x.Patients)
                                        .SingleOrDefaultAsync();
+            if(user.Patients.Count == 0)
+            {
+                user = await _context.Accounts.Where(x => x.Username == username).Include(x => x.Doctor)
+                                       .SingleOrDefaultAsync();
+            }
             return user;
         }
 

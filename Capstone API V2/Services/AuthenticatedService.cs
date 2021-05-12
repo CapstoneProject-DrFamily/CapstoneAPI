@@ -20,7 +20,7 @@ namespace Capstone_API_V2.Services
             _mapper = mapper;
         }
 
-        public async Task<User> LoginOTP(LoginModel user)
+        public async Task<Account> LoginOTP(LoginModel user)
         {
             //UserRecord user_firebase = await FirebaseAuth.DefaultInstance.GetUserAsync(uid);
             int role_id = int.Parse(user.RoleID);
@@ -29,7 +29,7 @@ namespace Capstone_API_V2.Services
 
             if (currentUser == null)
             {
-                var user_info = new User()
+                var user_info = new Account()
                 {
                     Username = user.PhoneNumber,
                     RoleId = role_id,

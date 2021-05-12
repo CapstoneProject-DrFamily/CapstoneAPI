@@ -33,13 +33,12 @@ namespace Capstone_API_V2.Controllers
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {
             var patients = await _patientService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
-                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.PatientNavigation.FullName.Contains(model.SearchValue) 
+                filter: f => !string.IsNullOrWhiteSpace(model.SearchValue) ? f.Fullname.Contains(model.SearchValue) 
                 && f.Disabled == false
-                && f.PatientNavigation.Account.Disabled == false
-                && f.PatientNavigation.ProfileId == f.PatientId && f.Relationship.Equals(Constants.Relationship.OWNER) : f.Disabled == false 
-                && f.PatientNavigation.AccountId == f.PatientNavigation.Account.AccountId
-                && f.PatientNavigation.Account.Disabled == false && f.Relationship.Equals(Constants.Relationship.OWNER), 
-                includeProperties: "PatientNavigation,PatientNavigation.Account");
+                && f.Account.Disabled == false
+                && f.Relationship.Equals(Constants.Relationship.OWNER) : f.Disabled == false && f.AccountId == f.Account.Id
+                && f.Account.Disabled == false && f.Relationship.Equals(Constants.Relationship.OWNER), 
+                includeProperties: "IdNavigation");
             var result = new
             {
                 patients,

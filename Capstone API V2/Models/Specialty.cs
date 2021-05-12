@@ -15,7 +15,7 @@ namespace Capstone_API_V2.Models
             Services = new HashSet<Service>();
         }
 
-        public int SpecialtyId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }

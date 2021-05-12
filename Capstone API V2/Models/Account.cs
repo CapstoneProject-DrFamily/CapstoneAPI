@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 namespace Capstone_API_V2.Models
 {
-    public partial class User
+    public partial class Account
     {
-        public User()
+        public Account()
         {
-            Profiles = new HashSet<Profile>();
+            Patients = new HashSet<Patient>();
         }
 
-        public int AccountId { get; set; }
+        public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
@@ -27,6 +27,7 @@ namespace Capstone_API_V2.Models
         public string NotiToken { get; set; }
 
         public virtual Role Role { get; set; }
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual Doctor Doctor { get; set; }
+        public virtual ICollection<Patient> Patients { get; set; }
     }
 }

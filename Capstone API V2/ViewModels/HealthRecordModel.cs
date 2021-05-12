@@ -7,7 +7,7 @@ namespace Capstone_API_V2.ViewModels
 {
     public class HealthRecordModel
     {
-        public int RecordId { get; set; }
+        public int Id { get; set; }
         public string ConditionAtBirth { get; set; }
         public double? BirthWeight { get; set; }
         public double? BirthHeight { get; set; }
@@ -46,6 +46,8 @@ namespace Capstone_API_V2.ViewModels
         public string ContactTime { get; set; }
         public string ToiletType { get; set; }
         public string OtherRisks { get; set; }
+        public int PatientId { get; set; }
+        public bool? Disable { get; set; }
         public string InsBy { get; set; }
         public string UpdBy { get; set; }
     }

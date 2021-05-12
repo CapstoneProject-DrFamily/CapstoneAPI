@@ -14,7 +14,7 @@ namespace Capstone_API_V2.Models
             PrescriptionDetails = new HashSet<PrescriptionDetail>();
         }
 
-        public string PrescriptionId { get; set; }
+        public string Id { get; set; }
         public string Description { get; set; }
         public string DiseaseId { get; set; }
         public string InsBy { get; set; }
@@ -23,7 +23,7 @@ namespace Capstone_API_V2.Models
         public DateTime? UpdDatetime { get; set; }
 
         public virtual Disease Disease { get; set; }
-        public virtual Transaction PrescriptionNavigation { get; set; }
+        public virtual Treatment IdNavigation { get; set; }
         public virtual ICollection<PrescriptionDetail> PrescriptionDetails { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Capstone_API_V2.Models
             PrescriptionDetails = new HashSet<PrescriptionDetail>();
         }
 
-        public int MedicineId { get; set; }
+        public int Id { get; set; }
         public string Form { get; set; }
         public string Strength { get; set; }
         public string Name { get; set; }

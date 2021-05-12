@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.Services
 {
-    public interface IUserService : IBaseService<User, UserModel>
+    public interface IUserService : IBaseService<Account, UserModel>
     {
-        Task<IEnumerable<User>> GetAllUsers();
-        Task<User> GetByUserName(string username, string action = "");
-        Task<User> CreateUser(UserModel user);
+        Task<IEnumerable<Account>> GetAllUsers();
+        Task<Account> GetByUserName(string username, string action = "");
+        Task<Account> CreateUser(UserModel user);
         Task<bool> CheckPassWord(string username, string password);
-        Task<User> UpdateUser(UserModel user);
+        Task<Account> UpdateUser(UserModel user);
         Task<bool> DeleteUser(int accountId);
         Task SendEmailAsync(string toEmail, string toName, bool waiting, bool disabled, string reason);
     }

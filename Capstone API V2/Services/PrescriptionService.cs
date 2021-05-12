@@ -23,7 +23,7 @@ namespace Capstone_API_V2.Services
         {
             var prescription = new Prescription
             {
-                PrescriptionId = dto.PrescriptionId,
+                Id = dto.Id,
                 Description = dto.Description,
                 DiseaseId = dto.DiseaseId,
                 InsBy = dto.InsBy,
@@ -34,7 +34,7 @@ namespace Capstone_API_V2.Services
 
             _repository.Add(prescription);
             await _unitOfWork.SaveAsync();
-            dto.PrescriptionId = prescription.PrescriptionId;
+            dto.Id = prescription.Id;
 
             foreach (PrescriptionDetailModel dtoPrescriptionDetail in dto.PrescriptionDetails)
             {
@@ -42,7 +42,7 @@ namespace Capstone_API_V2.Services
                 {
                     PrescriptionDetailId = 0,
                     MedicineId = dtoPrescriptionDetail.MedicineId,
-                    PrescriptionId = dto.PrescriptionId,
+                    PrescriptionId = dto.Id,
                     Method = dtoPrescriptionDetail.Method,
                     AfternoonQuantity = dtoPrescriptionDetail.AfternoonQuantity,
                     MorningQuantity = dtoPrescriptionDetail.MorningQuantity,
@@ -96,7 +96,7 @@ namespace Capstone_API_V2.Services
 
         public async Task<PrescriptionSimpModel> UpdatePrescription(PrescriptionSimpModel dto)
         {
-            var entity = await _unitOfWork.PrescriptionRepositorySep.GetPrescriptionByID(dto.PrescriptionId);
+            var entity = await _unitOfWork.PrescriptionRepositorySep.GetPrescriptionByID(dto.Id);
 
             if (entity != null)
             {

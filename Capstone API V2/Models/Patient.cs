@@ -11,25 +11,31 @@ namespace Capstone_API_V2.Models
     {
         public Patient()
         {
-            Feedbacks = new HashSet<Feedback>();
-            Transactions = new HashSet<Transaction>();
+            HealthRecords = new HashSet<HealthRecord>();
+            Treatments = new HashSet<Treatment>();
         }
 
-        public int PatientId { get; set; }
+        public int Id { get; set; }
+        public string Fullname { get; set; }
+        public DateTime? Birthday { get; set; }
+        public string Image { get; set; }
+        public string IdCard { get; set; }
+        public string Email { get; set; }
+        public string Gender { get; set; }
+        public string Location { get; set; }
+        public string Relationship { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
         public string BloodType { get; set; }
+        public int AccountId { get; set; }
         public string InsBy { get; set; }
         public DateTime? InsDatetime { get; set; }
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
-        public string Relationship { get; set; }
         public bool? Disabled { get; set; }
-        public string Location { get; set; }
 
-        public virtual Profile PatientNavigation { get; set; }
-        public virtual HealthRecord HealthRecord { get; set; }
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual Account Account { get; set; }
+        public virtual ICollection<HealthRecord> HealthRecords { get; set; }
+        public virtual ICollection<Treatment> Treatments { get; set; }
     }
 }

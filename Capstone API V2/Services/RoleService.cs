@@ -13,7 +13,7 @@ namespace Capstone_API_V2.Services
 
         protected override IGenericRepository<Role> _repository => _unitOfWork.RoleRepository;
 
-        public string GetRole(User user)
+        public string GetRole(Account user)
         {
             var role = _repository.GetByObject(u => u.RoleId == user.RoleId).SingleOrDefault();
             return role.Name;

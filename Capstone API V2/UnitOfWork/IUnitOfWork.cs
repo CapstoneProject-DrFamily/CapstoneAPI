@@ -20,8 +20,8 @@ namespace Capstone_API_V2.UnitOfWork
         IGenericRepository<Specialty> SpecialtyRepository { get; }
         IGenericRepository<Symptom> SymptomRepository { get; }
         IGenericRepository<SymptomDetail> SymptomDetailRepository { get; }
-        IGenericRepository<Transaction> TransactionRepository { get; }
-        IGenericRepository<User> UserGenRepository { get; }
+        IGenericRepository<Treatment> TransactionRepository { get; }
+        IGenericRepository<Account> UserGenRepository { get; }
         IGenericRepository<Disease> DiseaseRepository { get; }
         IGenericRepository<AppConfig> AppConfigRepository { get; }
         IUserRepository UserRepository { get; }

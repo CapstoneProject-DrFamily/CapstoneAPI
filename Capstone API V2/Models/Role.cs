@@ -11,7 +11,7 @@ namespace Capstone_API_V2.Models
     {
         public Role()
         {
-            Users = new HashSet<User>();
+            Accounts = new HashSet<Account>();
         }
 
         public int RoleId { get; set; }
@@ -23,6 +23,6 @@ namespace Capstone_API_V2.Models
         public string UpdBy { get; set; }
         public DateTime? UpdDatetime { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

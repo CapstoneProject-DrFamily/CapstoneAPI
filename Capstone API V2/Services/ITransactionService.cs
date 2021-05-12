@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.Services
 {
-    public interface ITransactionService : IBaseService<Transaction, TransactionModel>
+    public interface ITransactionService : IBaseService<Treatment, TreatmentModel>
     {
-        Task<TransactionSimpModel> CreateTransaction(TransactionSimpModel dto);
-        Task<List<TransactionSimpModel>> CreateTransactions(List<TransactionSimpModel> dtos);
-        Task<TransactionPutModel> UpdateTransaction(TransactionPutModel dto);
-        Task<List<TransactionModel>> GetAllTransaction();
-        Task<TransactionModel> GetTransactionByID(string transactionID);
-        IQueryable<TransactionHistoryModel> GetTransactionByDoctorIDAsync(int doctorID, int status, DateTime dateStart);
-        IQueryable<TransactionHistoryModel> GetTransactionByPatientIDAsync(int patientID, int status);
+        Task<TreatmentSimpModel> CreateTransaction(TreatmentSimpModel dto);
+        Task<List<TreatmentSimpModel>> CreateTransactions(List<TreatmentSimpModel> dtos);
+        Task<TreatmentPutModel> UpdateTransaction(TreatmentPutModel dto);
+        Task<List<TreatmentModel>> GetAllTransaction();
+        Task<TreatmentModel> GetTransactionByID(string transactionID);
+        IQueryable<TreatmentHistoryModel> GetTransactionByDoctorIDAsync(int doctorID, int status, DateTime dateStart);
+        IQueryable<TreatmentHistoryModel> GetTransactionByPatientIDAsync(int patientID, int status);
     }
 }

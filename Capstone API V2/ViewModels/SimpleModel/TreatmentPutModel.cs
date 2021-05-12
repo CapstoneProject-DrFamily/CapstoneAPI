@@ -5,17 +5,16 @@ using System.Threading.Tasks;
 
 namespace Capstone_API_V2.ViewModels.SimpleModel
 {
-    public class TransactionSimpModel
+    public class TreatmentPutModel
     {
-        public string TransactionId { get; set; }
-        public int? DoctorId { get; set; }
+        public string Id { get; set; }
+        public int DoctorId { get; set; }
         public int? PatientId { get; set; }
-        public DateTime? DateStart { get; set; }
+        public string EstimatedTime { get; set; }
         public byte Status { get; set; }
         public string Location { get; set; }
         public string Note { get; set; }
-        public int? ServiceId { get; set; }
         public int? ScheduleId { get; set; }
-        public ICollection<SymptomDetailModel> SymptomDetails { get; set; }
+        public string ReasonCancel { get; set; }
     }
 }
