@@ -41,9 +41,9 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.ServiceRepository.GetById(dto.Id);
             if(entity != null)
             {
-                entity.Name = dto.ServiceName;
-                entity.Price = dto.ServicePrice;
-                entity.Description = dto.ServiceDescription;
+                entity.Name = dto.Name;
+                entity.Price = dto.Price;
+                entity.Description = dto.Description;
                 entity.Image = dto.Image;
                 entity.UpdBy = Constants.Roles.ROLE_ADMIN;
                 entity.UpdDatetime = ConvertTimeZone();
