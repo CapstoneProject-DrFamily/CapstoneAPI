@@ -22,7 +22,8 @@ namespace Capstone_API_V2.Services
 
         public async Task<PatientSimpModel> CreatePatient(PatientSimpModel dto)
         {
-            var profile = await _unitOfWork.ProfileRepository.GetById(dto.Id);
+            //Auto incremnent index
+            dto.Id = 0;
 
             var entity = _mapper.Map<Patient>(dto);
             entity.Disabled = false;

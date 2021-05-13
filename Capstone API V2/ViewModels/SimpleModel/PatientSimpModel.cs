@@ -14,12 +14,12 @@ namespace Capstone_API_V2.ViewModels.SimpleModel
         public string IdCard { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
-        public double Height { get; set; }
-        public double Weight { get; set; }
+        public string Location { get; set; }
+        public string Relationship { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
         public string BloodType { get; set; }
         public int AccountId { get; set; }
-        public string Relationship { get; set; }
-        public string Location { get; set; }
 
         //public int AccountId { get; set; }
     }
