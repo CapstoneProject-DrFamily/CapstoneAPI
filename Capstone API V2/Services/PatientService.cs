@@ -41,7 +41,6 @@ namespace Capstone_API_V2.Services
         {
             var entity = await _unitOfWork.PatientRepository.GetById(dto.Id);
             //var profile = await _unitOfWork.ProfileRepository.GetById(dto.Id);
-            string fullname = profile.FullName;
 
             if (entity != null)
             {
@@ -57,7 +56,7 @@ namespace Capstone_API_V2.Services
                 entity.AccountId = dto.AccountId;
                 entity.Relationship = dto.Relationship;
                 entity.Location = dto.Location;
-                entity.UpdBy = fullname;
+                entity.UpdBy = dto.Fullname;
                 entity.UpdDatetime = ConvertTimeZone();
                 _unitOfWork.PatientRepository.Update(entity);
                 await _unitOfWork.SaveAsync();
