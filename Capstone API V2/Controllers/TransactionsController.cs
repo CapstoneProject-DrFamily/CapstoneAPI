@@ -35,7 +35,7 @@ namespace Capstone_API_V2.Controllers
         {
             var transactions = await _transactionService.GetAsync(pageIndex: model.PageIndex, pageSize: model.PageSize, 
                 filter: transaction => !string.IsNullOrWhiteSpace(model.SearchValue) ? transaction.Id.Equals(model.SearchValue)
-                && transaction.Disabled == false : transaction.Disabled == false && transaction.Status != 0, 
+                && transaction.Disabled == false : transaction.Disabled == false && transaction.Status != Constants.TransactionStatus.OPEN, 
                 includeProperties: "Doctor,Doctor.Specialty,ExaminationHistory,Patient,Prescription,Service");
 
             var result = new

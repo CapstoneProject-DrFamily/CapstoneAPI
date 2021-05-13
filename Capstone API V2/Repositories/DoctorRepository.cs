@@ -20,7 +20,7 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<DoctorRequestModel> GetRequestDoctorInfo(int doctorId)
         {
-            var doctorInfo = await _context.Doctors.Where(x => x.Id == doctorId && x.Disabled == false).Include(x => x.Treatments).Include(x => x.Treatments.SingleOrDefault().Feedback)
+            var doctorInfo = await _context.Doctors.Where(x => x.Id == doctorId && x.Disabled == false).Include(x => x.Treatments)
                                        .Select(x => new DoctorRequestModel
                                        {
                                            DoctorId = x.Id,

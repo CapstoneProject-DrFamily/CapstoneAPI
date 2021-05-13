@@ -70,7 +70,7 @@ namespace Capstone_API_V2.Services
         {
             if (roleId == Constants.Roles.ROLE_DOCTOR_ID)
             {
-                return _uow.DoctorRepository.GetById(accountId) != null ? _uow.DoctorRepository.GetById(accountId).Result.Id : 0;
+                return _uow.DoctorRepository.GetById(accountId).Result != null ? _uow.DoctorRepository.GetById(accountId).Result.Id : 0;
             }
             return _uow.PatientRepository.GetAll(filter: f => f.AccountId == accountId && Constants.Relationship.OWNER.Equals(f.Relationship)).SingleOrDefault() != null ? 
                 _uow.PatientRepository.GetAll(filter: f => f.AccountId == accountId && Constants.Relationship.OWNER.Equals(f.Relationship)).SingleOrDefault().Id : 0;
