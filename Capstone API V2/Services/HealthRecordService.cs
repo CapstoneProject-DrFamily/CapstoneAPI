@@ -23,6 +23,7 @@ namespace Capstone_API_V2.Services
             var entity = _mapper.Map<HealthRecord>(dto);
             entity.InsDatetime = ConvertTimeZone();
             entity.UpdDatetime = ConvertTimeZone();
+            entity.Disable = false;
 
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();
@@ -35,7 +36,7 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.HealthRecordRepository.GetById(dto.Id);
             if (entity != null)
             {
-                /*entity.ActivityFrequency = dto.ActivityFrequency;
+                entity.ActivityFrequency = dto.ActivityFrequency;
                 entity.BirthDefects = dto.BirthDefects;
                 entity.BirthHeight = dto.BirthHeight;
                 entity.BirthWeight = dto.BirthWeight;
@@ -72,17 +73,26 @@ namespace Capstone_API_V2.Services
                 entity.ToiletType = dto.ToiletType;
                 entity.Tuberculosis = dto.Tuberculosis;
                 entity.TuberculosisFamily = dto.TuberculosisFamily;
-                entity.SurgeryHistory = dto.SurgeryHistory;*/
+                entity.SurgeryHistory = dto.SurgeryHistory;
                 entity.Disable = true;
                 entity.UpdBy = dto.UpdBy;
                 entity.UpdDatetime = ConvertTimeZone();
 
                 _repository.Update(entity);
                 await _unitOfWork.SaveAsync();
-
-                await CreateAsync(dto);
             }
             return null;
+        }
+
+        public async override Task<bool> DeleteAsync(object id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null || entity.Disable == true) throw new Exception("Not found disease with id: " + id);
+
+            entity.Disable = true;
+
+            return await _unitOfWork.SaveAsync() > 0;
         }
     }
 }
