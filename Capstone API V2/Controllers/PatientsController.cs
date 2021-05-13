@@ -38,7 +38,7 @@ namespace Capstone_API_V2.Controllers
                 && f.Account.Disabled == false
                 && f.Relationship.Equals(Constants.Relationship.OWNER) : f.Disabled == false && f.AccountId == f.Account.Id
                 && f.Account.Disabled == false && f.Relationship.Equals(Constants.Relationship.OWNER), 
-                includeProperties: "IdNavigation");
+                includeProperties: "Account");
             var result = new
             {
                 patients,
