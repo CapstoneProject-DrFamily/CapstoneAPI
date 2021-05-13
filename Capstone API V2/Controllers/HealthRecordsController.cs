@@ -22,10 +22,14 @@ namespace Capstone_API_V2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllOldRecords([Required]int patientId)
+        public async Task<IActionResult> GetAll([Required]int patientId, bool isOldRecord)
         {
-            var result = await _healthRecordService.GetAll(filter: f => f.PatientId == patientId && f.Disable == true).ToListAsync();
-            return Ok(result);
+            if (isOldRecord)
+            {
+                var result = await _healthRecordService.GetAll(filter: f => f.PatientId == patientId && f.Disable == true).ToListAsync();
+                return Ok(result);
+            }
+            return Ok(await _healthRecordService.GetAll(filter: f => f.PatientId == patientId && f.Disable == false).ToListAsync());
         }
 
         [HttpGet("paging")]
