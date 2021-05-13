@@ -17,6 +17,7 @@ namespace Capstone_API_V2.ViewModels
         public double? Height { get; set; }
         public double? Weight { get; set; }
         public string BloodType { get; set; }
+        public int AccountId { get; set; }
         public bool Disabled { get; set; }
         public string InsBy { get; set; }
         public DateTime? InsDatetime { get; set; }

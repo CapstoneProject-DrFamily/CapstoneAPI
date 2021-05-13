@@ -40,21 +40,21 @@ namespace Capstone_API_V2.Services
         public async Task<PatientSimpModel> UpdatePatient(PatientSimpModel dto)
         {
             var entity = await _unitOfWork.PatientRepository.GetById(dto.Id);
-            var profile = await _unitOfWork.ProfileRepository.GetById(dto.Id);
+            //var profile = await _unitOfWork.ProfileRepository.GetById(dto.Id);
             string fullname = profile.FullName;
 
             if (entity != null)
             {
                 entity.Birthday = dto.Birthday;
                 entity.Email = dto.Email;
-                entity.Fullname = dto.Email;
+                entity.Fullname = dto.Fullname;
                 entity.Gender = dto.Gender;
                 entity.IdCard = dto.IdCard;
                 entity.Image = dto.Image;
                 entity.Height = dto.Height;
                 entity.Weight = dto.Weight;
                 entity.BloodType = dto.BloodType;
-                //entity.AccountId = dto.AccountId;
+                entity.AccountId = dto.AccountId;
                 entity.Relationship = dto.Relationship;
                 entity.Location = dto.Location;
                 entity.UpdBy = fullname;

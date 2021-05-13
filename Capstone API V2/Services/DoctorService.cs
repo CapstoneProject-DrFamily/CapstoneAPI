@@ -68,6 +68,7 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.DoctorRepository.GetById(dto.Id);
             if (entity != null)
             {
+                entity.Fullname = dto.Fullname;
                 entity.Birthday = dto.Birthday;
                 entity.Email = dto.Email;
                 entity.Fullname = dto.Email;

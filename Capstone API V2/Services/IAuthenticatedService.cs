@@ -7,5 +7,6 @@ namespace Capstone_API_V2.Services
     public interface IAuthenticatedService
     {
         Task<Account> LoginOTP(LoginModel user);
+        int GetUserProfile(int roleId, int accountId);
     }
 }
