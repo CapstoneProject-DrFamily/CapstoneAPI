@@ -23,13 +23,12 @@ namespace Capstone_API_V2.Services
         public async Task<PatientSimpModel> CreatePatient(PatientSimpModel dto)
         {
             var profile = await _unitOfWork.ProfileRepository.GetById(dto.Id);
-            string fullname = profile.FullName;
 
             var entity = _mapper.Map<Patient>(dto);
             entity.Disabled = false;
-            entity.InsBy = fullname;
+            entity.InsBy = dto.Fullname;
             entity.InsDatetime = ConvertTimeZone();
-            entity.UpdBy = fullname;
+            entity.UpdBy = dto.Fullname;
             entity.UpdDatetime = ConvertTimeZone();
             _repository.Add(entity);
             await _unitOfWork.SaveAsync();
