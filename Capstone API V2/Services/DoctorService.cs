@@ -68,10 +68,9 @@ namespace Capstone_API_V2.Services
             var entity = await _unitOfWork.DoctorRepository.GetById(dto.Id);
             if (entity != null)
             {
-                entity.Fullname = dto.Fullname;
                 entity.Birthday = dto.Birthday;
                 entity.Email = dto.Email;
-                entity.Fullname = dto.Email;
+                entity.Fullname = dto.Fullname;
                 entity.Gender = dto.Gender;
                 entity.IdCard = dto.IdCard;
                 entity.Image = dto.Image;
@@ -85,7 +84,7 @@ namespace Capstone_API_V2.Services
                 entity.UpdDatetime = ConvertTimeZone();
                 _unitOfWork.DoctorRepository.Update(entity);
                 await _unitOfWork.SaveAsync();
-                return dto;
+                return _mapper.Map<DoctorSimpModel>(await _unitOfWork.DoctorRepository.GetById(dto.Id));
             }
             return null;
         }
@@ -133,10 +132,20 @@ namespace Capstone_API_V2.Services
             return _mapper.Map<List<DoctorModel>>(doctors);
         }
 
-        public async Task<List<DoctorModel>> GetWaitingDoctor()
+        public async Task<List<Account>> GetWaitingDoctor()
         {
             var doctors = await _unitOfWork.DoctorRepositorySep.GetWaitingDoctor();
-            return _mapper.Map<List<DoctorModel>>(doctors);
+            List<Account> result = new List<Account>();
+            if(doctors.Count > 0)
+            {
+                foreach (var d in doctors)
+                {
+                    result.Add(d.IdNavigation);
+                }
+                return result;
+            }
+            return null;
+            //return _mapper.Map<List<DoctorModel>>(doctors);
         }
 
         public async Task<List<DoctorModel>> GetOldDoctor(int patientId)

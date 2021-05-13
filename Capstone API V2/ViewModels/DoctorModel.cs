@@ -33,5 +33,7 @@ namespace Capstone_API_V2.ViewModels
         public double? RatingPoint { get; set; }
         public int BookedCount { get; set; }
         public int FeedbackCount { get; set; }
+        public virtual Account IdNavigation { get; set; }
+
     }
 }

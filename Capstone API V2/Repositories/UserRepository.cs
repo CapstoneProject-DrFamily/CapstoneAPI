@@ -66,7 +66,7 @@ namespace Capstone_API_V2.Repositories
         {
             var user = await _context.Accounts.Where(x => x.Username == username).Include(x => x.Patients)
                                        .SingleOrDefaultAsync();
-            if(user.Patients.Count == 0)
+            if(user != null && user.Patients.Count == 0)
             {
                 user = await _context.Accounts.Where(x => x.Username == username).Include(x => x.Doctor)
                                        .SingleOrDefaultAsync();
