@@ -115,7 +115,8 @@ namespace Capstone_API_V2.Services
             var doctor = await _unitOfWork.DoctorRepositorySep.GetDoctorByID(doctorId);
             if(doctor != null)
             {
-                var ratingPoint = (from treatment in doctor.Treatments where doctor.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback.RatingPoint).Average();
+                CalculateRatingDoctor(doctor.Id);
+                //var lstRatingPoint = (from treatment in doctor.Treatments where doctor.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback.RatingPoint).Average();
                 var bookedCount = (from transaction in doctor.Treatments where doctor.Treatments.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count();
                 var result = _mapper.Map<DoctorModel>(doctor);
                 result.RatingPoint = ratingPoint;
@@ -163,7 +164,9 @@ namespace Capstone_API_V2.Services
         private void CalculateRatingDoctor(int doctorId)
         {
             var feedbacks = _unitOfWork.FeedbackRepository.GetAll(filter: f => f.IdNavigation.DoctorId == doctorId);
-            var avgRatingPoint = (from feedback in feedbacks where feedbacks.Count() > 0 select feedback.RatingPoint).Average();
+            var lstRatingPoint = (from feedback in feedbacks where feedbacks.Count() > 0 select feedback.RatingPoint).ToList();
+            lstRatingPoint.Add(5);
+            var avgRatingPoint = lstRatingPoint.Average();
             var transactions = _unitOfWork.TransactionRepository.GetAll(filter: f => f.DoctorId == doctorId && f.Disabled == false && f.Status == Constants.TransactionStatus.DONE);
             
             ratingPoint = avgRatingPoint;

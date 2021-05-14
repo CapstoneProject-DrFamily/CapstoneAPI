@@ -20,6 +20,11 @@ namespace Capstone_API_V2.Repositories
 
         public async Task<DoctorRequestModel> GetRequestDoctorInfo(int doctorId)
         {
+            var feedbacks = _context.Feedbacks.Where(f => f.IdNavigation.DoctorId == doctorId);
+            var lstRatingPoint = (from feedback in feedbacks where feedbacks.Count() > 0 select feedback.RatingPoint).ToList();
+            lstRatingPoint.Add(5);
+            var avgRatingPoint = lstRatingPoint.Average();
+
             var doctorInfo = await _context.Doctors.Where(x => x.Id == doctorId && x.Disabled == false).Include(x => x.Treatments)
                                        .Select(x => new DoctorRequestModel
                                        {
@@ -28,9 +33,11 @@ namespace Capstone_API_V2.Repositories
                                            DoctorName = x.Fullname,
                                            DoctorSpecialty = x.Specialty.Name,
                                            DoctorServiceId = x.SpecialtyId,
-                                           RatingPoint = (from treatment in x.Treatments where x.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback.RatingPoint).Average(),
+                                           //RatingPoint = (from treatment in x.Treatments where x.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback.RatingPoint).Average(),
+                                           RatingPoint = avgRatingPoint,
                                            BookedCount = (from transaction in x.Treatments where x.Treatments.Count != 0 && transaction.Status == Constants.TransactionStatus.DONE && transaction.Disabled == false select transaction).Count(),
-                                           FeedbackCount = (from treatment in x.Treatments where x.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback).Count()
+                                           //FeedbackCount = (from treatment in x.Treatments where x.Treatments.Count != 0 && treatment.Feedback != null select treatment.Feedback).Count()
+                                           FeedbackCount = feedbacks.Count()
                                        }).SingleOrDefaultAsync();
             if(doctorInfo.RatingPoint == null)
             {
