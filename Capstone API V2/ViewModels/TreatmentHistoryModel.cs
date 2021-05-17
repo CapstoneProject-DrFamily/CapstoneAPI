@@ -7,7 +7,7 @@ namespace Capstone_API_V2.ViewModels
 {
     public class TreatmentHistoryModel
     {
-        public string TransactionId { get; set; }
+        public string Id { get; set; }
         //public int DoctorId { get; set; }
         public int? PatientId { get; set; }
         public DateTime? DateStart { get; set; }

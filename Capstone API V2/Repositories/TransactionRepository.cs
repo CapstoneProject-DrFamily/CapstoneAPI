@@ -40,7 +40,7 @@ namespace Capstone_API_V2.Repositories
                                                 .Where(transaction => transaction.DoctorId == doctorID && transaction.Disabled == false && dateStart.Date.Equals(transaction.DateStart.Value.Date) && transaction.Status == 0)
                                                 .Select(transaction => new TreatmentHistoryModel
                                                 {
-                                                    TransactionId = transaction.Id,
+                                                    Id = transaction.Id,
                                                     DateStart = transaction.DateStart,
                                                     DateEnd = transaction.DateEnd,
                                                     DoctorName = transaction.Doctor.Fullname,
@@ -60,7 +60,7 @@ namespace Capstone_API_V2.Repositories
                                                 .Where(transaction => status != -1? transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status == (byte)status : transaction.DoctorId == doctorID && transaction.Disabled == false && transaction.Status != 0)
                                                 .Select(transaction => new TreatmentHistoryModel
                                                 {
-                                                    TransactionId = transaction.Id,
+                                                    Id = transaction.Id,
                                                     DateStart = transaction.DateStart,
                                                     DateEnd = transaction.DateEnd,
                                                     DoctorName = transaction.Doctor.Fullname,
@@ -96,7 +96,7 @@ namespace Capstone_API_V2.Repositories
                                                 .Where(transaction => status != -1 ? transaction.PatientId == patientID && transaction.Disabled == false && transaction.Status == status : transaction.PatientId == patientID && transaction.Disabled == false && transaction.Status != 0)
                                                 .Select(transaction => new TreatmentHistoryModel
                                                 {
-                                                    TransactionId = transaction.Id,
+                                                    Id = transaction.Id,
                                                     DateStart = transaction.DateStart,
                                                     DateEnd = transaction.DateEnd,
                                                     DoctorName = transaction.Doctor.Fullname,
