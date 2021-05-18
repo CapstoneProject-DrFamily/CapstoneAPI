@@ -49,41 +49,42 @@ namespace Capstone_API_V2.Services
             //return await PaginatedList<DoctorModel>.CreateAsync(doctors, model.PageIndex, model.PageSize); ;
         }
 
-        /*public async Task<PaginatedList<DoctorModel>> GetOldDoctorForAppointment(int accountId, ResourceParameter model)
+        public async Task<PaginatedList<DoctorModel>> GetOldDoctorForAppointment(int accountId, ResourceParameter model)
         {
+            PaginatedList<DoctorModel> result = null;
+            List<DoctorModel> lstDoctorModels = new List<DoctorModel>();
+
             var specialtyId = int.Parse(model.SearchValue);
             var lstPatientId = _unitOfWork.PatientRepository.GetAll(f => f.AccountId == accountId).Select(p => p.Id).ToList();
 
-            if (specialtyId != -1)
-            {
-                var lstDoctor = await _unitOfWork.DoctorRepositorySep.GetBySpecialtyId(specialtyId);
-                var doctorModels = _mapper.Map<List<DoctorModel>>(lstDoctor);
-                foreach (var doctor in doctorModels)
-                {
-                    var schedules = doctor.Schedules;
-                    var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= ConvertTimeZone() && schedule.Status == false select schedule;
-                    doctor.Schedules = querySchedules.OrderBy(o => o.AppointmentTime).ToList();
-
-                    CalculateRatingDoctor(doctorId: doctor.Id);
-
-                    doctor.RatingPoint = ratingPoint;
-                    doctor.BookedCount = bookedCount;
-                    doctor.FeedbackCount = feedbackCount;
-                }
-                return PaginatedList<DoctorModel>.GetPage(doctorModels, model.PageIndex, model.PageSize).Result;
-            }
-
-            List<DoctorModel> doctors = new List<DoctorModel>();
             foreach (var patientId in lstPatientId)
             {
-                var entity = await _unitOfWork.TransactionRepository.GetAll(f => f.PatientId == patientId && f.Status == Constants.TransactionStatus.DONE).Select(d => d.DoctorId).ToListAsync();
-                foreach (var doctorId in entity)
+                var lstDoctorId = await _unitOfWork.TransactionRepository.GetAll(f => f.PatientId == patientId && f.Status == Constants.TransactionStatus.DONE).Select(d => d.DoctorId).ToListAsync();
+                foreach (var doctorId in lstDoctorId)
                 {
-                    doctors = _mapper.Map<List<DoctorModel>>(_unitOfWork.DoctorRepository.GetAll(f => f.Id == doctorId).ToList());
+                    var lstDoctorBySpecialty = await _unitOfWork.DoctorRepositorySep.GetBySpecialtyId(specialtyId);
+                    var doctorBySpecialty = _mapper.Map<DoctorModel>(lstDoctorBySpecialty.Where(d => d.Id == doctorId).SingleOrDefault());
+                    if (doctorBySpecialty != null)
+                    {
+                        var schedules = doctorBySpecialty.Schedules;
+                        var querySchedules = from schedule in schedules where schedule.Disabled == false && schedule.AppointmentTime >= ConvertTimeZone() && schedule.Status == false select schedule;
+                        doctorBySpecialty.Schedules = querySchedules.OrderBy(o => o.AppointmentTime).ToList();
+
+                        CalculateRatingDoctor(doctorId: doctorBySpecialty.Id);
+
+                        doctorBySpecialty.RatingPoint = ratingPoint;
+                        doctorBySpecialty.BookedCount = bookedCount;
+                        doctorBySpecialty.FeedbackCount = feedbackCount;
+                        doctorBySpecialty.IdNavigation = null;
+                        lstDoctorModels.Add(doctorBySpecialty);
+                    }
                 }
             }
-            return PaginatedList<DoctorModel>.GetPage(doctors, model.PageIndex, model.PageSize).Result;
-        }*/
+
+            lstDoctorModels = lstDoctorModels.GroupBy(d => d.Id).Select(d => d.First()).ToList();
+            result = PaginatedList<DoctorModel>.GetPage(lstDoctorModels, model.PageIndex, model.PageSize).Result;
+            return result;
+        }
 
         public async Task<DoctorSimpModel> CreateDoctor(DoctorSimpModel dto)
         {

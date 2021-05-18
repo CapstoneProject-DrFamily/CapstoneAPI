@@ -22,6 +22,6 @@ namespace Capstone_API_V2.Services
         Task<PaginatedList<DoctorModel>> GetBySpecialtyAsync(int specialtyId, ResourceParameter model);
         Task<List<DoctorModel>> GetOldDoctor(int patientId);
         Task<List<DoctorRequestModel>> GetOldDoctorForRealtime(int accountId, int specialtyId);
-        //Task<List<DoctorRequestModel>> GetOldDoctorForAppointment(int accountId, int specialtyId);
+        Task<PaginatedList<DoctorModel>> GetOldDoctorForAppointment(int accountId, ResourceParameter model);
     }
 }
