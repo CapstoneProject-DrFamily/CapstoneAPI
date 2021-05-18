@@ -37,6 +37,28 @@ namespace Capstone_API_V2.Controllers
             return Ok(result.GroupBy(d => d.Id).Select(d => d.First()));
         }
 
+        [HttpGet("FindDoctor")]
+        public async Task<IActionResult> GetOldDoctors(int accountId, int specialtyId)
+        {
+            var result = await _doctorService.GetOldDoctorForRealtime(accountId, specialtyId);
+            return Ok(result.GroupBy(d => d.DoctorId).Select(d => d.First()));
+        }
+
+        [HttpGet("BookAppointment")]
+        public async Task<IActionResult> GetOldDoctorsBySchedule([FromRoute]int specialtyId, [FromQuery]ResourceParameter model)
+        {
+            var doctors = await _doctorService.GetBySpecialtyAsync(specialtyId, model);
+
+            var result = new
+            {
+                doctors,
+                doctors.TotalPages,
+                doctors.HasPreviousPage,
+                doctors.HasNextPage
+            };
+            return Ok(result);
+        }
+
         [HttpGet("paging")]
         public async Task<IActionResult> Get([FromQuery] ResourceParameter model)
         {

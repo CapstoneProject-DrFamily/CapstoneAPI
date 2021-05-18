@@ -99,6 +99,12 @@ namespace Capstone_API_V2.AutoMapper
 
             CreateMap<AppConfig, AppConfigModel>();
             CreateMap<AppConfigModel, AppConfig>();
+
+            /*CreateMap<Doctor, DoctorRequestModel>()
+                .ForMember(des => des.DoctorId, act => act.MapFrom(src => src.Id))
+                .ForMember(des => des.DoctorName, act => act.MapFrom(src => src.Fullname))
+                .ForMember(des => des.DoctorImage, act => act.MapFrom(src => src.Image))
+                .ForMember(des => des., act => act.MapFrom(src => src.Image))*/
         }
     }
 }
