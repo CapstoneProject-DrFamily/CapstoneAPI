@@ -17,6 +17,7 @@ namespace Capstone_API_V2.ViewModels
         public string Location { get; set; }
         public string Note { get; set; }
         public int? ScheduleId { get; set; }
+        public int? DoctorId { get; set; }
         public string DoctorName { get; set; }
         public string PatientName { get; set; }
         public string Relationship { get; set; }
@@ -26,8 +27,6 @@ namespace Capstone_API_V2.ViewModels
         public string Conclusion { get; set; }
         public int SpecialtyId { get; set; }
         public string SpecialtyName { get; set; }
-        /*public bool Disabled { get; set; }
-        public int ExamId { get; set; }
-        public int ServiceId { get; set; }*/
+        public int? ServiceId { get; set; }
     }
 }

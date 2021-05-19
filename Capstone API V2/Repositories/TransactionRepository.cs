@@ -110,7 +110,9 @@ namespace Capstone_API_V2.Repositories
                                                     Note = transaction.Note,
                                                     Conclusion = transaction.ExaminationHistory.Conclusion,
                                                     SpecialtyId = transaction.Doctor.SpecialtyId,
-                                                    SpecialtyName = transaction.Doctor.Specialty.Name
+                                                    SpecialtyName = transaction.Doctor.Specialty.Name,
+                                                    DoctorId = transaction.DoctorId,
+                                                    ServiceId = transaction.ServiceId
                                                 }).OrderByDescending(o => o.DateStart);
             return transactions;
         }
