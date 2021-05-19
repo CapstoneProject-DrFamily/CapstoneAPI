@@ -108,7 +108,9 @@ namespace Capstone_API_V2.Repositories
                                                     ServicePrice = transaction.Service.Price,
                                                     Status = transaction.Status,
                                                     Note = transaction.Note,
-                                                    Conclusion = transaction.ExaminationHistory.Conclusion
+                                                    Conclusion = transaction.ExaminationHistory.Conclusion,
+                                                    SpecialtyId = transaction.Doctor.SpecialtyId,
+                                                    SpecialtyName = transaction.Doctor.Specialty.Name
                                                 }).OrderByDescending(o => o.DateStart);
             return transactions;
         }
