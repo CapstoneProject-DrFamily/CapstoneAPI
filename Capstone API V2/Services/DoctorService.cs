@@ -75,7 +75,7 @@ namespace Capstone_API_V2.Services
                         doctorBySpecialty.RatingPoint = ratingPoint;
                         doctorBySpecialty.BookedCount = bookedCount;
                         doctorBySpecialty.FeedbackCount = feedbackCount;
-                        doctorBySpecialty.IdNavigation = null;
+                        doctorBySpecialty.IdNavigation.Doctor = null;
                         lstDoctorModels.Add(doctorBySpecialty);
                     }
                 }
