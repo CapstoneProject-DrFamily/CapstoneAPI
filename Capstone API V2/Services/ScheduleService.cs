@@ -99,7 +99,7 @@ namespace Capstone_API_V2.Services
             if(schedule != null)
             {
                 checkingSchedule.isOvertime = false;
-                if (!schedule.Treatments.Any(t => Constants.TransactionStatus.DONE == t.Status))
+                if (!schedule.Treatments.Any(t => Constants.TransactionStatus.DONE == t.Status || Constants.TransactionStatus.AWAIT_PAYMENT == t.Status))
                 {
                     TimeSpan ts = schedule.AppointmentTime.GetValueOrDefault(ConvertTimeZone()) - ConvertTimeZone();
                     checkingSchedule.isOvertime = ts.TotalMinutes <= 30;
